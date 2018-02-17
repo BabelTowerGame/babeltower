@@ -85,7 +85,8 @@ namespace DuloGames.UI
 			floatTween.AddOnFinishCallback(OnTweenFinished);
 			floatTween.ignoreTimeScale = true;
 			floatTween.easing = this.Easing;
-			this.m_FloatTweenRunner.StartTween(floatTween);
+			//this.m_FloatTweenRunner.StartTween(floatTween);
+			//Demo file as example of implementing Heath, Magic
 		}
 	}
 }
