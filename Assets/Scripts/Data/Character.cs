@@ -39,7 +39,6 @@ public class Character {
         public Armor legs;
         public Shoes shoes;
     }
-
 }
 
 [Serializable]
