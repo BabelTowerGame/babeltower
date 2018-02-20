@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-[Serializable]
-public class NewBehaviourScript{
+[System.Serializable]
+public class Monster {
 	public float health;
 	public float current_health;
 	public int damage;
