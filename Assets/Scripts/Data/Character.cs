@@ -11,7 +11,7 @@ public class Character {
     #region general
     public string name;
     public float maxHealth;
-    public int level;
+    public uint level;
     #endregion
 
     #region status
@@ -21,9 +21,9 @@ public class Character {
         get { return currentHealth <= 0; }
     }
 
-    //public Inventory inventory;
+    public Inventory inventory;
     public float currentHealth;
-    //public Location location
+    public Location location;
     public float Defense {
         get { return 0; }
     }
@@ -53,4 +53,17 @@ public class Appearance {
     public Color hairColor;
     public Color skinColor;
 
+}
+
+
+[Serializable]
+public class Inventory {
+    public uint occupied = 0;
+    public uint capacity = 0;
+    public List<Item> list;
+
+    
+    public Inventory() {
+        this.list = new List<Item>();
+    }
 }
