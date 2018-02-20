@@ -1,4 +1,6 @@
-﻿using System;
+﻿using UnityEngine;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -31,15 +33,24 @@ public class Character {
     #endregion
 
     public struct Equipped {
-        //public Weapon weapon;
-        //public Armor head;
-        //public Armor chest;
-        //public Armor legs;
-        //public Shoe shoe;
+        public Weapon weapon;
+        public Armor head;
+        public Armor chest;
+        public Armor legs;
+        public Shoes shoes;
     }
-   
 
+}
 
+[Serializable]
+public class Appearance {
+    public enum Gender {
+        Male,
+        Female
+    }
 
+    public Gender gender;
+    public Color hairColor;
+    public Color skinColor;
 
 }
