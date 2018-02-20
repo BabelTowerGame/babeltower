@@ -19,11 +19,10 @@ public class Weapon:Item{
 		this.ab = ab;
 		this.cd = cd;
 	}
-	
-	
 }
+
 public class Armor:Item{
-	enum armor_type
+	public enum armor_type
 	{
 		head,
 		chest,
