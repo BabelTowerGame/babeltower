@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class Item {
+public class Item{
 	private string name;
 	private int level;
 	public Item(string name,int level){
@@ -20,6 +20,13 @@ public class Weapon:Item{
 		this.cd = cd;
 	}
 }
+public class Shield:Weapon{
+	private int defense;
+	public Shield(string name,int level,int damage, Ability ab,int cd,int defense):base(name,level,damge,ab,cd){
+		this.defense = defense;
+	}
+}
+		
 
 public class Armor:Item{
 	public enum armor_type
@@ -48,9 +55,11 @@ public class Ability{
 	private int A_damage;
 	private int A_range;
 	private int A_type;
-	public Ability(int damage,int range, int type){
+	private int A_cd;
+	public Ability(int damage,int range, int type,int cd){
 		this.A_damage = damage;
 		this.A_range = range;
 		this.A_type = type;
+		this.A_cd = cd;
 	}
 }
