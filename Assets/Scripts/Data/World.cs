@@ -4,5 +4,5 @@ using UnityEngine;
 
 [System.Serializable]
 public class World {
-	LinkedList<WorldLevel> level;
+	List<WorldLevel> level;
 }
