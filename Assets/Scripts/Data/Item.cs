@@ -5,8 +5,19 @@ using System;
 
 [Serializable]
 public class Item {
+    private int id;
     private string name;
     private int level;
+
+    public string Name {
+        get { return this.name; }
+        set { this.name = value; }
+    }
+
+    public int ID {
+        get { return this.id; }
+        set { this.id = value; }
+    }
     public Item(string name, int level) {
         this.name = name;
         this.level = level;
