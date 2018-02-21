@@ -8,7 +8,6 @@ public class Location {
 	public int level;
 	public Point point;
 
-
 }
 
 public struct Point{

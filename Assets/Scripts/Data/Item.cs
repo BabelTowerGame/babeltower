@@ -92,7 +92,7 @@ public class Shoes : Item {
     private int speed;
 	public int Speed{
 		get{ return this.speed; }
-		set{ this.speed = ValueType; }
+		set{ this.speed = value; }
 	}
     public Shoes(string name, int level, int speed) : base(name, level) {
         this.speed = speed;
