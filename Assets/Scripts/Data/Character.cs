@@ -9,15 +9,44 @@ using System.Xml.Serialization;
 [Serializable]
 public class Character {
     #region general
-    public string name;
-    public float maxHealth;
-    public uint level;
+    private string name;
+    private float maxHealth;
+    private uint level;
+    public string Name {
+        get {
+            return name;
+        }
+
+        set {
+            name = value;
+        }
+    }
+
+    public float MaxHealth {
+        get {
+            return maxHealth;
+        }
+
+        set {
+            maxHealth = value;
+        }
+    }
+
+    public uint Level {
+        get {
+            return level;
+        }
+
+        set {
+            level = value;
+        }
+    }
     #endregion
 
     #region status
-    public bool inBattle;
-    public bool inMovement;
-    public bool isDead {
+    private bool inBattle;
+    private bool inMovement;
+    public bool IsDead {
         get { return currentHealth <= 0; }
     }
 
@@ -31,9 +60,10 @@ public class Character {
     public float Damage {
         get { return 0; }
     }
+
     #endregion
 
-	public Character(string name, Appearance app) {
+    public Character(string name, Appearance app) {
 		this.name = name;
 		this.appearance = app;
 	}
