@@ -1,4 +1,29 @@
-﻿[System.Serializable]
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class StringIntPair {
+
+    [SerializeField] private string key;
+    [SerializeField] private int value;
+
+    public string Key {
+        get { return this.key; }
+        set { this.key = value; }
+    }
+
+    public int Value {
+        get { return this.value; }
+        set { this.value = value; }
+    }
+
+}
+
+
+
+
+
+[Serializable]
 public class Pair<T, U> {
     public Pair() {
     }

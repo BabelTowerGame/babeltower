@@ -16,15 +16,15 @@ public class ConstIntDB : ScriptableObject {
     }
     #endregion
 
-    public Pair<string,int>[] items;
+    public StringIntPair[] items;
 
-    public Pair<string, int> get(int index) {
+    public StringIntPair get(int index) {
         return (this.items[index]);
     }
 
-    public Pair<string, int> getByKey(string key) {
+    public StringIntPair getByKey(string key) {
         for (int i = 0; i < this.items.Length; i++) {
-            if (this.items[i].First.Equals(key))
+            if (this.items[i].Key.Equals(key))
                 return this.items[i];
         }
 
