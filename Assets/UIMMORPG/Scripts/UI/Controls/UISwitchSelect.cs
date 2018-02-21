@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
@@ -11,6 +13,7 @@ namespace DuloGames.UI
         [SerializeField] private Text m_Text;
         [SerializeField] private Button m_PrevButton;
         [SerializeField] private Button m_NextButton;
+		public GameObject m_link;
 
         // Currently selected item
 		[HideInInspector][SerializeField] private string m_SelectedItem;
@@ -45,6 +48,7 @@ namespace DuloGames.UI
                 this.SelectOption(value);
             }
         }
+
 
         /// <summary>
         /// Gets the index of the selected option.
@@ -267,5 +271,33 @@ namespace DuloGames.UI
             if (onChange != null)
                 onChange.Invoke(this.selectedOptionIndex, this.m_SelectedItem);
         }
+		public void Change_Resolution(){
+			string temp_str = this.m_SelectedItem;
+			string[] sArray=temp_str.Split('X');
+			int firstval = Int32.Parse(sArray[0]);
+			int secval = Int32.Parse(sArray[1]);
+			GameObject  ChildGameObject1 = m_link.transform.GetChild (0).gameObject;
+			Text txt = ChildGameObject1.GetComponent<Text> ();
+			if (txt.text == "Full Screen") {
+				Screen.SetResolution (firstval, secval, true, 0);
+			} else {
+				Screen.SetResolution (firstval, secval, false, 0);
+			}
+
+		}
+		public void Change_Display(){
+			GameObject  ChildGameObject1 = m_link.transform.GetChild (0).gameObject;
+			Text txt = ChildGameObject1.GetComponent<Text> ();
+			string temp_str = txt.text;
+			string[] sArray=temp_str.Split('X');
+			int firstval = Int32.Parse(sArray[0]);
+			int secval = Int32.Parse(sArray[1]);
+			if (this.m_SelectedItem == "Full Screen") {
+				Screen.SetResolution (firstval, secval, true, 0);
+			} else {
+				Screen.SetResolution (firstval, secval, false, 0);
+			}
+			
+		}
     }
 }
