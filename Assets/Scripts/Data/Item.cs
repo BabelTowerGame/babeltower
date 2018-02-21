@@ -39,7 +39,7 @@ public class Weapon : Item {
 [Serializable]
 public class Shield : Weapon {
     private int defense;
-    public Shield(string name, int level, int damage, Ability ab, int cd, int defense) : base(name, level, damge, ab, cd) {
+    public Shield(string name, int level, int damage, Ability ab, int cd, int defense) : base(name, level, damage, ab, cd) {
         this.defense = defense;
     }
 }
@@ -50,7 +50,6 @@ public class Armor : Item {
         head,
         chest,
         leg
-
     }
     private armor_type type;
     private int defense;
