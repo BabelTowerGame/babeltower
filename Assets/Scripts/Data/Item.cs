@@ -5,9 +5,17 @@ using System;
 
 [Serializable]
 public class Item {
-    private int id;
-    private string name;
-    private int level;
+    public enum ItemType {
+        Normal,
+        Weapon,
+        Shield,
+        Armor,
+        Shoes
+    }
+    [SerializeField] private int id;
+    [SerializeField] private string name;
+    [SerializeField] private int level;
+    [SerializeField] private ItemType type;
 
     public string Name {
         get { return this.name; }
