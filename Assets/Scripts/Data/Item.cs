@@ -2,32 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-<<<<<<< HEAD
-public class Item{
-	private string name;
-	private int level;
-	public Item(string name,int level){
-		this.name = name;
-		this.level = level;
-	}
-}
-public class Weapon:Item{
-	private int damage;
-	private Ability ab;
-	private int cd;
-	public Weapon(string name,int level,int damage, Ability ab,int cd):base(name,level){
-		this.damage = damage;
-		this.ab = ab;
-		this.cd = cd;
-	}
-}
-public class Shield:Weapon{
-	private int defense;
-	public Shield(string name,int level,int damage, Ability ab,int cd,int defense):base(name,level,damage,ab,cd){
-		this.defense = defense;
-	}
-=======
-
 [Serializable]
 public class Item {
     public enum ItemType {
@@ -59,7 +33,6 @@ public class Item {
         this.name = name;
         this.level = level;
     }
->>>>>>> develop
 }
 
 [Serializable]
