@@ -5,14 +5,14 @@ using UnityEngine;
 public class StringIntPair {
 
     [SerializeField] private string key;
-    [SerializeField] private int value;
+    [SerializeField] private uint value;
 
     public string Key {
         get { return this.key; }
         set { this.key = value; }
     }
 
-    public int Value {
+    public uint Value {
         get { return this.value; }
         set { this.value = value; }
     }
