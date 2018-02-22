@@ -26,8 +26,6 @@ public class CharacterApperaenceSaver : MonoBehaviour {
 			gender = Appearance.Gender.Female;
 			Debug.Log ("female");
 		}
-
-			
 	}
 
 //	public Character createCharacter(string name, Appearance.Gender gender){
