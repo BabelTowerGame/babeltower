@@ -22,7 +22,7 @@ public class Weapon:Item{
 }
 public class Shield:Weapon{
 	private int defense;
-	public Shield(string name,int level,int damage, Ability ab,int cd,int defense):base(name,level,damge,ab,cd){
+	public Shield(string name,int level,int damage, Ability ab,int cd,int defense):base(name,level,damage,ab,cd){
 		this.defense = defense;
 	}
 }
