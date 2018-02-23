@@ -15,6 +15,7 @@ public class Item {
     [SerializeField] private string name;
     [SerializeField] private int level;
     [SerializeField] private ItemType type;
+	[SerializeField] private Sprite icon;
 
     public string Name {
         get { return this.name; }
@@ -29,9 +30,18 @@ public class Item {
         get { return this.level; }
         set { this.level = value; }
     }
-    public Item(string name, int level) {
+	public Sprite Icon{
+		get { return this.icon; }
+		set { this.icon = value; }
+	}
+	public ItemType Type{
+		get { return this.type; }
+		set { this.type = value; }
+	}
+	public Item(string name, int level) {
         this.name = name;
         this.level = level;
+
     }
 }
 
@@ -52,7 +62,7 @@ public class Weapon : Item {
         get { return this.cd; }
         set { this.cd = value; }
     }
-    public Weapon(string name, int level, int damage, Ability ab, int cd) : base(name, level) {
+	public Weapon(string name, int level, int damage, Ability ab, int cd) : base(name,level) {
         this.damage = damage;
         this.ab = ab;
         this.cd = cd;
@@ -88,7 +98,7 @@ public class Armor : Item {
         get { return this.defense; }
         set { this.defense = value; }
     }
-    public Armor(string name, int level, armor_type type, int defense) : base(name, level) {
+	public Armor(string name, int level, armor_type type, int defense) : base(name,level) {
         this.defense = defense;
         this.type = type;
     }
@@ -101,7 +111,7 @@ public class Shoes : Item {
         get { return this.speed; }
         set { this.speed = value; }
     }
-    public Shoes(string name, int level, int speed) : base(name, level) {
+	public Shoes(string name, int level, int speed) : base(name,level) {
         this.speed = speed;
     }
 }

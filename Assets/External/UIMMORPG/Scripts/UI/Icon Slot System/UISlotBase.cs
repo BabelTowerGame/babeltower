@@ -243,7 +243,7 @@ namespace DuloGames.UI
 			if (!this.IsAssigned() && this.iconGraphic != null && this.iconGraphic.gameObject.activeSelf)
 			{
 				// Disable the icon graphic object
-				this.iconGraphic.gameObject.SetActive(false);
+				this.iconGraphic.gameObject.SetActive(true);
 			}
 		}
 		
@@ -665,16 +665,22 @@ namespace DuloGames.UI
 		/// <param name="iconSprite">The icon sprite.</param>
 		public void SetIcon(Sprite iconSprite)
 		{
+			
 			// Check if the icon graphic valid image
 			if (this.iconGraphic == null || !(this.iconGraphic is Image))
 				return;
 			
 			// Set the sprite
 			(this.iconGraphic as Image).sprite = iconSprite;
-			
+
+
+
+
+			this.iconGraphic.gameObject.SetActive (true);
+			//Debug.Log (iconGraphic + " " + this.iconGraphic.gameObject.transform.GetInstanceID() + " " + this.iconGraphic.gameObject.activeSelf);
 			// Enable or disabled the icon graphic game object
-			if (iconSprite != null && !this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(true);
-			if (iconSprite == null && this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(false);
+			//if (iconSprite != null && !this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(true);
+			//if (iconSprite == null && this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(false);
 		}
 		
 		/// <summary>
@@ -691,8 +697,8 @@ namespace DuloGames.UI
 			(this.iconGraphic as RawImage).texture = iconTex;
 			
 			// Enable or disabled the icon graphic game object
-			if (iconTex != null && !this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(true);
-			if (iconTex == null && this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(false);
+			//if (iconTex != null && !this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(true);
+			//if (iconTex == null && this.iconGraphic.gameObject.activeSelf) this.iconGraphic.gameObject.SetActive(false);
 		}
 		
 		/// <summary>

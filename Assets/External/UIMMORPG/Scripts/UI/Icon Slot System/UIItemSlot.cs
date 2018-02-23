@@ -38,7 +38,8 @@ namespace DuloGames.UI
 			get { return this.m_ID; }
 			set { this.m_ID = value; }
 		}
-		
+
+		private Item m_Item;
 		/// <summary>
 		/// The assigned item info.
 		/// </summary>
@@ -68,6 +69,10 @@ namespace DuloGames.UI
         /// The unassign event delegate.
         /// </summary>
         public OnUnassignEvent onUnassign = new OnUnassignEvent();
+
+		public Item GetItem(){
+			return this.m_Item;
+		}
 		
 		/// <summary>
 		/// Gets the item info of the item assigned to this slot.
@@ -118,6 +123,33 @@ namespace DuloGames.UI
             // Success
             return true;
         }
+		public bool newAssign(Item itemInfo, Object source)
+		{
+			if (itemInfo == null)
+				return false;
+
+			// Make sure we unassign first, so the event is called before new assignment
+			this.Unassign();
+
+			// Use the base class assign to set the icon
+			this.Assign(itemInfo.Icon);
+
+			// Set the spell info
+			this.m_Item = itemInfo;
+
+			// Invoke the on assign event
+			if (this.onAssign != null)
+				//Debug.Log("Assign without source");
+				this.onAssign.Invoke(this);
+
+			// Invoke the on assign event
+			if (this.onAssignWithSource != null)
+				//Debug.Log("Assign with source");
+				this.onAssignWithSource.Invoke(this, source);
+
+			// Success
+			return true;
+		}
 
 		/// <summary>
 		/// Assign the slot by item info.
@@ -196,9 +228,12 @@ namespace DuloGames.UI
             IUIItemSlot sourceSlot = (sourceObject as IUIItemSlot);
 			
 			// Get the source item info
+
+			//TODO
 			UIItemInfo sourceItemInfo = sourceSlot.GetItemInfo();
 
             // Assign the source slot by this slot
+			//TODO
 			bool assign1 = sourceSlot.Assign(this.GetItemInfo(), this);
 
 			// Assign this slot by the source slot

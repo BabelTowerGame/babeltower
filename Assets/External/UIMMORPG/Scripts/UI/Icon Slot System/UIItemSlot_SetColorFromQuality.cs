@@ -37,7 +37,7 @@ namespace DuloGames.UI
 
         public void OnSlotAssign(UIItemSlot slot)
         {
-            if (this.m_Target == null && slot.GetItemInfo() != null)
+			if (this.m_Target == null && slot.GetItemInfo () != null)
                 return;
             
             this.m_Target.canvasRenderer.SetColor(UIItemQualityColor.GetColor(slot.GetItemInfo().Quality));
