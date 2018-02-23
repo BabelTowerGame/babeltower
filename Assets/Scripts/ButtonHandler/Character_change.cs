@@ -4,7 +4,7 @@ using UnityEngine;
 using Image = UnityEngine.UI.Image;
 using UnityEngine.UI;
 
-public class Clickhandle : MonoBehaviour {
+public class Character_change : MonoBehaviour {
 	[SerializeField] private GameObject Hookobj;
 	[SerializeField] private Sprite source1;
 	[SerializeField] private Toggle Hooktoggle;
