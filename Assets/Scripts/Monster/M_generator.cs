@@ -38,48 +38,81 @@ public class M_generator : MonoBehaviour {
 		Demons21
 
 	}
-	public enum BullHoundType
-	{
-		BullHound1,
-		BullHound2
+	public enum WeaponType{
+		Sword,
+		Cudge,
+		Scythe,
+		Trident,
+		Pike,
+		Hammer,
+		Bow,
+		Axe
+
 	}
 	public enum BullHoundSkin
 	{
-		BullHounds1,
-		Bullhounds2
+		bullhound1,
+		bullhound2,
+		bullhound3,
+		bullhound4,
+		bullhound5,
+		bullhound6,
+		bullhound7,
+		bullhound8,
+		bullhound9,
+		bullhound10
 	}
-	[SerializeField] private GameObject DemonPrefab_1;
-	[SerializeField] private GameObject DemonPrefab_2;
-	[SerializeField] private GameObject DemonPrefab_3;
-	[SerializeField] private GameObject DemonPrefab_4;
-	[SerializeField] private GameObject BullHoundPrefab_1;
-	[SerializeField] private GameObject BullHoundPrefab_2;
 	// Use this for initialization
 	void Start () {
-		
+		GenerateMonster(BullHoundSkin.bullhound1,new Vector3(1,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound2,new Vector3(2,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound3,new Vector3(3,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound4,new Vector3(4,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound5,new Vector3(5,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound6,new Vector3(0,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound7,new Vector3(-1,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound8,new Vector3(-2,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound9,new Vector3(-3,2,3),new Vector3(0,180,0));
+		GenerateMonster(BullHoundSkin.bullhound10,new Vector3(-4,2,3),new Vector3(0,180,0));
+		GenerateMonster(DemonType.Demon1,DemonSkin.Demons1,WeaponType.Sword,new Vector3(3,4,4),new Vector3(0,180,0));
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-	void GenerateMonster(BullHoundType BT,BullHoundSkin BS,Vector3 position,Vector3 rotation){ 
+	void GenerateMonster(BullHoundSkin BS,Vector3 position,Vector3 rotation){ 
 		GameObject Monster;
-		//iterate through enum to decide which tyep of BullHound
-		Monster = Instantiate (BullHoundPrefab_1, position, Quaternion.identity);
+		GameObject Hound = Resources.Load ("Monster/Bullhound/Prefab/bullhound_hi_Prefab",typeof(GameObject)) as GameObject;
+		string skinpath = "Monster/Bullhound/Material/" + BS.ToString ();
+		Monster = Instantiate (Hound, position, Quaternion.identity);
+		Transform shader = Monster.transform.FindChild ("bullhound_hi");
+		Material[] m;
+		m = shader.GetComponent<SkinnedMeshRenderer> ().materials;
+		Material test = Resources.Load (skinpath,typeof(Material))as Material;
+		m [0] = test;
+		shader.GetComponent<SkinnedMeshRenderer> ().materials = m;
+
 		Monster.GetComponent<Transform> ().Rotate (rotation.x, rotation.y, rotation.z);
+
 		//generate BullHound
 		
 	}
-	void GenerateMonster(DemonType DT,DemonSkin DS,Vector3 position,Vector3 rotation){
+	void GenerateMonster(DemonType DT,DemonSkin DS,WeaponType WT,Vector3 position,Vector3 rotation){
 		//overload generate 
 		//generate generate Demon
 		GameObject Monster;
-		Monster = Instantiate (DemonPrefab_1, position, Quaternion.identity);
+		string Demonpath = "Monster/Demon/Prefab/" + DT.ToString ();
+		string skinpath = "Monster/Demon/Material/" + DS.ToString ();
+		GameObject Demon = Resources.Load (Demonpath,typeof(GameObject)) as GameObject;
+		Monster = Instantiate (Demon, position, Quaternion.identity);
+		Transform shader = Monster.transform.FindChild ("Demon");
+		Material[] m;
+		m = shader.GetComponent<SkinnedMeshRenderer> ().materials;
+		Material test = Resources.Load (skinpath,typeof(Material))as Material;
+		m [0] = test;
+		shader.GetComponent<SkinnedMeshRenderer> ().materials = m;
 		Monster.GetComponent<Transform> ().Rotate (rotation.x, rotation.y, rotation.z);
-	}
-	void setDemonSkin(){
-	}
-	void setBullhoundSkin(){
 	}
 }

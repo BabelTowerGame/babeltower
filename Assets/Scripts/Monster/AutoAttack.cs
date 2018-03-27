@@ -43,6 +43,11 @@ public class AutoAttack : MonoBehaviour {
 			float distance = Vector3.Distance (targetPos, transform.position);
 			float rangeDistance = Vector3.Distance (oriPos, transform.position);
 
+			//check if self_health value reached zero,go to defeated state
+			//TODO: check self_current health
+			if(this.GetComponent<Monster>().Current_health <= 0.0){
+				animator.SetTrigger ("DieTrigger");
+			}
 
 			//if target player moved out the active range of monster. Go back to original poisition.
 			if (rangeDistance >= activeDistance) {
@@ -62,12 +67,15 @@ public class AutoAttack : MonoBehaviour {
 				//Back from goto player to Attack
 				animator.SetBool ("PlayerOutofRange", false);
 				attackCounter += Time.deltaTime;
+				//check target player's health value. If it is zero, go back to original position
+				//TODO: set animator's boolean value to go back to original position
 				if (attackCounter > attackTime) {
 					//set attack mode using random number
 					start_attack();
 					attackCounter = 0;
 				} else {
 					//TODO :just wait for next attack
+					animator.SetBool("Waiting",true);
 				}
 			}
 			else {
@@ -85,9 +93,10 @@ public class AutoAttack : MonoBehaviour {
 			}
 			
 		}
-		if (animator.GetBool ("Hitted")) {
+		//set Hitted animation
+		/*if (animator.GetBool ("Hitted")) {
 			reset_hit ();
-		}
+		}*/
 	}
 
 
