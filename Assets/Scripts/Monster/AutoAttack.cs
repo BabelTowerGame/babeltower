@@ -15,6 +15,7 @@ public class AutoAttack : MonoBehaviour {
 	private float awakeDistance;
 	private float activeDistance;
 	private Vector3 oriPos;
+    private bool hitstatus;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,7 @@ public class AutoAttack : MonoBehaviour {
 		if (playerobj != null) {
 			player = playerobj.GetComponent<Transform> ();
 		}
-		cc = this.GetComponent<CharacterController> ();
+		cc = gameObject.GetComponent<CharacterController> ();
 		animator = this.GetComponent<Animator> ();
 		//once reach target. Attack immediatelly
 		attackCounter = attackTime;
@@ -39,13 +40,14 @@ public class AutoAttack : MonoBehaviour {
 			player = playerobj.GetComponent<Transform> ();
 			Vector3 targetPos = player.position;
 			targetPos.y = transform.position.y;
-			transform.LookAt (targetPos);
+			//transform.LookAt (targetPos);
 			float distance = Vector3.Distance (targetPos, transform.position);
+            Debug.Log(distance);
 			float rangeDistance = Vector3.Distance (oriPos, transform.position);
 
 			//check if self_health value reached zero,go to defeated state
 			//TODO: check self_current health
-			if(this.GetComponent<Monster>().Current_health <= 0.0){
+			if(gameObject.GetComponent<Monster>().Current_health <= 0.0){
 				animator.SetTrigger ("DieTrigger");
 			}
 
@@ -53,7 +55,8 @@ public class AutoAttack : MonoBehaviour {
 			if (rangeDistance >= activeDistance) {
 				transform.LookAt (oriPos);
 				cc.SimpleMove (transform.forward * walkspeed);
-				set_back (true);
+                gameObject.GetComponent<Monster>().InBattle = false;
+                set_back (true);
 				restart_patrol (false);
 			}
 			//at original position back to patrolling state.
@@ -68,7 +71,6 @@ public class AutoAttack : MonoBehaviour {
 				animator.SetBool ("PlayerOutofRange", false);
 				attackCounter += Time.deltaTime;
 				//check target player's health value. If it is zero, go back to original position
-				//TODO: set animator's boolean value to go back to original position
 				if (attackCounter > attackTime) {
 					//set attack mode using random number
 					start_attack();
@@ -82,8 +84,14 @@ public class AutoAttack : MonoBehaviour {
 				//once reach target. Attack immediatelly
 				attackCounter = attackTime;
 				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
-					cc.SimpleMove (transform.forward * runspeed);
-					animator.SetBool ("SawPlayer", true);
+                    if (distance <= awakeDistance || hitstatus == true)
+                    {
+                        transform.LookAt(targetPos);
+                        animator.SetTrigger("GoTrigger");
+                        cc.SimpleMove(transform.forward * runspeed);
+                        gameObject.GetComponent<Monster>().InBattle = true;
+                        gameObject.GetComponent<Monster>().InMovement = true;
+                    }
 				}
 				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
 					cc.SimpleMove (transform.forward * runspeed);
@@ -158,8 +166,11 @@ public class AutoAttack : MonoBehaviour {
 	void restart_patrol(bool flag){
 		animator.SetBool ("AtOri", flag);
 	}
-	public void hit(){
-		animator.SetBool ("Hitted", true);
+	public void hit(Transform player){
+        if (gameObject.GetComponent<Monster>().InBattle == false) {
+            this.player = player;
+            this.hitstatus = true;
+        }
 	}
 	void reset_hit(){
 		animator.SetBool ("Hitted", false);
