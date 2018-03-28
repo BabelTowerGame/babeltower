@@ -7,6 +7,8 @@ public class M_generator : MonoBehaviour {
 	//change dynamic loading method later according to team leader decision
 	//Using Resource.Load or AssetBundle
 	//Using this part only for testing.
+	private int sword_num = 1;
+	private int trident_num = 1;
 	public enum DemonType {
 		Demon1,
 		Demon2,
@@ -40,12 +42,10 @@ public class M_generator : MonoBehaviour {
 	}
 	public enum WeaponType{
 		Sword,
-		Cudge,
 		Scythe,
 		Trident,
 		Pike,
 		Hammer,
-		Bow,
 		Axe
 
 	}
@@ -75,6 +75,11 @@ public class M_generator : MonoBehaviour {
 		GenerateMonster(BullHoundSkin.bullhound9,new Vector3(-3,2,3),new Vector3(0,180,0));
 		GenerateMonster(BullHoundSkin.bullhound10,new Vector3(-4,2,3),new Vector3(0,180,0));
 		GenerateMonster(DemonType.Demon1,DemonSkin.Demons1,WeaponType.Sword,new Vector3(3,4,4),new Vector3(0,180,0));
+		GenerateMonster(DemonType.Demon2,DemonSkin.Demons2,WeaponType.Sword,new Vector3(2,4,4),new Vector3(0,180,0));
+		GenerateMonster(DemonType.Demon3,DemonSkin.Demons3,WeaponType.Sword,new Vector3(1,4,4),new Vector3(0,180,0));
+		GenerateMonster(DemonType.Demon4,DemonSkin.Demons4,WeaponType.Sword,new Vector3(0,4,4),new Vector3(0,180,0));
+		GenerateMonster(DemonType.Demon2,DemonSkin.Demons5,WeaponType.Pike,new Vector3(-1,4,4),new Vector3(0,180,0));
+		GenerateMonster(DemonType.Demon3,DemonSkin.Demons6,WeaponType.Hammer,new Vector3(-2,4,4),new Vector3(0,180,0));
 
 	}
 	
@@ -87,6 +92,7 @@ public class M_generator : MonoBehaviour {
 		GameObject Hound = Resources.Load ("Monster/Bullhound/Prefab/bullhound_hi_Prefab",typeof(GameObject)) as GameObject;
 		string skinpath = "Monster/Bullhound/Material/" + BS.ToString ();
 		Monster = Instantiate (Hound, position, Quaternion.identity);
+		Monster.tag = "Monster";
 		Transform shader = Monster.transform.FindChild ("bullhound_hi");
 		Material[] m;
 		m = shader.GetComponent<SkinnedMeshRenderer> ().materials;
@@ -107,6 +113,7 @@ public class M_generator : MonoBehaviour {
 		string skinpath = "Monster/Demon/Material/" + DS.ToString ();
 		GameObject Demon = Resources.Load (Demonpath,typeof(GameObject)) as GameObject;
 		Monster = Instantiate (Demon, position, Quaternion.identity);
+		Monster.tag = "Monster";
 		Transform shader = Monster.transform.FindChild ("Demon");
 		Material[] m;
 		m = shader.GetComponent<SkinnedMeshRenderer> ().materials;
@@ -114,5 +121,57 @@ public class M_generator : MonoBehaviour {
 		m [0] = test;
 		shader.GetComponent<SkinnedMeshRenderer> ().materials = m;
 		Monster.GetComponent<Transform> ().Rotate (rotation.x, rotation.y, rotation.z);
+		initWeapon (Monster, WT);
+	}
+	void assignMotion(WeaponType WT){
+		//for demon
+		
+	}
+
+	void assignMotion(){
+		//overload 
+		//for bullhound
+	}
+
+	void initWeapon(GameObject Demon,WeaponType WT){
+		//disable other weapon in model
+		string item_name;
+		GameObject weapon;
+		for (int i = 0; i < Demon.transform.childCount; i++) {
+			var child = Demon.transform.GetChild (i).gameObject;
+			if (child != null) {
+				if (child.name.Contains ("item")) {
+					child.SetActive (false);
+				}
+			}
+		}
+		if (WT != WeaponType.Sword && WT != WeaponType.Trident) {
+			item_name = "item_" + WT.ToString ().ToLower();
+			Debug.Log (item_name);
+			weapon = Demon.transform.FindChild (item_name).gameObject;
+			weapon.SetActive (true);
+		} else if (WT == WeaponType.Sword) {
+			if (sword_num <= 6) {
+				item_name = "item_sword_0" + sword_num.ToString ();
+				sword_num++;
+			} else {
+				sword_num = 1;
+				item_name = "item_sword_0" + sword_num.ToString ();
+			}
+			Debug.Log (item_name);
+			weapon = Demon.transform.FindChild (item_name).gameObject;
+			weapon.SetActive (true);
+		} else if (WT == WeaponType.Trident) {
+			if (trident_num <= 2) {
+				item_name = "item_trident_0" + trident_num.ToString ();
+				trident_num++;
+			} else {
+				trident_num = 1;
+				item_name = "item_trident_0" + trident_num.ToString ();
+			}
+			weapon = Demon.transform.FindChild (item_name).gameObject;
+			weapon.SetActive (true);
+
+		}
 	}
 }
