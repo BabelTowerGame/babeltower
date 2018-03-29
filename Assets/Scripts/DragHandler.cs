@@ -15,9 +15,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	//slot ids
 	string newID;
 	string oldID;
+	string lastID;
 	//outer use
 	public BagManager bagManager;
 	public Character player;
+	public GameObject confirmWindow;
 
 	// Use this for initialization
 	void Start()
@@ -29,11 +31,12 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		originalPosition = myTransform.position;
 		//link the players
 		player = bagManager.player;
+		lastID = oldID;
 	}
 
 	void Update()
 	{
-		
+		lastID = oldID;
 	}
 
 	public void OnBeginDrag(PointerEventData eventData)
@@ -46,6 +49,13 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		myTransform.SetAsLastSibling();
 		//Debug.Log("Start Dragging..." + this);
 		oldID = Regex.Replace(this.name, @"[^\d.\d]", "");
+		lastID = oldID;
+		//Debug.Log ("begin: lastID = " + lastID);
+
+		//we cannot move a empty item
+//		if (int.Parse(oldID) > player.inventory.list.Count) {
+//			return;
+//		}
 		//get the original image
 		//oriOb = GetComponentInChildren<Image>;
 		//Debug.Log ("source image..." + oriOb);
@@ -61,6 +71,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			//Debug.Log("Moving..." + this);
 			myTransform.position = globalMousePos;
 		}
+		lastID = oldID;
 //		GameObject curEnter = eventData.pointerEnter;
 
 	}
@@ -68,15 +79,49 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
+		lastID = oldID;
+		//Debug.Log ("end : lastID = " + lastID);
+
 		myTransform.position = originalPosition;
+		this.transform.position = originalPosition;
 		//the gameobject we want to move into
 		GameObject curEnter = eventData.pointerEnter;
 		//Debug.Log ("End Dragging... ");
+
+		//Debug.Log ("CurEnter = " + curEnter);
+
+		//if out of the window
+		if (curEnter == null) {
+			//Debug.Log ("CurEnter2 = " + curEnter);
+			canvasGroup.blocksRaycasts = true; 
+			return;
+		}
+
+		//we cannot move a empty item
+		if (int.Parse(oldID) > player.inventory.list.Count) {
+			//Debug.Log ("oldID = " + oldID);
+
+			canvasGroup.blocksRaycasts = true; 
+			return;
+		}
+
+		//get old item(which we are dragging)
+		int old_slot = int.Parse (oldID) - 1;
+		Item temp = player.inventory.list [old_slot];
 
 		//out of the bag, back to the slot
 		if (curEnter.tag != "Slot") {
 			Debug.Log ("Out! Moving back...");
 			//myTransform.position = originalPosition;
+
+			//if we drag it to the background, set a confirm window for delete it
+			if (curEnter.name == "Background") {
+				if (!confirmWindow.activeSelf) {
+					confirmWindow.SetActive (true);
+				}
+				//deleteItem (temp);
+			}
+
 		} else {
 			//get the new slot id
 			newID = Regex.Replace (curEnter.name, @"[^\d.\d]", ""); 
@@ -84,26 +129,28 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 				//if exchange two items in the list
 				myTransform.position = originalPosition;
 				
-				int old_slot = int.Parse (oldID) - 1;
 				int new_slot = int.Parse (newID) - 1;
-				Item temp;
-				if (old_slot > player.inventory.list.Count) {
-					return;
-				}
-				//Debug.Log("old slot = " + old_slot);
-				//Debug.Log ("new slot: " + new_slot);
-				temp = player.inventory.list [old_slot];
-				//Debug.Log ("Now item: " + temp.Name);
+
+//				if (old_slot > player.inventory.list.Count) {
+//					return;
+//				}
+				Debug.Log("old slot = " + old_slot);
+				Debug.Log ("new slot = " + new_slot);
+				Debug.Log ("Drag item: " + temp.Name);
+
 				player.inventory.list[old_slot] = player.inventory.list[new_slot];
-				player.inventory.list [new_slot] = temp;
+				player.inventory.list[new_slot] = temp;
+				for (int i = 0; i < player.inventory.list.Count; i++) {
+					Debug.Log (i + " " + player.inventory.list [i].Name);
+				}
 
 			} else {
 				//if move to the end
 				int i;
-				Item temp = player.inventory.list [int.Parse(oldID) - 1];
-				Debug.Log ("Change items: " + temp.Name);
+				//Item temp = player.inventory.list [int.Parse(oldID) - 1];
+				//Debug.Log ("Change items: " + temp.Name);
 				for(i = int.Parse(oldID) - 1; i < player.inventory.list.Count - 1; i++){
-					Debug.Log ("Change items: " + player.inventory.list [i].Name + " , " + player.inventory.list [i+1].Name);
+					//Debug.Log ("Change items: " + player.inventory.list [i].Name + " , " + player.inventory.list [i+1].Name);
 					player.inventory.list[i] = player.inventory.list[i + 1];
 				}
 				player.inventory.list [i] = temp;
@@ -115,5 +162,26 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 		//reset
 		canvasGroup.blocksRaycasts = true; 
+	}
+
+	public void deleteItem(){
+		Debug.Log ("lastID = " + this.transform.name);
+		oldID = Regex.Replace(this.name, @"[^\d.\d]", "");
+		int old_slot = int.Parse (oldID) - 1;
+		//Item temp = player.inventory.list [old_slot];
+		bagManager.deleteByID(old_slot);
+		//close the confirm window
+		confirmWindow.SetActive (false);
+		canvasGroup.blocksRaycasts = true; 
+
+	}
+
+	public void closeWindow(){
+		if (confirmWindow.activeSelf) {
+			confirmWindow.SetActive (false);
+		}
+		//Debug.Log ("cancel lastID = " + lastID);
+		//canvasGroup.blocksRaycasts = true; 
+
 	}
 }

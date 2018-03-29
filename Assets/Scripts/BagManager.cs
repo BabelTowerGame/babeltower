@@ -10,23 +10,26 @@ public class BagManager : MonoBehaviour {
 	//window
 	public GameObject bagObject;
 	public Character player;
-	public int nowHave;
 	public UIItemSlot[] slots = new UIItemSlot[42];
 	[SerializeField] private GameObject Content;
 	//only for testing
 	[SerializeField] private Sprite Shoes;
+	int lastCount;
 
 
 
-	// Use this for initialization
-	void Start () {
+	void Awake(){
 		int i = 0;
 		foreach (Transform child in Content.transform)  
 		{  
 			//Debug.Log ("Child name is" + child.name);
 			slots [i++] = child.gameObject.GetComponent<UIItemSlot>();  
-		} 
-		nowHave = 0;
+		}
+	}
+
+	// Use this for initialization
+	void Start () {
+		 
 
 		//only for testing
 		//testing();
@@ -48,8 +51,8 @@ public class BagManager : MonoBehaviour {
 
 	//add items to bag
 	public void addItem(Item item){
-		if (nowHave < player.inventory.capacity) {
-			player.inventory.list[nowHave++] = item;
+		if (player.inventory.list.Count < player.inventory.capacity) {
+			player.inventory.list.Add (item);
 			//if the window is open, update immediately
 			if (bagObject.activeSelf) {
 				updateGui ();
@@ -60,17 +63,35 @@ public class BagManager : MonoBehaviour {
 		}
 	}
 
-	void deleteItem(Item obj){
+	/* Delete items by it own */
+	public void deleteItem(Item obj){
 		if (player.inventory.list.Contains (obj)) {
-			player.inventory.list[player.inventory.list.IndexOf(obj)] = null;
+			//delete
+			Debug.Log("Delete..." + obj.Name);
+			player.inventory.list.Remove (obj);
 			//if the window is open, update immediately
 			if (bagObject.activeSelf) {
+				//when delete, we need to unassign the last item
+				slots[player.inventory.list.Count].Unassign();
 				updateGui ();
 			}
-			nowHave = nowHave - 1;
+
 			//TODO: when a character throw out a item, drop it into the environment.
+
 		} else {
 			Debug.Log ("not correct item!");
+		}
+	}
+
+	/* Delete items by its index */
+	public void deleteByID(int i){
+		if (i < player.inventory.list.Count) {
+			player.inventory.list.RemoveAt (i);
+			if (bagObject.activeSelf) {
+				//when delete, we need to unassign the last item
+				slots [player.inventory.list.Count].Unassign ();
+				updateGui ();
+			}
 		}
 	}
 
@@ -78,13 +99,14 @@ public class BagManager : MonoBehaviour {
 	//we need to update the gui everytime when we open
 	public void updateGui(){
 		int i;
+		Debug.Log ("count = " + player.inventory.list.Count);
 		for(i = 0; i < player.inventory.list.Count; i++){
 			//TODO: to show the items in the bag
-			//Debug.Log("Add the " + i + "item.");
-			slots[i].newAssign (player.inventory.list[i], null);
-			//for testing drag
-			if (player.inventory.list [i] != null) {
-				//Debug.Log (i + " has item!");
+			Debug.Log("Add the " + i + " item.");
+			if (player.inventory.list [i] == null) {
+				Debug.Log ("Error: NULL!");
+			} else {
+				slots [i].newAssign (player.inventory.list [i], null);
 			}
 		}
 	}
