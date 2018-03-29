@@ -11,8 +11,10 @@ namespace UnityStandardAssets.Utility
 		// The distance in the x-z plane to the target
 		[SerializeField]
 		private float distance = 10.0f;
-		// the height we want the camera to be above the target
-		[SerializeField]
+        [SerializeField]
+        private float maxcameradistance = 20.0f;
+        // the height we want the camera to be above the target
+        [SerializeField]
 		private float height = 5.0f;
 
 		[SerializeField]
@@ -23,8 +25,26 @@ namespace UnityStandardAssets.Utility
 		// Use this for initialization
 		void Start() { }
 
-		// Update is called once per frame
-		void LateUpdate()
+        void Update() {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f) {
+                if (distance < maxcameradistance) {
+                    distance += 0.4f;
+                    if (distance > 2.0f) {
+                        height += 0.3f;
+                    }
+                }
+            } 
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0f){
+                
+                distance -= 0.4f;
+                if (height > 2.0f) {
+                    height -= 0.3f;
+                }
+            }
+        }
+
+        // Update is called once per frame
+        void LateUpdate()
 		{
 			// Early out if we don't have a target
 			if (!target)
