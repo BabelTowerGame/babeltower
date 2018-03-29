@@ -83,8 +83,9 @@ public class M_generator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		
 	}
-	GameObject GenerateMonster(BullHoundSkin BS,Vector3 position,Vector3 rotation){ 
+	public GameObject GenerateMonster(BullHoundSkin BS,Vector3 position,Vector3 rotation){ 
 		GameObject Monster;
 		GameObject Hound = Resources.Load ("Monster/Bullhound/Prefab/bullhound_hi_Prefab",typeof(GameObject)) as GameObject;
 		string skinpath = "Monster/Bullhound/Material/" + BS.ToString ();
@@ -99,12 +100,12 @@ public class M_generator : MonoBehaviour {
 
 		Monster.GetComponent<Transform> ().Rotate (rotation.x, rotation.y, rotation.z);
         Monster.GetComponent<AutoAttack>().OriPosition = position;
-		Physics.IgnoreCollision(Monster.GetComponent<Collider>(), GetComponent<Collider>());
+		//Physics.IgnoreCollision(Monster.GetComponent<Collider>(), GetComponent<Collider>());
         return Monster;
 		//generate BullHound
 		
 	}
-	GameObject GenerateMonster(DemonType DT,DemonSkin DS,WeaponType WT,Vector3 position,Vector3 rotation){
+	public GameObject GenerateMonster(DemonType DT,DemonSkin DS,WeaponType WT,Vector3 position,Vector3 rotation){
 		//overload generate 
 		//generate generate Demon
 		GameObject Monster;

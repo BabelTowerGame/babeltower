@@ -7,13 +7,13 @@ public class AutoAttack : MonoBehaviour {
 	private GameObject playerobj;
 	private float attackDistance = 2.0f;
 	private Animator animator;
-	private float walkspeed = 1;
+	private float walkspeed = 0.04f;
 	private float runspeed = 0.07f;
 	private CharacterController cc;
 	private float attackTime = 3;
 	private float attackCounter;
-	private float awakeDistance = 50;
-	private float activeDistance = 100;
+	private float awakeDistance;
+	private float activeDistance;
 	private Vector3 oriPos;
     private bool hitstatus;
 
@@ -48,7 +48,7 @@ public class AutoAttack : MonoBehaviour {
 			//check if self_health value reached zero,go to defeated stat
 			if(gameObject.GetComponent<Monster>().Current_health <= 0.0){
 				Debug.Log ("Monster died");
-				animator.SetTrigger ("DieTrigger");
+				//animator.SetTrigger ("DieTrigger");
 			}
 
 			//if target player moved out the active range of monster. Go back to original poisition.
@@ -58,14 +58,14 @@ public class AutoAttack : MonoBehaviour {
                 gameObject.GetComponent<Monster>().InBattle = false;
                 set_back (true);
 				restart_patrol (false);
-				Debug.Log ("Monster back to ori position");
+				//Debug.Log ("Monster back to ori position");
 			}
 			//at original position back to patrolling state.
 			if (rangeDistance == 0.0) {
 				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Return to Ori")) {
 					set_back (false);
 					restart_patrol (true);
-					Debug.Log ("Monster restart patrol");
+					//Debug.Log ("Monster restart patrol");
 				}
 			}
 
@@ -77,13 +77,13 @@ public class AutoAttack : MonoBehaviour {
 				//check target player's health value. If it is zero, go back to original position
 				if (attackCounter > attackTime) {
 					//set attack mode using random number
-					Debug.Log("Monster start attack player");
+					//Debug.Log("Monster start attack player");
 					start_attack();
 					attackCounter = 0;
 					animator.SetBool ("Waiting", false);
 				} else {
 					//TODO :just wait for next attack
-					Debug.Log("Monster wait for next attack");
+					//Debug.Log("Monster wait for next attack");
 					animator.SetBool("Waiting",true);
 				}
 			}
@@ -198,7 +198,12 @@ public class AutoAttack : MonoBehaviour {
 				cc.Move (movement);
 			} 
 		} else {
-			Debug.Log ("Character is grounded");
+			//Debug.Log ("Character is grounded");
 		}
+	}
+	void applyDamage(float damage){
+		float defense = gameObject.GetComponent<Monster> ().Defense;
+		int real_damage = damage - defense;
+		gameObject.GetComponent<Monster> ().Current_health -= real_damage;
 	}
 }
