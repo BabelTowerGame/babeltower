@@ -15,13 +15,13 @@ public class abilityCoolDown : MonoBehaviour {
 	private float coolDownTimeLeft;
 	private Image buttonImage;
 
-	[SerializeField] private AbilityCast ability;
-	[SerializeField] private GameObject weaponHolder;
+	private AbilityCast ability;
+	private GameObject weaponHolder; 
 
 
 	// Use this for initialization
 	void Start () {
-		Initialize (ability, weaponHolder);
+		//Initialize (ability, weaponHolder);
 	}
 
 	public void Initialize(AbilityCast selectedAbility, GameObject obj){
