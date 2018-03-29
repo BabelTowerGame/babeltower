@@ -10,7 +10,8 @@ public class BagManager : MonoBehaviour {
 	//window
 	public GameObject bagObject;
 	public Character player;
-	UIItemSlot[] slots = new UIItemSlot[42];
+	public int nowHave;
+	public UIItemSlot[] slots = new UIItemSlot[42];
 	[SerializeField] private GameObject Content;
 	//only for testing
 	[SerializeField] private Sprite Shoes;
@@ -25,10 +26,10 @@ public class BagManager : MonoBehaviour {
 			//Debug.Log ("Child name is" + child.name);
 			slots [i++] = child.gameObject.GetComponent<UIItemSlot>();  
 		} 
-		//maxValue = 42;
+		nowHave = 0;
 
 		//only for testing
-		testing();
+		//testing();
 	}
 	
 	// Update is called once per frame
@@ -47,8 +48,8 @@ public class BagManager : MonoBehaviour {
 
 	//add items to bag
 	public void addItem(Item item){
-		if (player.inventory.list.Count < player.inventory.capacity) {
-			player.inventory.list.Add (item);
+		if (nowHave < player.inventory.capacity) {
+			player.inventory.list[nowHave++] = item;
 			//if the window is open, update immediately
 			if (bagObject.activeSelf) {
 				updateGui ();
@@ -61,11 +62,13 @@ public class BagManager : MonoBehaviour {
 
 	void deleteItem(Item obj){
 		if (player.inventory.list.Contains (obj)) {
-			player.inventory.list.Remove (obj);
+			player.inventory.list[player.inventory.list.IndexOf(obj)] = null;
 			//if the window is open, update immediately
 			if (bagObject.activeSelf) {
 				updateGui ();
 			}
+			nowHave = nowHave - 1;
+			//TODO: when a character throw out a item, drop it into the environment.
 		} else {
 			Debug.Log ("not correct item!");
 		}
@@ -73,12 +76,16 @@ public class BagManager : MonoBehaviour {
 
 
 	//we need to update the gui everytime when we open
-	void updateGui(){
+	public void updateGui(){
 		int i;
 		for(i = 0; i < player.inventory.list.Count; i++){
 			//TODO: to show the items in the bag
-			Debug.Log("Add the " + i + "item.");
+			//Debug.Log("Add the " + i + "item.");
 			slots[i].newAssign (player.inventory.list[i], null);
+			//for testing drag
+			if (player.inventory.list [i] != null) {
+				//Debug.Log (i + " has item!");
+			}
 		}
 	}
 
@@ -96,23 +103,23 @@ public class BagManager : MonoBehaviour {
 		//TODO: delete the item from bag then update the character part
 	}
 
-	void testing(){
-		Item testItem = new Item ("1 shoes", 100);
-		testItem.Icon = Shoes;
-		testItem.ID = 0;
-		testItem.Type = Item.ItemType.Shoes;
-		Item testItem2 = new Item ("2 shoes", 200);
-		testItem2.Icon = Shoes;
-		testItem2.ID = 2;
-		testItem2.Type = Item.ItemType.Shoes;
-		Item testItem1 = new Item ("3 shoes", 300);
-		testItem1.Icon = Shoes;
-		testItem1.ID = 1;
-		testItem1.Type = Item.ItemType.Shoes;
-		player.inventory.list.Add(testItem);
-		player.inventory.list.Add(testItem2);
-		player.inventory.list.Add(testItem1);
-		Debug.Log (player.inventory.list.Count);
-	}
+//	void testing(){
+//		Item testItem = new Item ("1 shoes", 100);
+//		testItem.Icon = Shoes;
+//		testItem.ID = 0;
+//		testItem.Type = Item.ItemType.Shoes;
+//		Item testItem2 = new Item ("2 shoes", 200);
+//		testItem2.Icon = Shoes;
+//		testItem2.ID = 2;
+//		testItem2.Type = Item.ItemType.Shoes;
+//		Item testItem1 = new Item ("3 shoes", 300);
+//		testItem1.Icon = Shoes;
+//		testItem1.ID = 1;
+//		testItem1.Type = Item.ItemType.Shoes;
+//		player.inventory.list.Add(testItem);
+//		player.inventory.list.Add(testItem2);
+//		player.inventory.list.Add(testItem1);
+//		Debug.Log (player.inventory.list.Count);
+//	}
 
 }
