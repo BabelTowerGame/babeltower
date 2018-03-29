@@ -64,8 +64,20 @@ public class M_generator : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		GenerateMonster(DemonType.Demon1,DemonSkin.Demons1,WeaponType.Sword,new Vector3(3,4,4),new Vector3(0,180,0));
-        GenerateMonster(BullHoundSkin.bullhound10, new Vector3(1, 4, 1), new Vector3(0, 180, 0));
+		GameObject monster1;
+		GameObject monster2;
+		GameObject monster3;
+		GameObject monster4;
+		monster1 = GenerateMonster(DemonType.Demon1,DemonSkin.Demons1,WeaponType.Sword,new Vector3(-10,0,0),new Vector3(0,180,0));
+		monster2 = GenerateMonster(DemonType.Demon2,DemonSkin.Demons4,WeaponType.Pike,new Vector3(-15,0,3),new Vector3(0,180,0));
+		monster3 = GenerateMonster(DemonType.Demon3,DemonSkin.Demons2,WeaponType.Hammer,new Vector3(20,0,5),new Vector3(0,180,0));
+		monster4 = GenerateMonster(DemonType.Demon4,DemonSkin.Demons3,WeaponType.Trident,new Vector3(-25,0,7),new Vector3(0,180,0));
+        //monster2 = GenerateMonster(BullHoundSkin.bullhound10, new Vector3(1, 4, 1), new Vector3(0, 180, 0));
+		monster1.GetComponent<Monster> ().Current_health = 20;
+		monster2.GetComponent<Monster> ().Current_health = 20;
+		monster3.GetComponent<Monster> ().Current_health = 20;
+		monster4.GetComponent<Monster> ().Current_health = 20;
+		//monster2.GetComponent<Monster> ().Current_health = 20;
 	}
 	
 	// Update is called once per frame
@@ -87,6 +99,7 @@ public class M_generator : MonoBehaviour {
 
 		Monster.GetComponent<Transform> ().Rotate (rotation.x, rotation.y, rotation.z);
         Monster.GetComponent<AutoAttack>().OriPosition = position;
+		Physics.IgnoreCollision(Monster.GetComponent<Collider>(), GetComponent<Collider>());
         return Monster;
 		//generate BullHound
 		
@@ -147,7 +160,7 @@ public class M_generator : MonoBehaviour {
 				sword_num = 1;
 				item_name = "item_sword_0" + sword_num.ToString ();
 			}
-			Debug.Log (item_name);
+			//Debug.Log (item_name);
 			weapon = Demon.transform.FindChild (item_name).gameObject;
 			weapon.SetActive (true);
 		} else if (WT == WeaponType.Trident) {
