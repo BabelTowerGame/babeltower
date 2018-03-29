@@ -13,7 +13,7 @@ namespace EasyEquipmentSystem
 		public FullBody[] fullBodies;
 		public BodyPart[] bodyParts;
 
-		public bool useBodyParts;
+		public bool useBodyParts = false;
 		public bool hideOther;
 
 		public string[] disableModes = new string[] {"Disable", "RendererOff"};

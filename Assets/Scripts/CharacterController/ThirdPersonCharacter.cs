@@ -19,6 +19,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
 		bool m_IsGrounded;
+        bool m_IsAttack;
 		float m_OrigGroundCheckDistance;
 		const float k_Half = 0.5f;
 		float m_TurnAmount;
@@ -43,8 +44,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 
-		public void Move(Vector3 move, bool crouch, bool jump)
-		{
+		public void Move(Vector3 move, bool crouch, bool jump, bool attack) {
 
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
@@ -62,6 +62,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			if (m_IsGrounded)
 			{
 				HandleGroundedMovement(crouch, jump);
+                m_IsAttack = attack;
 			}
 			else
 			{
@@ -122,6 +123,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetFloat("Turn", m_TurnAmount, 0.1f, Time.deltaTime);
 			m_Animator.SetBool("Crouch", m_Crouching);
 			m_Animator.SetBool("OnGround", m_IsGrounded);
+            m_Animator.SetBool("Attack", m_IsAttack);
 			if (!m_IsGrounded)
 			{
 				m_Animator.SetFloat("Jump", m_Rigidbody.velocity.y);
@@ -165,8 +167,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void HandleGroundedMovement(bool crouch, bool jump)
 		{
-			// check whether conditions are right to allow a jump:
-			if (jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
+            AnimatorStateInfo info = m_Animator.GetCurrentAnimatorStateInfo(0);
+            // check whether conditions are right to allow a jump:
+            if (jump && !crouch && (info.IsName("Grounded")))
 			{
 				// jump!
 				m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
