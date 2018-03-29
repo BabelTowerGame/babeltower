@@ -19,17 +19,17 @@ public class BagManager : MonoBehaviour {
 
 
 	void Awake(){
+
+	}
+
+	// Use this for initialization
+	void Start () {
 		int i = 0;
 		foreach (Transform child in Content.transform)  
 		{  
 			//Debug.Log ("Child name is" + child.name);
 			slots [i++] = child.gameObject.GetComponent<UIItemSlot>();  
 		}
-	}
-
-	// Use this for initialization
-	void Start () {
-		 
 
 		//only for testing
 		//testing();

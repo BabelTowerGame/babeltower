@@ -118,6 +118,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			if (curEnter.name == "Background") {
 				if (!confirmWindow.activeSelf) {
 					confirmWindow.SetActive (true);
+					GameObject button = GameObject.Find("Delete_Yes_Button");
+					button.GetComponent<DeleteButton> ().name = this.transform.name;
 				}
 				//deleteItem (temp);
 			}
@@ -164,17 +166,17 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		canvasGroup.blocksRaycasts = true; 
 	}
 
-	public void deleteItem(){
-		Debug.Log ("lastID = " + this.transform.name);
-		oldID = Regex.Replace(this.name, @"[^\d.\d]", "");
-		int old_slot = int.Parse (oldID) - 1;
-		//Item temp = player.inventory.list [old_slot];
-		bagManager.deleteByID(old_slot);
-		//close the confirm window
-		confirmWindow.SetActive (false);
-		canvasGroup.blocksRaycasts = true; 
-
-	}
+//	public void deleteItem(){
+//		Debug.Log ("lastID = " + this.transform.name);
+//		oldID = Regex.Replace(this.name, @"[^\d.\d]", "");
+//		int old_slot = int.Parse (oldID) - 1;
+//		//Item temp = player.inventory.list [old_slot];
+//		bagManager.deleteByID(old_slot);
+//		//close the confirm window
+//		confirmWindow.SetActive (false);
+//		canvasGroup.blocksRaycasts = true; 
+//
+//	}
 
 	public void closeWindow(){
 		if (confirmWindow.activeSelf) {
