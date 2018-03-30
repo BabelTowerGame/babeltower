@@ -7,17 +7,18 @@ public class AutoAttack : MonoBehaviour {
 	private GameObject playerobj;
 	private float attackDistance = 2.0f;
 	private Animator animator;
-	private float walkspeed = 0.04f;
+	private float walkspeed = 0.1f;
 	private float runspeed = 0.07f;
 	private CharacterController cc;
 	private float attackTime = 3;
 	private float attackCounter;
     [SerializeField]
-	private float awakeDistance = 50;
+	private float awakeDistance = 20;
     [SerializeField]
-    private float activeDistance = 100;
+    private float activeDistance = 50;
 	private Vector3 oriPos;
     private bool hitstatus;
+    private bool goback;
 
 	// Use this for initialization
 	void Start () {
@@ -35,7 +36,7 @@ public class AutoAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		new_gravity ();
+		//new_gravity ();
 		if (playerobj == null) {
 			playerobj = FindClosestPlayer ();
 		}
@@ -55,15 +56,20 @@ public class AutoAttack : MonoBehaviour {
 
 			//if target player moved out the active range of monster. Go back to original poisition.
 			if (rangeDistance >= activeDistance) {
-				transform.LookAt (oriPos);
-				cc.SimpleMove (transform.forward * walkspeed);
-                gameObject.GetComponent<Monster>().InBattle = false;
-                set_back (true);
-				restart_patrol (false);
-				//Debug.Log ("Monster back to ori position");
+                goback = true;
+
 			}
+            if (goback == true) {
+                transform.LookAt(oriPos);
+                cc.Move(transform.forward * walkspeed);
+                gameObject.GetComponent<Monster>().InBattle = false;
+                set_back(true);
+                Debug.Log("Monster back to ori position");
+                restart_patrol(false);
+            }
 			//at original position back to patrolling state.
-			if (rangeDistance == 0.0) {
+			if (rangeDistance <= 5.0) {
+                goback = false;
 				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Return to Ori")) {
 					set_back (false);
 					restart_patrol (true);
@@ -96,8 +102,9 @@ public class AutoAttack : MonoBehaviour {
                     if (distance <= awakeDistance || hitstatus == true)
                     {
                         transform.LookAt(targetPos);
-						//Debug.Log("Monster goto Player");
-                        animator.SetTrigger("GoTrigger");
+                        //Debug.Log("Monster goto Player");
+                        pause_attack();
+                        animator.SetTrigger("GoTrigger"); 
 						cc.Move(transform.forward*runspeed);
                         gameObject.GetComponent<Monster>().InBattle = true;
                         gameObject.GetComponent<Monster>().InMovement = true;
@@ -140,7 +147,7 @@ public class AutoAttack : MonoBehaviour {
 		set { this.attackDistance = value; }
 	}
 
-	public float WalkingSpeed{
+	public float WalkingSpeed{ 
 		get { return this.walkspeed; }
 		set { this.walkspeed = value; }
 	}
@@ -182,6 +189,9 @@ public class AutoAttack : MonoBehaviour {
 	void start_attack(){
 		animator.SetBool ("Attack", true);
 	}
+    void pause_attack() {
+        animator.SetBool("Attack", false);
+    }
 
 	void attack(Transform Player){
 		
@@ -190,17 +200,18 @@ public class AutoAttack : MonoBehaviour {
 		Vector3 movement;
 		movement = transform.position;
 		float _vertSpeed = 0.0f;;
-
 		if (!cc.isGrounded) {
+            
 			_vertSpeed += -9.8f * 5 * Time.deltaTime;
 			if (_vertSpeed < -10.0f) { 
 				_vertSpeed = -10.0f; 
 				movement.y = _vertSpeed; 
 				movement *= Time.deltaTime; 
 				cc.Move (movement);
-			} 
+                //Debug.Log("Add gravity");
+            } 
 		} else {
-			//Debug.Log ("Character is grounded");
+
 		}
 	}
 	void applyDamage(float damage){

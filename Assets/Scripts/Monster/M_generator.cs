@@ -64,20 +64,20 @@ public class M_generator : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		GameObject monster1;
-		GameObject monster2;
-		GameObject monster3;
-		GameObject monster4;
-		monster1 = GenerateMonster(DemonType.Demon1,DemonSkin.Demons1,WeaponType.Sword,new Vector3(-10,0,0),new Vector3(0,180,0));
-		monster2 = GenerateMonster(DemonType.Demon2,DemonSkin.Demons4,WeaponType.Pike,new Vector3(-15,0,3),new Vector3(0,180,0));
-		monster3 = GenerateMonster(DemonType.Demon3,DemonSkin.Demons2,WeaponType.Hammer,new Vector3(20,0,5),new Vector3(0,180,0));
-		monster4 = GenerateMonster(DemonType.Demon4,DemonSkin.Demons3,WeaponType.Trident,new Vector3(-25,0,7),new Vector3(0,180,0));
-        //monster2 = GenerateMonster(BullHoundSkin.bullhound10, new Vector3(1, 4, 1), new Vector3(0, 180, 0));
-		monster1.GetComponent<Monster> ().Current_health = 20;
-		monster2.GetComponent<Monster> ().Current_health = 20;
-		monster3.GetComponent<Monster> ().Current_health = 20;
-		monster4.GetComponent<Monster> ().Current_health = 20;
+		//GameObject monster1;
+		//GameObject monster2;
+		//GameObject monster3;
+		//GameObject monster4;
+		//monster1 = GenerateMonster(DemonType.Demon1,DemonSkin.Demons1,WeaponType.Sword,new Vector3(-10,0,0),new Vector3(0,180,0));
+		//monster2 = GenerateMonster(DemonType.Demon2,DemonSkin.Demons4,WeaponType.Pike,new Vector3(-15,0,3),new Vector3(0,180,0));
+		//monster3 = GenerateMonster(DemonType.Demon3,DemonSkin.Demons2,WeaponType.Hammer,new Vector3(20,0,5),new Vector3(0,180,0));
+		//monster4 = GenerateMonster(DemonType.Demon4,DemonSkin.Demons3,WeaponType.Trident,new Vector3(-25,0,7),new Vector3(0,180,0));
+  //      //monster2 = GenerateMonster(BullHoundSkin.bullhound10, new Vector3(1, 4, 1), new Vector3(0, 180, 0));
+		//monster1.GetComponent<Monster> ().Current_health = 20;    
 		//monster2.GetComponent<Monster> ().Current_health = 20;
+		//monster3.GetComponent<Monster> ().Current_health = 20;
+		//monster4.GetComponent<Monster> ().Current_health = 20;
+		////monster2.GetComponent<Monster> ().Current_health = 20;
 	}
 	
 	// Update is called once per frame
