@@ -30,7 +30,7 @@ namespace UnityStandardAssets.Utility
                 if (distance < maxcameradistance) {
                     distance += 0.4f;
                     if (distance > 2.0f) {
-                        height += 0.3f;
+                        height += 0.2f;
                     }
                 }
             } 
@@ -38,7 +38,7 @@ namespace UnityStandardAssets.Utility
                 
                 distance -= 0.4f;
                 if (height > 2.0f) {
-                    height -= 0.3f;
+                    height -= 0.2f;
                 }
             }
         }
