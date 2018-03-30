@@ -150,7 +150,7 @@ public class M_generator : MonoBehaviour {
 		}
 		if (WT != WeaponType.Sword && WT != WeaponType.Trident) {
 			item_name = "item_" + WT.ToString ().ToLower();
-			Debug.Log (item_name);
+			//Debug.Log (item_name);
 			weapon = Demon.transform.Find (item_name).gameObject;
 			weapon.SetActive (true);
 		} else if (WT == WeaponType.Sword) {
