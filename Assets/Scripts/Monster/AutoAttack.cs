@@ -12,8 +12,10 @@ public class AutoAttack : MonoBehaviour {
 	private CharacterController cc;
 	private float attackTime = 3;
 	private float attackCounter;
-	private float awakeDistance;
-	private float activeDistance;
+    [SerializeField]
+	private float awakeDistance = 50;
+    [SerializeField]
+    private float activeDistance = 100;
 	private Vector3 oriPos;
     private bool hitstatus;
 
@@ -203,7 +205,7 @@ public class AutoAttack : MonoBehaviour {
 	}
 	void applyDamage(float damage){
 		float defense = gameObject.GetComponent<Monster> ().Defense;
-		int real_damage = damage - defense;
+		float real_damage = damage - defense;
 		gameObject.GetComponent<Monster> ().Current_health -= real_damage;
 	}
 }

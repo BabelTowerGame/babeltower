@@ -91,7 +91,7 @@ public class M_generator : MonoBehaviour {
 		string skinpath = "Monster/Bullhound/Material/" + BS.ToString ();
 		Monster = Instantiate (Hound, position, Quaternion.identity);
 		Monster.tag = "Monster";
-		Transform shader = Monster.transform.FindChild ("bullhound_hi");
+		Transform shader = Monster.transform.Find ("bullhound_hi");
 		Material[] m;
 		m = shader.GetComponent<SkinnedMeshRenderer> ().materials;
 		Material test = Resources.Load (skinpath,typeof(Material))as Material;
@@ -114,7 +114,7 @@ public class M_generator : MonoBehaviour {
 		GameObject Demon = Resources.Load (Demonpath,typeof(GameObject)) as GameObject;
 		Monster = Instantiate (Demon, position, Quaternion.identity);
 		Monster.tag = "Monster";
-		Transform shader = Monster.transform.FindChild ("Demon");
+		Transform shader = Monster.transform.Find ("Demon");
 		Material[] m;
 		m = shader.GetComponent<SkinnedMeshRenderer> ().materials;
 		Material test = Resources.Load (skinpath,typeof(Material))as Material;
@@ -151,7 +151,7 @@ public class M_generator : MonoBehaviour {
 		if (WT != WeaponType.Sword && WT != WeaponType.Trident) {
 			item_name = "item_" + WT.ToString ().ToLower();
 			Debug.Log (item_name);
-			weapon = Demon.transform.FindChild (item_name).gameObject;
+			weapon = Demon.transform.Find (item_name).gameObject;
 			weapon.SetActive (true);
 		} else if (WT == WeaponType.Sword) {
 			if (sword_num <= 6) {
@@ -162,7 +162,7 @@ public class M_generator : MonoBehaviour {
 				item_name = "item_sword_0" + sword_num.ToString ();
 			}
 			//Debug.Log (item_name);
-			weapon = Demon.transform.FindChild (item_name).gameObject;
+			weapon = Demon.transform.Find (item_name).gameObject;
 			weapon.SetActive (true);
 		} else if (WT == WeaponType.Trident) {
 			if (trident_num <= 2) {
@@ -172,7 +172,7 @@ public class M_generator : MonoBehaviour {
 				trident_num = 1;
 				item_name = "item_trident_0" + trident_num.ToString ();
 			}
-			weapon = Demon.transform.FindChild (item_name).gameObject;
+			weapon = Demon.transform.Find (item_name).gameObject;
 			weapon.SetActive (true);
 
 		}
