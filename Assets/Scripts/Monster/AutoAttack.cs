@@ -7,15 +7,15 @@ public class AutoAttack : MonoBehaviour {
 	private GameObject playerobj;
 	private float attackDistance = 2.0f;
 	private Animator animator;
-	private float walkspeed = 0.1f;
+	private float walkspeed = 0.14f;
 	private float runspeed = 0.07f;
 	private CharacterController cc;
 	private float attackTime = 3;
 	private float attackCounter;
     [SerializeField]
-	private float awakeDistance = 20;
+	private float awakeDistance = 10;
     [SerializeField]
-    private float activeDistance = 50;
+    private float activeDistance = 30;
 	private Vector3 oriPos;
     private bool hitstatus;
     private bool goback;
@@ -65,15 +65,13 @@ public class AutoAttack : MonoBehaviour {
                 gameObject.GetComponent<Monster>().InBattle = false;
                 set_back(true);
                 Debug.Log("Monster back to ori position");
-                restart_patrol(false);
             }
 			//at original position back to patrolling state.
 			if (rangeDistance <= 5.0) {
-                goback = false;
-				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Return to Ori")) {
+				if (goback == true) {
 					set_back (false);
-					restart_patrol (true);
-					//Debug.Log ("Monster restart patrol");
+					animator.SetTrigger("BackPatrol");
+					Debug.Log ("Monster restart patrol");
 				}
 			}
 
@@ -173,9 +171,6 @@ public class AutoAttack : MonoBehaviour {
 	}
 	void set_back(bool flag){
 		animator.SetBool("OutRange", flag);
-	}
-	void restart_patrol(bool flag){
-		animator.SetBool ("AtOri", flag);
 	}
 	public void hit(Transform player){
         if (gameObject.GetComponent<Monster>().InBattle == false) {
