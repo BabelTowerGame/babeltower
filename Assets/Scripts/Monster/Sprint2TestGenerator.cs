@@ -10,9 +10,9 @@ public class Sprint2TestGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Vector3 mobLocation = player.position;
-        mobLocation.x += 10.0f;
-        mobLocation.z += 10.0f;
-        mobLocation.y = 133.0f;
+        mobLocation.x += 50.0f;
+        mobLocation.z += 50.0f;
+        mobLocation.y = 150.0f;
 
         M_generator gen = this.transform.GetComponent<M_generator>();
 

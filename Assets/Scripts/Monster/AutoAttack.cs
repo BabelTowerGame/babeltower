@@ -12,13 +12,12 @@ public class AutoAttack : MonoBehaviour {
 	private CharacterController cc;
 	private float attackTime = 3;
 	private float attackCounter;
-    [SerializeField]
 	private float awakeDistance = 10;
-    [SerializeField]
     private float activeDistance = 30;
 	private Vector3 oriPos;
-    private bool hitstatus;
+    private bool hitstatus = false;
     private bool goback;
+    private bool grounded;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +30,8 @@ public class AutoAttack : MonoBehaviour {
 		animator = this.GetComponent<Animator> ();
 		//once reach target. Attack immediatelly
 		attackCounter = attackTime;
+        grounded = false;
+        Debug.Log(oriPos);
 
 	}
 	
@@ -40,6 +41,14 @@ public class AutoAttack : MonoBehaviour {
 		if (playerobj == null) {
 			playerobj = FindClosestPlayer ();
 		}
+        if (grounded == false) {
+            Debug.Log("Gounding");
+            if (cc.isGrounded) {
+                oriPos = transform.position;
+                Debug.Log(oriPos);
+            }
+            grounded = true;
+        }
 		if (player != null) {
 			player = playerobj.GetComponent<Transform> ();
 			Vector3 targetPos = player.position;
@@ -67,7 +76,7 @@ public class AutoAttack : MonoBehaviour {
                 Debug.Log("Monster back to ori position");
             }
 			//at original position back to patrolling state.
-			if (rangeDistance <= 5.0) {
+			if (transform.position.x -oriPos.x <3.0f && transform.position.y -oriPos.y <3.0f) {
 				if (goback == true) {
 					set_back (false);
 					animator.SetTrigger("BackPatrol");
@@ -97,10 +106,13 @@ public class AutoAttack : MonoBehaviour {
 				//once reach target. Attack immediatelly
 				attackCounter = attackTime;
 				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")||animator.GetCurrentAnimatorStateInfo (0).IsName ("Go to player")) {
-                    if (distance <= awakeDistance || hitstatus == true)
+                    if (distance < awakeDistance)
                     {
                         transform.LookAt(targetPos);
-                        //Debug.Log("Monster goto Player");
+                        Debug.Log("Distance between player");
+                        Debug.Log(distance);
+                        Debug.Log("Awake distance is");
+                        Debug.Log(awakeDistance);
                         pause_attack();
                         animator.SetTrigger("GoTrigger"); 
 						cc.Move(transform.forward*runspeed);
