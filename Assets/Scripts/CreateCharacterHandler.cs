@@ -46,7 +46,7 @@ public class CreateCharacterHandler : MonoBehaviour {
         //ap.hairColor = 
         //ap.skinColor = 
 
-        Character character = new Character(name, ap);
+        //Character character = new Character(name, ap);
 
 
         Debug.Log("Character created: name: " + name + " gender: " + genderString + " hairColor: " + hairColorString + " " + hairColorVal);
