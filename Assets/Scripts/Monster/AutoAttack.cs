@@ -5,6 +5,8 @@ using UnityEngine;
 public class AutoAttack : MonoBehaviour {
 	private Transform player;
 	private GameObject playerobj;
+
+	//all constant value should be change in real gen
 	private float attackDistance = 1.0f;
 	private Animator animator;
 	private float walkspeed = 3.0f;
@@ -37,7 +39,6 @@ public class AutoAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         new_gravity ();
-        //Debug.Log(cc.isGrounded ? "GROUNDED" : "NOT GROUNDED");
         if (playerobj == null) {
 			playerobj = FindClosestPlayer ();
 		}
@@ -61,6 +62,14 @@ public class AutoAttack : MonoBehaviour {
 				animator.SetTrigger ("DieTrigger");
 			}
 
+			/*if (Input.GetKeyDown (KeyCode.L))  
+			{  
+				manual_attack ();	
+			}  
+			if (Input.GetKeyDown (KeyCode.T))  
+			{  
+				manual_move ();
+			} */ 
 			//if target player moved out the active range of monster. Go back to original poisition.
 			if (rangeDistance >= activeDistance && gameObject.GetComponent<Monster>().InBattle == true) {
                 goback = true;
@@ -91,7 +100,6 @@ public class AutoAttack : MonoBehaviour {
 				attackCounter += Time.deltaTime;
 				//TODO check target player's health value. If it is zero, go back to original position
 				if (attackCounter > attackTime) {
-                    //Debug.Log("Start attack");
 					start_attack();
 					attackCounter = 0;
 					//animator.SetBool ("Waiting", false);
@@ -196,9 +204,6 @@ public class AutoAttack : MonoBehaviour {
         animator.SetBool("Attack", false);
     }
 
-	void attack(Transform Player){
-		
-	}
 	void new_gravity(){
 		Vector3 movement = Vector3.zero;
 		//movement = transform.position;
@@ -213,4 +218,30 @@ public class AutoAttack : MonoBehaviour {
 		float real_damage = damage - defense;
 		gameObject.GetComponent<Monster> ().Current_health -= real_damage;
 	}
+
+	void dealthDmage(){
+		if (player != null) {
+			player.GetComponent<Character> ().currentHealth -= this.GetComponent<Monster> ().Damage;
+
+		}
+	}
+
+
+
+	//manual control part for network transimission
+	void manual_move(Vector3 dest){
+		transform.LookAt (dest);
+		animator.SetTrigger ("M_Go");
+		float distance = Vector3.Distance (dest, transform.position);
+		while (distance > 1.0f) {
+			cc.SimpleMove (transform.forward * walkspeed);
+			distance = Vector3.Distance (dest, transform.position);
+		}
+
+	}
+	void manual_attack(Vector3 target){
+		transform.LookAt (target);
+		animator.SetTrigger ("M_Attack");
+	}
+
 }
