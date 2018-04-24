@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class ConstIntDBEditor {
+public class AbilityDBEditor {
     private static string GetSavePath() {
         return EditorUtility.SaveFilePanelInProject("New item database", "New item database", "asset", "Create a new item database.");
     }
 
-    [MenuItem("Assets/Create/Databases/ConstIntDB")]
+    [MenuItem("Assets/Create/Databases/AbilityDB")]
     public static void CreateDatabase() {
         string assetPath = GetSavePath();
-        ConstIntDB asset = ScriptableObject.CreateInstance("ConstIntDB") as ConstIntDB;  //scriptable object
+        AbilityDB asset = ScriptableObject.CreateInstance("AbilityDB") as AbilityDB;  //scriptable object
         AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(assetPath));
         AssetDatabase.Refresh();
     }

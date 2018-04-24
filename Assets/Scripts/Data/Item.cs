@@ -152,6 +152,7 @@ public class Shoes : Item {
 
 [Serializable]
 public class Ability {
+    [SerializeField] private int id;
     [SerializeField] private int A_damage;
     [SerializeField] private int A_range;
     [SerializeField] private int A_type;
@@ -172,11 +173,18 @@ public class Ability {
         get { return this.A_cd; }
         set { this.A_cd = value; }
     }
-    public Ability Init(int damage, int range, int type, int cd) {
+
+    public int ID {
+        get {   return this.id;}
+
+        set {   this.id = value;}
+    }
+
+    public Ability(int ID, int damage, int range, int type, int cd) {
+        this.ID = ID;
         this.A_damage = damage;
         this.A_range = range;
         this.A_type = type;
         this.A_cd = cd;
-        return this;
     }
 }
