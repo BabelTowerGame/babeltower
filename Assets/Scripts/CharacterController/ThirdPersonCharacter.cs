@@ -84,6 +84,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Animator.SetBool ("anotherSkill", buttonPressed);
 		}
 
+		public bool inTransition(){
+			if (m_Animator.GetCurrentAnimatorStateInfo (1).normalizedTime > 1 
+				&& !m_Animator.IsInTransition (1)) 
+				return false;
+			else
+				return true;
+		}
+
 
 		void ScaleCapsuleForCrouching(bool crouch)
 		{
