@@ -105,10 +105,11 @@ public class M_generator : MonoBehaviour {
 		//generate BullHound
 		
 	}
-	public GameObject GenerateMonster(DemonType DT,DemonSkin DS,WeaponType WT,Vector3 position,Vector3 rotation){
+	public GameObject GenerateMonster(DemonType DT,DemonSkin DS,WeaponType WT,Vector3 position){
 		//overload generate 
 		//generate generate Demon
 		GameObject Monster;
+		Vector3 rotation = new Vector3 (0, Random.Range (0, 360), 0);
 		string Demonpath = "Monster/Demon/Prefab/" + DT.ToString ();
 		string skinpath = "Monster/Demon/Material/" + DS.ToString ();
 		GameObject Demon = Resources.Load (Demonpath,typeof(GameObject)) as GameObject;

@@ -86,6 +86,10 @@ public class AutoAttack : MonoBehaviour {
                 goback = true;
                 gameObject.GetComponent<Monster>().InBattle = false;
             }
+			if (player.GetComponent<Character>().currentHealth <= 0.0f) {
+				goback = true;
+				gameObject.GetComponent<Monster>().InBattle = false;
+			}
             if (goback == true) {
                 oriPos.y = transform.position.y;
                 transform.LookAt(oriPos);
@@ -203,12 +207,6 @@ public class AutoAttack : MonoBehaviour {
 	void set_back(bool flag){
 		animator.SetBool("OutRange", flag);
 	}
-	public void hit(Transform player){
-        if (gameObject.GetComponent<Monster>().InBattle == false) {
-            this.player = player;
-            this.hitstatus = true;
-        }
-	}
 	public int[] lootableItem(){
 		if (LootReady) {
 			return this.GetComponent<Monster> ().LootList;
@@ -249,7 +247,15 @@ public class AutoAttack : MonoBehaviour {
                 //Debug.Log("Add gravity");
         } 
 	}
-	void applyDamage(float damage){
+	void applyDamage(float damage,Transform player){
+		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
+			this.player = player;
+		} else {
+			if (this.GetComponent<Monster> ().InBattle == false) {
+				// no damage can be cause to monster while it is not in battle
+				return;
+			}
+		}
 		float defense = gameObject.GetComponent<Monster> ().Defense;
 		float real_damage = damage - defense;
 		gameObject.GetComponent<Monster> ().Current_health -= real_damage;
