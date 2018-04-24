@@ -21,6 +21,7 @@ public class AutoAttack : MonoBehaviour {
     private bool goback;
     private bool grounded;
     private bool testval;
+	private bool Die;
 
 	// Use this for initialization
 	void Start () {
@@ -31,8 +32,16 @@ public class AutoAttack : MonoBehaviour {
 		}
 		cc = gameObject.GetComponent<CharacterController> ();
 		animator = this.GetComponent<Animator> ();
+		Item[] itemlist = this.GetComponent<Monster> ().DB.items;
+		int[] LootTable = new int[itemlist.Length];
+		for (int i = 0; i < itemlist.Length; i++) {
+			LootTable [i] = itemlist [i].ID;
+		}
+		this.GetComponent<Monster> ().LootTable = LootTable;
+
 		attackCounter = attackTime;
         grounded = false;
+		Die = false;
 
 	}
 	
@@ -50,7 +59,7 @@ public class AutoAttack : MonoBehaviour {
             }
             grounded = true;
         }
-		if (player != null) {
+		if (player != null && Die != true) {
 			player = playerobj.GetComponent<Transform> ();
 			Vector3 targetPos = player.position;
 			targetPos.y = transform.position.y;
@@ -60,6 +69,8 @@ public class AutoAttack : MonoBehaviour {
 			if(gameObject.GetComponent<Monster>().Current_health <= 0.0){
 				//Debug.Log ("Monster died");
 				animator.SetTrigger ("DieTrigger");
+				LootlistGen();
+				Die = true;
 			}
 
 			/*if (Input.GetKeyDown (KeyCode.L))  
@@ -160,6 +171,10 @@ public class AutoAttack : MonoBehaviour {
 		get { return this.attackDistance; }
 		set { this.attackDistance = value; }
 	}
+	public bool LootReady{
+		get { return this.Die; }
+		set {this.Die = value; }
+	}
 
 	public float WalkingSpeed{ 
 		get { return this.walkspeed; }
@@ -193,6 +208,27 @@ public class AutoAttack : MonoBehaviour {
             this.player = player;
             this.hitstatus = true;
         }
+	}
+	public int[] lootableItem(){
+		if (LootReady) {
+			return this.GetComponent<Monster> ().LootList;
+		}
+		return null;
+			
+	}
+	public int lootItem(int index){
+		if (LootReady) {
+			int[] lootlist = gameObject.GetComponent<Monster> ().LootList;
+			if (index >= lootlist.Length) {
+				return -1;
+			} else {
+				int result = lootlist [index];
+				lootlist [index] = -1;
+				gameObject.GetComponent<Monster> ().LootList = lootlist;
+				return -1;
+			}
+		}
+		return -1;
 	}
 	void reset_hit(){
 		animator.SetBool ("Hitted", false);
@@ -243,5 +279,15 @@ public class AutoAttack : MonoBehaviour {
 		transform.LookAt (target);
 		animator.SetTrigger ("M_Attack");
 	}
-
+	void LootlistGen(){
+		int iUp=10; 
+		int iDown=1;
+		int result = Random.Range (iDown, iUp);
+		int[] lootlist = new int[result];
+		for (int i = 0; i < result; i++) {
+			int[] temptable = this.GetComponent<Monster> ().LootTable;
+			lootlist [i] = temptable [Random.Range (0, temptable.Length)];
+		}
+		this.GetComponent<Monster> ().LootList = lootlist;
+	}
 }

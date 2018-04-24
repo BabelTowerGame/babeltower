@@ -14,7 +14,10 @@ public class Monster: MonoBehaviour  {
     [SerializeField]private Location location;
     [SerializeField]private bool inBattle;
     [SerializeField]private bool inMovement;
-
+	[SerializeField]private int level;
+	private int[] Lootlist = new int[10];
+	private ItemDB ObjDB = new ItemDB();
+	private int[] Loottable;
     public int ID {
         get {
             return id;
@@ -114,5 +117,38 @@ public class Monster: MonoBehaviour  {
             inMovement = value;
         }
     }
+	public int[] LootList{
+		get{ 
+			return Lootlist;
+		
+		}
+		set{ 
+			Lootlist = value;
+		}
+	}
+	public int Level{
+		get{ 
+			return level;
+		}
+		set{ 
+			level = value;
+		}
+	}
+	public ItemDB DB{
+		get{ 
+			return ObjDB;
+		}
+		set{ 
+			ObjDB = value;
+		}
+	}
+	public int[] LootTable{
+		get{ 
+			return Loottable;
+		}
+		set{ 
+			LootTable = value;
+		}
+	}
 
 }
