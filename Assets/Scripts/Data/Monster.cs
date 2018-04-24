@@ -18,7 +18,6 @@ public class Monster: MonoBehaviour  {
 	private DemonType DT;
 	private WeaponType WT;
 	private int[] Lootlist = new int[10];
-	private ItemDB ObjDB = new ItemDB();
 	private int[] Loottable;
 	public enum DemonType {
 		Demon1,
@@ -165,14 +164,6 @@ public class Monster: MonoBehaviour  {
 		}
 		set{ 
 			level = value;
-		}
-	}
-	public ItemDB DB{
-		get{ 
-			return ObjDB;
-		}
-		set{ 
-			ObjDB = value;
 		}
 	}
 	public int[] LootTable{

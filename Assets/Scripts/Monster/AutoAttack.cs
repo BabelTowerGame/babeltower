@@ -32,13 +32,14 @@ public class AutoAttack : MonoBehaviour {
 		}
 		cc = gameObject.GetComponent<CharacterController> ();
 		animator = this.GetComponent<Animator> ();
-		Item[] itemlist = this.GetComponent<Monster> ().DB.items;
+		/*ItemDB ObjDB = new ItemDB();
+		Item[] itemlist = ObjDB.items;
 		int[] LootTable = new int[itemlist.Length];
 		for (int i = 0; i < itemlist.Length; i++) {
 			LootTable [i] = itemlist [i].ID;
 		}
 		this.GetComponent<Monster> ().LootTable = LootTable;
-
+		*/
 		attackCounter = attackTime;
         grounded = false;
 		Die = false;
@@ -86,10 +87,10 @@ public class AutoAttack : MonoBehaviour {
                 goback = true;
                 gameObject.GetComponent<Monster>().InBattle = false;
             }
-			if (player.GetComponent<Character>().currentHealth <= 0.0f) {
+			/*if (player.gameObject.GetComponent<Character>().currentHealth <= 0.0f) {
 				goback = true;
 				gameObject.GetComponent<Monster>().InBattle = false;
-			}
+			}*/
             if (goback == true) {
                 oriPos.y = transform.position.y;
                 transform.LookAt(oriPos);
@@ -252,7 +253,7 @@ public class AutoAttack : MonoBehaviour {
 			this.player = player;
 		} else {
 			if (this.GetComponent<Monster> ().InBattle == false) {
-				// no damage can be cause to monster while it is not in battle
+				// no damage can be cause to monster while it is not in battle	
 				return;
 			}
 		}
@@ -284,6 +285,9 @@ public class AutoAttack : MonoBehaviour {
 	void manual_attack(Vector3 target){
 		transform.LookAt (target);
 		animator.SetTrigger ("M_Attack");
+	}
+	void manual_die(){
+		animator.SetTrigger ("M_Die");
 	}
 	void LootlistGen(){
 		int iUp=10; 

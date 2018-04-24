@@ -33,13 +33,13 @@ public class Sprint2TestGenerator : MonoBehaviour {
         GameObject monster3;
         GameObject monster4;
         monster1 = gen.GenerateMonster(M_generator.DemonType.Demon1, M_generator.DemonSkin.Demons1, 
-                M_generator.WeaponType.Sword, mobLocation1, new Vector3(0,180,0));
+                M_generator.WeaponType.Sword, mobLocation1);
         monster2 = gen.GenerateMonster(M_generator.DemonType.Demon2, M_generator.DemonSkin.Demons2,
-                M_generator.WeaponType.Trident, mobLocation2, new Vector3(0, 180, 0));
+                M_generator.WeaponType.Trident, mobLocation2);
         monster3 = gen.GenerateMonster(M_generator.DemonType.Demon3, M_generator.DemonSkin.Demons3,
-                M_generator.WeaponType.Hammer, mobLocation3, new Vector3(0, 180, 0));
+                M_generator.WeaponType.Hammer, mobLocation3);
         monster4 = gen.GenerateMonster(M_generator.DemonType.Demon4, M_generator.DemonSkin.Demons4,
-                M_generator.WeaponType.Pike, mobLocation4, new Vector3(0, 180, 0));
+                M_generator.WeaponType.Pike, mobLocation4);
 
         monster1.GetComponent<Monster>().Current_health = 20.0f;
         monster2.GetComponent<Monster>().Current_health = 20.0f;
