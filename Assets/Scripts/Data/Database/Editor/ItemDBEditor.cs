@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
 public class ItemDBEditor {
     private static string GetSavePath() {
         return EditorUtility.SaveFilePanelInProject("New item database", "New item database", "asset", "Create a new item database.");
@@ -14,4 +13,3 @@ public class ItemDBEditor {
         AssetDatabase.Refresh();
     }
 }
-
