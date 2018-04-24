@@ -12,6 +12,7 @@ public class Character {
     private string name;
     private float maxHealth;
     private uint level;
+	public Equipped equips;
     public string Name {
         get {
             return name;
@@ -74,6 +75,7 @@ public class Character {
         public Armor chest;
         public Armor legs;
         public Shoes shoes;
+		public Shield shield;
     }
 }
 

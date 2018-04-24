@@ -81,6 +81,7 @@ public class Weapon : Item {
     }
     public override void OnGUI() {
         Editor.CreateEditor(this).DrawDefaultInspector();
+		this.Type = ItemType.Weapon;
     }
 }
 
@@ -92,6 +93,7 @@ public class Shield : Weapon {
         this.defense = defense;
         this.Type = ItemType.Shield;
         return this;
+		this.Type = ItemType.Shield;
     }
     public int Defense {
         get { return this.defense; }
@@ -129,6 +131,7 @@ public class Armor : Item {
     }
     public override void OnGUI() {
         Editor.CreateEditor(this).DrawDefaultInspector();
+		this.Type = ItemType.Armor;
     }
 }
 
@@ -139,7 +142,7 @@ public class Shoes : Item {
         get { return this.speed; }
         set { this.speed = value; }
     }
-	public Shoes Init(int ID,string name, int level, int speed) {
+	public Shoes Init(int ID, string name, int level, int speed) {
         this.Init(ID, name, level);
         this.speed = speed;
         this.Type = ItemType.Shoes;
@@ -147,6 +150,7 @@ public class Shoes : Item {
     }
     public override void OnGUI() {
         Editor.CreateEditor(this).DrawDefaultInspector();
+		this.Type = ItemType.Shoes;
     }
 }
 
