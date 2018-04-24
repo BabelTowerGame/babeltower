@@ -180,7 +180,6 @@ public class Ability {
 
     public int ID {
         get {   return this.id;}
-
         set {   this.id = value;}
     }
 
