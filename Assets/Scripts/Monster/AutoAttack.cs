@@ -32,14 +32,14 @@ public class AutoAttack : MonoBehaviour {
 		}
 		cc = gameObject.GetComponent<CharacterController> ();
 		animator = this.GetComponent<Animator> ();
-		/*ItemDB ObjDB = new ItemDB();
-		Item[] itemlist = ObjDB.items;
-		int[] LootTable = new int[itemlist.Length];
+
+		Item[] itemlist = ItemDB.Instance.items;
+		int[] Loottable = new int[itemlist.Length];
 		for (int i = 0; i < itemlist.Length; i++) {
-			LootTable [i] = itemlist [i].ID;
+			Loottable [i] = itemlist [i].ID;
 		}
-		this.GetComponent<Monster> ().LootTable = LootTable;
-		*/
+		this.GetComponent<Monster> ().LootTable = Loottable;
+
 		attackCounter = attackTime;
         grounded = false;
 		Die = false;

@@ -171,7 +171,7 @@ public class Monster: MonoBehaviour  {
 			return Loottable;
 		}
 		set{ 
-			LootTable = value;
+			Loottable = value;
 		}
 	}
 	public DemonSkin Skin{
