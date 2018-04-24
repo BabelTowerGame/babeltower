@@ -76,6 +76,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			UpdateAnimator(move);
 		}
 
+		public void useSkill(bool buttonPressed){
+			m_Animator.SetBool ("Skill", buttonPressed);
+		}
+
+		public void useAnotherSkill(bool buttonPressed){
+			m_Animator.SetBool ("anotherSkill", buttonPressed);
+		}
+
 
 		void ScaleCapsuleForCrouching(bool crouch)
 		{

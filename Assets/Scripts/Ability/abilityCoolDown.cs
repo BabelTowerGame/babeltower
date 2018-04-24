@@ -9,29 +9,34 @@ public class abilityCoolDown : MonoBehaviour {
 	public Text cooldownDisplay;
 	public Image darkMask;
 
-
+	[SerializeField] private Ability ability;
+	[SerializeField] private GameObject weaponHolder;
 	private float coolDownDuration;
 	private float nextReadyTime;
 	private float coolDownTimeLeft;
 	private Image buttonImage;
 
-	private AbilityCast ability;
-	private GameObject weaponHolder; 
+//	private Ability ability;
+//	private GameObject weaponHolder; 
 
 
 	// Use this for initialization
 	void Start () {
-		//Initialize (ability, weaponHolder);
+		Initialize (ability, weaponHolder);
 	}
 
-	public void Initialize(AbilityCast selectedAbility, GameObject obj){
+	public void Initialize(Ability selectedAbility, GameObject obj){
 		ability = selectedAbility;
-		coolDownDuration = ability.BaseCoolDown;
+		coolDownDuration = ability.baseCoolDown;
 		buttonImage = GetComponent<Image> ();
 		buttonImage.sprite = ability.aSprite;
 		darkMask.sprite = ability.aSprite;
 		ability.Initialize (obj);
 		AbilityReady ();
+	}
+
+	public bool isInitialize(){
+		return ability != null ? true : false;
 	}
 
 	// Update is called once per frame
@@ -40,13 +45,14 @@ public class abilityCoolDown : MonoBehaviour {
 		if (coolDownComplete) 
 		{
 			AbilityReady ();
-			if (Input.GetKeyDown(buttonName)) 
-			{
-				ButtonTriggered ();
-			}
+
+			bool buttonPressed = Input.GetKeyDown (buttonName);
+			
+			ButtonTriggered (buttonPressed);
 		} else 
 		{
 			CoolDown();
+			ButtonTriggered (false);
 		}
 	}
 
@@ -63,13 +69,14 @@ public class abilityCoolDown : MonoBehaviour {
 		darkMask.fillAmount = (coolDownTimeLeft / coolDownDuration);
 	}
 
-	private void ButtonTriggered()
+	private void ButtonTriggered(bool buttonPressed)
 	{
-		nextReadyTime = coolDownDuration + Time.time;
-		coolDownTimeLeft = coolDownDuration;
-		darkMask.enabled = true;
-		cooldownDisplay.enabled = true;
-
-		ability.TriggerAbility ();
+		if (buttonPressed) {
+			nextReadyTime = coolDownDuration + Time.time;
+			coolDownTimeLeft = coolDownDuration;
+			darkMask.enabled = true;
+			cooldownDisplay.enabled = true;
+		}
+		ability.TriggerAbility (buttonPressed);
 	}
 }

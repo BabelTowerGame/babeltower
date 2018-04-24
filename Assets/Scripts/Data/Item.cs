@@ -117,31 +117,42 @@ public class Shoes : Item {
 }
 
 [Serializable]
-public class Ability {
-    private int A_damage;
-    private int A_range;
-    private int A_type;
-    private int A_cd;
-    public int Ability_damage {
-        get { return this.A_damage; }
-        set { this.A_damage = value; }
-    }
-    public int Ability_range {
-        get { return this.A_range; }
-        set { this.A_range = value; }
-    }
-    public int Ability_type {
-        get { return this.A_type; }
-        set { this.A_type = value; }
-    }
-    public int Ability_cd {
-        get { return this.A_cd; }
-        set { this.A_cd = value; }
-    }
-    public Ability(int damage, int range, int type, int cd) {
-        this.A_damage = damage;
-        this.A_range = range;
-        this.A_type = type;
-        this.A_cd = cd;
-    }
+public abstract class Ability : ScriptableObject{
+//    private int A_damage;
+//    private int A_range;
+//    private int A_type;
+//    private int A_cd;
+//    public int Ability_damage {
+//        get { return this.A_damage; }
+//        set { this.A_damage = value; }
+//    }
+//    public int Ability_range {
+//        get { return this.A_range; }
+//        set { this.A_range = value; }
+//    }
+//    public int Ability_type {
+//        get { return this.A_type; }
+//        set { this.A_type = value; }
+//    }
+//    public int Ability_cd {
+//        get { return this.A_cd; }
+//        set { this.A_cd = value; }
+//    }
+//    public Ability(int damage, int range, int type, int cd) {
+//        this.A_damage = damage;
+//        this.A_range = range;
+//        this.A_type = type;
+//        this.A_cd = cd;
+//    }
+	public int id = 0;
+	public int damage = 100;
+	public int range = 100;
+	public string name = "New Ability";
+	public float baseCoolDown = 1f;
+	public Sprite aSprite;
+
+	public abstract void Initialize (GameObject obj);
+	public abstract void TriggerAbility(bool buttonPressed);
+
+
 }
