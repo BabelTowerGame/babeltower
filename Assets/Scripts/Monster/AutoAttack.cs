@@ -208,9 +208,5 @@ public class AutoAttack : MonoBehaviour {
                 //Debug.Log("Add gravity");
         } 
 	}
-	void applyDamage(float damage){
-		float defense = gameObject.GetComponent<Monster> ().Defense;
-		float real_damage = damage - defense;
-		gameObject.GetComponent<Monster> ().Current_health -= real_damage;
-	}
+
 }

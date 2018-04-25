@@ -47,9 +47,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			ThirdPersonCharacter tc = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<ThirdPersonCharacter> ();
 
-			bool inTransition = tc.inTransition ();
-
-			if (coolDownComplete && !inTransition) 
+			if (coolDownComplete && !tc.inTransition ()) 
 			{
 				AbilityReady ();
 

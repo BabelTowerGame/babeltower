@@ -115,4 +115,8 @@ public class Monster: MonoBehaviour  {
         }
     }
 
+	public void applyDamage(float damage){
+		float real_damage = damage - defense;
+		current_health = current_health - damage + defense;
+	}
 }

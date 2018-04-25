@@ -13,7 +13,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 
 		public void launch(bool buttonPressed){
-			tc.useAnotherSkill (buttonPressed);
+			tc.useSkill (buttonPressed, "anotherSkill");
 		}
 	}
 }

@@ -145,8 +145,6 @@ public abstract class Ability : ScriptableObject{
 //        this.A_cd = cd;
 //    }
 	public int id = 0;
-	public int damage = 100;
-	public int range = 100;
 	public string name = "New Ability";
 	public float baseCoolDown = 1f;
 	public Sprite aSprite;

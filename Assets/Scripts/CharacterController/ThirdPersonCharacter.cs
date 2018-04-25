@@ -76,20 +76,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			UpdateAnimator(move);
 		}
 
-		public void useSkill(bool buttonPressed){
-			m_Animator.SetBool ("Skill", buttonPressed);
-		}
-
-		public void useAnotherSkill(bool buttonPressed){
-			m_Animator.SetBool ("anotherSkill", buttonPressed);
+		public void useSkill(bool buttonPressed, string skillName){
+			m_Animator.SetBool (skillName, buttonPressed);
 		}
 
 		public bool inTransition(){
-			if (m_Animator.GetCurrentAnimatorStateInfo (1).normalizedTime > 1 
-				&& !m_Animator.IsInTransition (1)) 
-				return false;
-			else
-				return true;
+			return (m_Animator.GetCurrentAnimatorStateInfo (1).normalizedTime > 1
+			&& !m_Animator.IsInTransition (1)) ? false : true;
 		}
 
 
