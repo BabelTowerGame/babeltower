@@ -92,6 +92,7 @@ public class AutoAttack : MonoBehaviour {
             if (goback == true) {
                 oriPos.y = transform.position.y;
                 transform.LookAt(oriPos);
+                this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Max_health;
                 cc.SimpleMove(transform.forward * walkspeed);
                 set_back(true);
                 //Debug.Log("Monster back to ori position");
@@ -280,7 +281,7 @@ public class AutoAttack : MonoBehaviour {
 
 	public void dealthDmage(){
 		if (player != null) {
-			player.GetComponent<Character> ().currentHealth -= this.GetComponent<Monster> ().Damage;
+			//player.GetComponent<Character> ().currentHealth -= this.GetComponent<Monster> ().Damage;
 
 		}
 	}
@@ -322,7 +323,9 @@ public class AutoAttack : MonoBehaviour {
 		animator.SetTrigger("M_Patrol");
 		this.GetComponent<Monster> ().InMovement = false;
 		this.GetComponent<Monster> ().InBattle = false;
-	}
+        this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Max_health;
+
+    }
 
 	void LootlistGen(){
 		int iUp=10; 
