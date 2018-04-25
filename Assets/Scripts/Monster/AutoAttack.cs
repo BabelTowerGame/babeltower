@@ -34,7 +34,7 @@ public class AutoAttack : MonoBehaviour {
 		animator = this.GetComponent<Animator> ();
 
 		ItemDB DB = ItemDB.Instance;
-		int dblength = ItemDB.Instance.items.Length;
+		int dblength = ItemDB.Instance.items.Count;
 		int[] Loottable = new int[dblength];
 		for (int i = 0; i < dblength; i++) {
 			Loottable [i] = DB.get (i).ID;
