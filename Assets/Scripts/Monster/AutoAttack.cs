@@ -33,10 +33,11 @@ public class AutoAttack : MonoBehaviour {
 		cc = gameObject.GetComponent<CharacterController> ();
 		animator = this.GetComponent<Animator> ();
 
-		Item[] itemlist = ItemDB.Instance.items;
-		int[] Loottable = new int[itemlist.Length];
-		for (int i = 0; i < itemlist.Length; i++) {
-			Loottable [i] = itemlist [i].ID;
+		ItemDB DB = ItemDB.Instance;
+		int dblength = ItemDB.Instance.items.Length;
+		int[] Loottable = new int[dblength];
+		for (int i = 0; i < dblength; i++) {
+			Loottable [i] = DB.get (i).ID;
 		}
 		this.GetComponent<Monster> ().LootTable = Loottable;
 
@@ -224,7 +225,7 @@ public class AutoAttack : MonoBehaviour {
 				int result = lootlist [index];
 				lootlist [index] = -1;
 				gameObject.GetComponent<Monster> ().LootList = lootlist;
-				return -1;
+				return result;
 			}
 		}
 		return -1;
