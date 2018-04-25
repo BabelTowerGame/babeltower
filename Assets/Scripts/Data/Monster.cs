@@ -17,6 +17,9 @@ public class Monster: MonoBehaviour  {
 	private DemonSkin DS;
 	private DemonType DT;
 	private WeaponType WT;
+	private float x;
+	private float y;
+	private float z;
 	private int[] Lootlist = new int[10];
 	private int[] Loottable;
 	public enum DemonType {
@@ -198,6 +201,29 @@ public class Monster: MonoBehaviour  {
 			WT = value;
 		}
 	}
-
+	public float X{
+		get{ 
+			return x;
+		}
+		set{ 
+			x = value;
+		}
+	}
+	public float Y{
+		get{ 
+			return y;
+		}
+		set{ 
+			y = value;
+		}
+	}
+	public float Z{
+		get{ 
+			return z;
+		}
+		set{ 
+			z = value;
+		}
+	}
 
 }
