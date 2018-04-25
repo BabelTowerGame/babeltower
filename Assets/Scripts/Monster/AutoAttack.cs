@@ -61,14 +61,14 @@ public class AutoAttack : MonoBehaviour {
             }
             grounded = true;
         }
-		if (player != null && Die != true) {
+		if (player != null) {
 			player = playerobj.GetComponent<Transform> ();
 			Vector3 targetPos = player.position;
 			targetPos.y = transform.position.y;
 			float distance = Vector3.Distance (targetPos, transform.position);
 			float rangeDistance = Vector3.Distance (oriPos, transform.position);
 
-			if(gameObject.GetComponent<Monster>().Current_health <= 0.0){
+			if(gameObject.GetComponent<Monster>().Current_health <= 0.0 && Die == false){
 				//Debug.Log ("Monster died");
 				animator.SetTrigger ("DieTrigger");
 				this.GetComponent<Monster> ().InBattle = false;
@@ -107,6 +107,8 @@ public class AutoAttack : MonoBehaviour {
                     //Debug.Log ("Monster restart patrol");
                     animator.SetBool("SawPlayer", false);
                     goback = false;
+					this.GetComponent<Monster> ().InBattle = false;
+					this.GetComponent<Monster> ().InMovement = false;
 					this.GetComponent<Monster> ().X = this.transform.position.x;
 					this.GetComponent<Monster> ().Y = this.transform.position.y;
 					this.GetComponent<Monster> ().Z = this.transform.position.z;
