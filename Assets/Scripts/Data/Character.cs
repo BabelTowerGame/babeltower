@@ -10,8 +10,8 @@ using System.Xml.Serialization;
 public class Character {
     #region general
     private string name;
-    private float maxHealth;
-    private uint level;
+    private float maxHealth = 100;
+    private uint level = 1;
 	public Equipped equips;
     public string Name {
         get {
@@ -50,11 +50,18 @@ public class Character {
     public bool IsDead {
         get { return currentHealth <= 0; }
     }
-
     public Inventory inventory;
-    public float currentHealth;
+    private float currentHealth = 100;
     public Location location;
 	public Appearance appearance;
+    public float CurrentHealth {
+        get {
+            return currentHealth;
+        }
+        set {
+            currentHealth = value;
+        }
+    }
     public float Defense {
         get { return 0; }
     }
@@ -64,6 +71,11 @@ public class Character {
 
     #endregion
 
+
+    public Character() {
+        this.name = "";
+        this.appearance = new Appearance();
+    }
     public Character(string name, Appearance app) {
 		this.name = name;
 		this.appearance = app;
@@ -77,6 +89,14 @@ public class Character {
         public Shoes shoes;
 		public Shield shield;
     }
+
+    public void setHairColor(Color color) {
+        this.appearance.hairColor = color;
+    }
+
+    public void setGender(Appearance.Gender gender) {
+        this.appearance.gender = gender;
+    }
 }
 
 [Serializable]
@@ -88,7 +108,14 @@ public class Appearance {
 
     public Gender gender;
     public Color hairColor;
-    public Color skinColor;
+
+    public Appearance() { }
+
+    public Appearance(Gender gender, Color hairColor) {
+        this.gender = gender;
+        this.hairColor = hairColor;
+    }
+    //public Color skinColor;
 
 }
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace EasyEquipmentSystem
 {
@@ -8,6 +9,7 @@ namespace EasyEquipmentSystem
 
 		public GameObject[] BodyParts;
 		public GameObject[] UsableArmor;
+        public Renderer HairRenderer;
 
 		public Equipment[] equipParts;
 		public FullBody[] fullBodies;
@@ -72,8 +74,13 @@ namespace EasyEquipmentSystem
 		public int chosenExtra3Index;
 
 
-		// Update pool for body parts
-		public void UpdateChoicesBody()
+        void Start() {
+            Debug.Log("Start");
+            HairRenderer = gameObject.GetComponentInChildren<HairColor>(true).gameObject.GetComponent<Renderer>();
+        }
+
+        // Update pool for body parts
+        public void UpdateChoicesBody()
 		{
 			bodyHeadChoices = UpdateBodyChoices (BodyPart.BSlot.Head);
 			bodyChestChoices = UpdateBodyChoices (BodyPart.BSlot.Chest);
@@ -174,8 +181,11 @@ namespace EasyEquipmentSystem
 			fullBodies = gameObject.GetComponentsInChildren<FullBody>(true);
 			bodyParts = gameObject.GetComponentsInChildren<BodyPart>(true);
 			equipParts = gameObject.GetComponentsInChildren<Equipment>(true);
+            HairRenderer = gameObject.GetComponentInChildren<HairColor>(true).gameObject.GetComponent<Renderer>();
 
-			ShowBodyParts (true);
+            //Debug.Log(HairRenderer.ToString());
+
+            ShowBodyParts (true);
 			ShowFullBody (true);
 			ShowEquip(true);
 		}
@@ -220,8 +230,8 @@ namespace EasyEquipmentSystem
 			return choiceArray;
 		}
 
-		// This only displays the equipment object that has been selected
-		void EnablePickedEquipment( int pickedIndex, string[] choiceArray  )
+        // This only displays the equipment object that has been selected
+        void EnablePickedEquipment( int pickedIndex, string[] choiceArray  )
 		{
 
 			// Find gameobject for selected index (index 0 is excluded!)
@@ -320,6 +330,7 @@ namespace EasyEquipmentSystem
 			}
 		}
 
+
 		// Sets visibility of an object, either using set active or disabling renderers
 		void SetPartVisibility( GameObject go, bool state)
 		{
@@ -339,6 +350,11 @@ namespace EasyEquipmentSystem
 				}
 			}
 		}
+
+        public void onHairColorChanged(Color color) {
+            if(HairRenderer == null) HairRenderer = gameObject.GetComponentInChildren<HairColor>(true).gameObject.GetComponent<Renderer>();
+            HairRenderer.material.SetColor("_Color", color);
+        }
 		
 	}
 }
