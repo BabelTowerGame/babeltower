@@ -248,7 +248,7 @@ public class AutoAttack : MonoBehaviour {
                 //Debug.Log("Add gravity");
         } 
 	}
-	void applyDamage(float damage,Transform player){
+	public void applyDamage(float damage,Transform player){
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
 			this.player = player;
 		} else {
@@ -272,7 +272,7 @@ public class AutoAttack : MonoBehaviour {
 
 
 	//manual control part for network transimission
-	void manual_move(Vector3 dest){
+	public void manual_move(Vector3 dest){
 		transform.LookAt (dest);
 		animator.SetTrigger ("M_Go");
 		float distance = Vector3.Distance (dest, transform.position);
@@ -282,13 +282,17 @@ public class AutoAttack : MonoBehaviour {
 		}
 
 	}
-	void manual_attack(Vector3 target){
+	public void manual_attack(Vector3 target){
 		transform.LookAt (target);
 		animator.SetTrigger ("M_Attack");
 	}
-	void manual_die(){
+	public void manual_die(){
 		animator.SetTrigger ("M_Die");
 	}
+	public void manual_patrol(){
+		animator.SetTrigger("M_Patrol");
+	}
+
 	void LootlistGen(){
 		int iUp=10; 
 		int iDown=1;
