@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DuloGames.UI;
+using System.Text.RegularExpressions;
 
 
 public class BagManager : MonoBehaviour {
@@ -32,20 +33,19 @@ public class BagManager : MonoBehaviour {
 		}
 
 		//only for testing
-		//testing();
+		testing();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//check if we need open or close the gui of bag
 		if (Input.GetButtonDown("Inventory") && bagObject.activeSelf) {
-			Debug.Log ("close the gui!!!");
+//			Debug.Log ("close the gui!!!");
 			closeGui ();
 		} else if (Input.GetButtonDown("Inventory") && !bagObject.activeSelf) {
-			Debug.Log ("open the gui!!!");
+//			Debug.Log ("open the gui!!!");
 			openGui ();
 		}
-			
 		
 	}
 
@@ -67,7 +67,7 @@ public class BagManager : MonoBehaviour {
 	public void deleteItem(Item obj){
 		if (player.inventory.list.Contains (obj)) {
 			//delete
-			Debug.Log("Delete..." + obj.Name);
+//			Debug.Log("Delete..." + obj.Name);
 			player.inventory.list.Remove (obj);
 			//if the window is open, update immediately
 			if (bagObject.activeSelf) {
@@ -95,14 +95,22 @@ public class BagManager : MonoBehaviour {
 		}
 	}
 
+	/* Use the new item on index i */
+	public void replaceItem(int i, Item temp){
+		if (player.inventory.list.Count > i) {
+			player.inventory.list [i] = temp;
+			//update the icon
+			slots [i].newAssign (player.inventory.list [i], null);
+		}
+	}
 
 	//we need to update the gui everytime when we open
 	public void updateGui(){
 		int i;
-		Debug.Log ("count = " + player.inventory.list.Count);
+//		Debug.Log ("count = " + player.inventory.list.Count);
 		for(i = 0; i < player.inventory.list.Count; i++){
 			//TODO: to show the items in the bag
-			Debug.Log("Add the " + i + " item.");
+//			Debug.Log("Add the " + i + " item.");
 			if (player.inventory.list [i] == null) {
 				Debug.Log ("Error: NULL!");
 			} else {
@@ -121,27 +129,25 @@ public class BagManager : MonoBehaviour {
 		bagObject.SetActive (false);
 	}
 
-	void equipped(Item item){
-		//TODO: delete the item from bag then update the character part
-	}
+	void testing(){
+		Item testItem = new global::Shoes().Init(1, "1shoes", 10, 5);
+		testItem.Icon = Shoes;
+		Item testchest = new global::Armor ().Init (2, "chest", 5, Armor.armor_type.chest, 4);
+		testchest.Icon = Shoes;
+		Item testhead = new Armor().Init (3, "head", 10, Armor.armor_type.head, 5);
+		testhead.Icon = Shoes;
+		Item testleg = new Armor().Init (4, "leg", 5, Armor.armor_type.leg, 4);
+		testleg.Icon = Shoes;
 
-//	void testing(){
-//		Item testItem = new Item ("1 shoes", 100);
-//		testItem.Icon = Shoes;
-//		testItem.ID = 0;
-//		testItem.Type = Item.ItemType.Shoes;
-//		Item testItem2 = new Item ("2 shoes", 200);
-//		testItem2.Icon = Shoes;
-//		testItem2.ID = 2;
-//		testItem2.Type = Item.ItemType.Shoes;
-//		Item testItem1 = new Item ("3 shoes", 300);
-//		testItem1.Icon = Shoes;
-//		testItem1.ID = 1;
-//		testItem1.Type = Item.ItemType.Shoes;
-//		player.inventory.list.Add(testItem);
-//		player.inventory.list.Add(testItem2);
-//		player.inventory.list.Add(testItem1);
-//		Debug.Log (player.inventory.list.Count);
-//	}
+		Item replaceShoes = new global::Shoes().Init (5, "2shoes", 20, 50);
+
+		player.inventory.list.Add(testItem);
+		player.inventory.list.Add (testchest);
+		player.inventory.list.Add (testhead);
+		player.inventory.list.Add (testleg);
+		player.inventory.list.Add (replaceShoes);
+
+		Debug.Log (player.inventory.list.Count);
+	}
 
 }

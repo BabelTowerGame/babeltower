@@ -22,7 +22,7 @@ using DuloGames.UI;
 		}*/
 		//Create a dummy inventory
 		Player_Inventory = new Inventory();
-		Item testItem = new Item ("Bogos shoes", 100);
+		Item testItem = new Item().Init(0,"Bogos shoes", 100);
 		testItem.Icon = Shoes;
 		testItem.ID = 0;
 		testItem.Type = Item.ItemType.Shoes;

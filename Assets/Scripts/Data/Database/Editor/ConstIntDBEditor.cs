@@ -9,7 +9,7 @@ public class ConstIntDBEditor {
     [MenuItem("Assets/Create/Databases/ConstIntDB")]
     public static void CreateDatabase() {
         string assetPath = GetSavePath();
-        MonsterDB asset = ScriptableObject.CreateInstance("ConstIntDB") as MonsterDB;  //scriptable object
+        ConstIntDB asset = ScriptableObject.CreateInstance("ConstIntDB") as ConstIntDB;  //scriptable object
         AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(assetPath));
         AssetDatabase.Refresh();
     }
