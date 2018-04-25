@@ -73,7 +73,7 @@ public class ArmorManager : MonoBehaviour {
 	}
 
 	void getDefense(){
-		float defense = 0.0;
+		float defense = 0.0f;
 		if (player.equips.head != null) {
 			defense += player.equips.head.Defense;
 		}
@@ -83,4 +83,5 @@ public class ArmorManager : MonoBehaviour {
 		if (player.equips.legs != null) {
 			defense += player.equips.legs.Defense;
 		}
+	}
 }
