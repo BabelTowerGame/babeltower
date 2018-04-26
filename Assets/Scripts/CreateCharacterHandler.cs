@@ -41,9 +41,7 @@ public class CreateCharacterHandler : MonoBehaviour {
 
         CharacterManager.character.setGender(gender);
         CharacterManager.character.Name = name;
-        CharacterManager.character.Level = 1;
-        CharacterManager.character.CurrentHealth = 100;
-        CharacterManager.character.MaxHealth = 100;
+        
         Debug.Log("Character created: name: " + name + " gender: " + genderString + " hairColor: " + hairColorString + " " + hairColorVal);
 
 	}
