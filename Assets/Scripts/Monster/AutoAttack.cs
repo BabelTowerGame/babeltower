@@ -7,7 +7,7 @@ public class AutoAttack : MonoBehaviour {
 	private GameObject playerobj;
 
 	//all constant value should be change in real gen
-	private float attackDistance = 1.0f;
+	private float attackDistance = 2.0f;
 	private Animator animator;
 	private float walkspeed = 3.0f;
 	private float runspeed = 3.0f;
@@ -61,15 +61,24 @@ public class AutoAttack : MonoBehaviour {
             }
             grounded = true;
         }
-		if (player != null) {
-			player = playerobj.GetComponent<Transform> ();
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            applyDamage(20.0f, player);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("您按下了S键");
+        }
+        if (player != null) {
+            player = playerobj.GetComponent<Transform> ();
 			Vector3 targetPos = player.position;
 			targetPos.y = transform.position.y;
 			float distance = Vector3.Distance (targetPos, transform.position);
 			float rangeDistance = Vector3.Distance (oriPos, transform.position);
 
 			if(gameObject.GetComponent<Monster>().Current_health <= 0.0 && Die == false){
-				//Debug.Log ("Monster died");
+				Debug.Log ("Monster died");
 				animator.SetTrigger ("DieTrigger");
 				this.GetComponent<Monster> ().InBattle = false;
 				this.GetComponent<Monster> ().InMovement = false;
@@ -77,7 +86,7 @@ public class AutoAttack : MonoBehaviour {
 				this.GetComponent<Monster> ().X = this.transform.position.x;
 				this.GetComponent<Monster> ().Y = this.transform.position.y;
 				this.GetComponent<Monster> ().Z = this.transform.position.z;
-				LootlistGen();
+				//LootlistGen();
 				Die = true;
 			}
 			//if target player moved out the active range of monster. Go back to original poisition.
@@ -85,27 +94,25 @@ public class AutoAttack : MonoBehaviour {
                 goback = true;
                 gameObject.GetComponent<Monster>().InBattle = false;
             }
-			/*if (player.gameObject.GetComponent<Character>().currentHealth <= 0.0f) {
-				goback = true;
-				gameObject.GetComponent<Monster>().InBattle = false;
-			}*/
             if (goback == true) {
                 oriPos.y = transform.position.y;
                 transform.LookAt(oriPos);
-                this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Max_health;
+                this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Health;
                 cc.SimpleMove(transform.forward * walkspeed);
                 set_back(true);
+                hitted =  false;
+                gameObject.GetComponent<Monster>().InBattle = false;
+
                 //Debug.Log("Monster back to ori position");
             }
 			//at original position back to patrolling state.
-			if (rangeDistance <= 5.0f) {
+			if (rangeDistance <= 5.0f && animator.GetCurrentAnimatorStateInfo(0).IsName("GoBack")) {
 				if (goback == true) {
 					set_back (false);
 					animator.SetTrigger("BackPatrol");
                     transform.LookAt(Vector3.zero);
-					player = null;
-					hitted = false;
-                    //Debug.Log ("Monster restart patrol");
+					//player = null;
+                    Debug.Log ("Monster restart patrol");
                     animator.SetBool("SawPlayer", false);
                     goback = false;
 					this.GetComponent<Monster> ().InBattle = false;
@@ -144,6 +151,7 @@ public class AutoAttack : MonoBehaviour {
                         gameObject.GetComponent<Monster>().InMovement = true;
                     }
 					if (hitted == true && rangeDistance < activeDistance) {
+                        Debug.Log("I am here");
 						transform.LookAt(targetPos);
 						pause_attack();
 						animator.SetBool("SawPlayer",true); 
@@ -170,8 +178,9 @@ public class AutoAttack : MonoBehaviour {
 		GameObject[] players;
 		players = GameObject.FindGameObjectsWithTag("Player");
 		GameObject closest = null;
-		float distance = Mathf.Infinity;
-		Vector3 position = transform.position;
+        float distance = Mathf.Infinity;
+
+        Vector3 position = transform.position;
 		foreach (GameObject target in players)
 		{
 			Vector3 diff = target.transform.position - position;
@@ -268,16 +277,19 @@ public class AutoAttack : MonoBehaviour {
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
 			this.player = player;
 			hitted = true;
+            Debug.Log("Hitted by player");
 		} else {
 			if (this.GetComponent<Monster> ().InBattle == false) {
-				// no damage can be cause to monster while it is not in battle	
-				return;
-			}
+                // no damage can be cause to monster while it is not in battle	
+                Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
+                return;
+            }
 		}
-		float defense = gameObject.GetComponent<Monster> ().Defense;
-		float real_damage = damage - defense;
-		gameObject.GetComponent<Monster> ().Current_health -= real_damage;
-	}
+        float defense = gameObject.GetComponent<Monster>().Defense;
+        float real_damage = damage - defense;
+        gameObject.GetComponent<Monster>().Current_health -= real_damage;
+
+    }
 
 	public void dealthDmage(){
 		if (player != null) {
@@ -323,7 +335,7 @@ public class AutoAttack : MonoBehaviour {
 		animator.SetTrigger("M_Patrol");
 		this.GetComponent<Monster> ().InMovement = false;
 		this.GetComponent<Monster> ().InBattle = false;
-        this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Max_health;
+        this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Health;
 
     }
 
