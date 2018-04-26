@@ -107,6 +107,7 @@ public class NetworkIDController : MonoBehaviour {
     void SendAnimation() {
         int[] stateHash = new int[charAnimator.layerCount];
         float[] normalizedTime = new float[charAnimator.layerCount];
+
         bool hasChanged = false;
         for (int i = 0; i < charAnimator.layerCount; i++) {
             if (CheckAnimStateChanged(i, out stateHash[i], out normalizedTime[i])) {
@@ -114,6 +115,22 @@ public class NetworkIDController : MonoBehaviour {
             }
         }
         if(!hasChanged) return;
+
+        for (int i = 0; i < charAnimator.parameters.Length; i++) {
+
+            AnimatorControllerParameter par = charAnimator.parameters[i];
+            if (par.type == AnimatorControllerParameterType.Int) {
+                int value = charAnimator.GetInteger(par.nameHash);
+            }
+
+            if (par.type == AnimatorControllerParameterType.Float) {
+                float value = charAnimator.GetFloat(par.nameHash);
+            }
+
+            if (par.type == AnimatorControllerParameterType.Bool) {
+                bool value = charAnimator.GetBool(par.nameHash);
+            }
+        }
         //TODO: Build network message using Hash and Time array above
         //TODO: Send msg to network
     }
