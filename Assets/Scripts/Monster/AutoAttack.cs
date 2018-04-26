@@ -22,6 +22,7 @@ public class AutoAttack : MonoBehaviour {
     private bool grounded;
     private bool hitted;
 	private bool Die;
+	public  Vector3 updatePos;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +38,9 @@ public class AutoAttack : MonoBehaviour {
 		int dblength = ItemDB.Instance.items.Count;
 		int[] Loottable = new int[dblength];
 		for (int i = 0; i < dblength; i++) {
-			Loottable [i] = DB.get (i).ID;
+			Item tempItem = DB.get (i);
+			Debug.Log (tempItem);
+			Loottable [i] = tempItem.ID;
 		}
 		this.GetComponent<Monster> ().LootTable = Loottable;
 
@@ -49,127 +52,169 @@ public class AutoAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        new_gravity ();
-		if (playerobj == null||animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
-			playerobj = FindClosestPlayer ();
-		}
-        if (grounded == false) {
-            //Debug.Log("Gounding");
-            if (cc.isGrounded == true) {
-                oriPos = transform.position;
-                Debug.Log(oriPos);
-            }
-            grounded = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            applyDamage(20.0f, player);
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Debug.Log("您按下了S键");
-        }
-        if (player != null) {
-            player = playerobj.GetComponent<Transform> ();
-			Vector3 targetPos = player.position;
-			targetPos.y = transform.position.y;
-			float distance = Vector3.Distance (targetPos, transform.position);
-			float rangeDistance = Vector3.Distance (oriPos, transform.position);
-
-			if(gameObject.GetComponent<Monster>().Current_health <= 0.0 && Die == false){
-				Debug.Log ("Monster died");
-				animator.SetTrigger ("DieTrigger");
-				this.GetComponent<Monster> ().InBattle = false;
-				this.GetComponent<Monster> ().InMovement = false;
-				hitted = false;
-				this.GetComponent<Monster> ().X = this.transform.position.x;
-				this.GetComponent<Monster> ().Y = this.transform.position.y;
-				this.GetComponent<Monster> ().Z = this.transform.position.z;
-				//LootlistGen();
-				Die = true;
+		if (true) {
+			//server
+			//
+			new_gravity ();
+			if (playerobj == null||animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
+				playerobj = FindClosestPlayer ();
 			}
-			//if target player moved out the active range of monster. Go back to original poisition.
-			if (rangeDistance >= activeDistance && gameObject.GetComponent<Monster>().InBattle == true) {
-                goback = true;
-                gameObject.GetComponent<Monster>().InBattle = false;
-            }
-            if (goback == true) {
-                oriPos.y = transform.position.y;
-                transform.LookAt(oriPos);
-                this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Health;
-                cc.SimpleMove(transform.forward * walkspeed);
-                set_back(true);
-                hitted =  false;
-                gameObject.GetComponent<Monster>().InBattle = false;
+			if (grounded == false) {
+				//Debug.Log("Gounding");
+				if (cc.isGrounded == true) {
+					oriPos = transform.position;
+					Debug.Log(oriPos);
+				}
+				grounded = true;
+			}
+			if (Input.GetKeyDown(KeyCode.Q))
+			{
+				applyDamage(20.0f, player);
+			}
 
-                //Debug.Log("Monster back to ori position");
-            }
-			//at original position back to patrolling state.
-			if (rangeDistance <= 5.0f && animator.GetCurrentAnimatorStateInfo(0).IsName("GoBack")) {
-				if (goback == true) {
-					set_back (false);
-					animator.SetTrigger("BackPatrol");
-                    transform.LookAt(Vector3.zero);
-					//player = null;
-                    Debug.Log ("Monster restart patrol");
-                    animator.SetBool("SawPlayer", false);
-                    goback = false;
+			if (player != null) {
+				player = playerobj.GetComponent<Transform> ();
+				Vector3 targetPos = player.position;
+				targetPos.y = transform.position.y;
+				float distance = Vector3.Distance (targetPos, transform.position);
+				float rangeDistance = Vector3.Distance (oriPos, transform.position);
+
+				if(gameObject.GetComponent<Monster>().Current_health <= 0.0 && Die == false){
+					Debug.Log ("Monster died");
+					animator.SetTrigger ("DieTrigger");
 					this.GetComponent<Monster> ().InBattle = false;
 					this.GetComponent<Monster> ().InMovement = false;
+					hitted = false;
 					this.GetComponent<Monster> ().X = this.transform.position.x;
 					this.GetComponent<Monster> ().Y = this.transform.position.y;
 					this.GetComponent<Monster> ().Z = this.transform.position.z;
-                }
-			}
-
-			if (distance <= attackDistance) {
-				this.GetComponent<Monster> ().X = this.transform.position.x;
-				this.GetComponent<Monster> ().Y = this.transform.position.y;
-				this.GetComponent<Monster> ().Z = this.transform.position.z;
-				animator.SetBool ("PlayerOutofRange", false);
-				attackCounter += Time.deltaTime;
-				//TODO check target player's health value. If it is zero, go back to original position
-				if (attackCounter > attackTime) {
-					start_attack();
-					attackCounter = 0;
-					//animator.SetBool ("Waiting", false);
+					LootlistGen();
+					Die = true;
 				}
-			}
-			else {
-				attackCounter = attackTime;
+				//if target player moved out the active range of monster. Go back to original poisition.
+				if (rangeDistance >= activeDistance && gameObject.GetComponent<Monster>().InBattle == true) {
+					goback = true;
+					gameObject.GetComponent<Monster>().InBattle = false;
+				}
+				if (goback == true) {
+					oriPos.y = transform.position.y;
+					transform.LookAt(oriPos);
+					this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Health;
+					cc.SimpleMove(transform.forward * walkspeed);
+					this.GetComponent<Monster> ().X = this.transform.position.x;
+					this.GetComponent<Monster> ().Y = this.transform.position.y;
+					this.GetComponent<Monster> ().Z = this.transform.position.z;
+					set_back(true);
+					hitted =  false;
+					gameObject.GetComponent<Monster>().InBattle = false;
 
-				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")||animator.GetCurrentAnimatorStateInfo (0).IsName ("Go to player")) {
-                    if (distance < awakeDistance && rangeDistance < activeDistance)
-                    {
-                        //Debug.Log("Monster go to player");
-                        transform.LookAt(targetPos);
-                        pause_attack();
-                        animator.SetBool("SawPlayer",true); 
-						cc.SimpleMove(transform.forward*runspeed);
-                        gameObject.GetComponent<Monster>().InBattle = true;
-                        gameObject.GetComponent<Monster>().InMovement = true;
-                    }
-					if (hitted == true && rangeDistance < activeDistance) {
-                        Debug.Log("I am here");
-						transform.LookAt(targetPos);
-						pause_attack();
-						animator.SetBool("SawPlayer",true); 
-						cc.SimpleMove(transform.forward*runspeed);
-						gameObject.GetComponent<Monster>().InBattle = true;
-						gameObject.GetComponent<Monster>().InMovement = true;
+					//Debug.Log("Monster back to ori position");
+				}
+				//at original position back to patrolling state.
+				if (rangeDistance <= 5.0f && animator.GetCurrentAnimatorStateInfo(0).IsName("GoBack")) {
+					if (goback == true) {
+						set_back (false);
+						animator.SetTrigger("BackPatrol");
+						transform.LookAt(Vector3.zero);
+						//player = null;
+						Debug.Log ("Monster restart patrol");
+						animator.SetBool("SawPlayer", false);
+						goback = false;
+						this.GetComponent<Monster> ().InBattle = false;
+						this.GetComponent<Monster> ().InMovement = false;
+						this.GetComponent<Monster> ().X = this.transform.position.x;
+						this.GetComponent<Monster> ().Y = this.transform.position.y;
+						this.GetComponent<Monster> ().Z = this.transform.position.z;
 					}
 				}
-				if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack1")
-                    ||animator.GetCurrentAnimatorStateInfo (0).IsName ("STAND")
-                    ||animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2")
-                    || animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3")) {
-                    //Debug.Log("Persue player");
-                    cc.SimpleMove (transform.forward * runspeed);
-					animator.SetBool ("PlayerOutofRange", true);
+
+				if (distance <= attackDistance) {
+					this.GetComponent<Monster> ().X = this.transform.position.x;
+					this.GetComponent<Monster> ().Y = this.transform.position.y;
+					this.GetComponent<Monster> ().Z = this.transform.position.z;
+					animator.SetBool ("PlayerOutofRange", false);
+					attackCounter += Time.deltaTime;
+					//TODO check target player's health value. If it is zero, go back to original position
+					if (attackCounter > attackTime) {
+						start_attack();
+						attackCounter = 0;
+						//animator.SetBool ("Waiting", false);
+					}
+				}
+				else {
+					attackCounter = attackTime;
+					if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")||animator.GetCurrentAnimatorStateInfo (0).IsName ("Go to player")) {
+						if (distance < awakeDistance && rangeDistance < activeDistance)
+						{
+							//Debug.Log("Monster go to player");
+							transform.LookAt(targetPos);
+							pause_attack();
+							animator.SetBool("SawPlayer",true); 
+							cc.SimpleMove(transform.forward*runspeed);
+							this.GetComponent<Monster> ().X = this.transform.position.x;
+							this.GetComponent<Monster> ().Y = this.transform.position.y;
+							this.GetComponent<Monster> ().Z = this.transform.position.z;
+							gameObject.GetComponent<Monster>().InBattle = true;
+							gameObject.GetComponent<Monster>().InMovement = true;
+						}
+						if (hitted == true && rangeDistance < activeDistance) {
+							//Debug.Log("I am here");
+							transform.LookAt(targetPos);
+							pause_attack();
+							animator.SetBool("SawPlayer",true); 
+							cc.SimpleMove(transform.forward*runspeed);
+							this.GetComponent<Monster> ().X = this.transform.position.x;
+							this.GetComponent<Monster> ().Y = this.transform.position.y;
+							this.GetComponent<Monster> ().Z = this.transform.position.z;
+							gameObject.GetComponent<Monster>().InBattle = true;
+							gameObject.GetComponent<Monster>().InMovement = true;
+						}
+					}
+					if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack1")
+						||animator.GetCurrentAnimatorStateInfo (0).IsName ("STAND")
+						||animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2")
+						|| animator.GetCurrentAnimatorStateInfo(0).IsName("Attack3")) {
+						//Debug.Log("Persue player");
+						cc.SimpleMove (transform.forward * runspeed);
+						this.GetComponent<Monster> ().X = this.transform.position.x;
+						this.GetComponent<Monster> ().Y = this.transform.position.y;
+						this.GetComponent<Monster> ().Z = this.transform.position.z;
+						gameObject.GetComponent<Monster>().InBattle = true;
+						gameObject.GetComponent<Monster>().InMovement = true;
+						animator.SetBool ("PlayerOutofRange", true);
+					}
 				}
 			}
+		} else {
+			//client
+			Vector3 dPos = new Vector3 (this.GetComponent<Monster> ().X, this.GetComponent<Monster> ().Y, this.GetComponent<Monster> ().Z);
+			if(this.GetComponent<Monster>().Updated == true){
+				this.transform.position = dPos;
+				this.GetComponent<Monster> ().Updated = false;
+
+			}
+			if (this.GetComponent<Monster> ().Current_health <= 0.0f) {
+				manual_die();
+			}
+			else if (this.GetComponent<Monster> ().InMovement == false && this.GetComponent<Monster> ().InBattle == false) {
+				manual_patrol();
+			}
+
+
+			Vector3 dTargetPos = new Vector3 (this.GetComponent<Monster> ().PX, this.GetComponent<Monster> ().PY, this.GetComponent<Monster> ().PZ);
+			Vector3 diff = dTargetPos - this.transform.position;
+			float curDistance = diff.sqrMagnitude;
+			if (curDistance <= attackDistance) {
+				manual_attack (dTargetPos);
+			} else {
+				this.transform.LookAt (dTargetPos);
+				animator.SetTrigger ("M_Go");
+				cc.SimpleMove (transform.forward * runspeed);
+			}
+
+
 		}
+       
 	}
 
 
@@ -277,11 +322,11 @@ public class AutoAttack : MonoBehaviour {
 		if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
 			this.player = player;
 			hitted = true;
-            Debug.Log("Hitted by player");
+            //Debug.Log("Hitted by player");
 		} else {
 			if (this.GetComponent<Monster> ().InBattle == false) {
                 // no damage can be cause to monster while it is not in battle	
-                Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
+                //Debug.Log(animator.GetCurrentAnimatorStateInfo(0));
                 return;
             }
 		}
@@ -322,20 +367,13 @@ public class AutoAttack : MonoBehaviour {
 	}
 	public void manual_attack(Vector3 target){
 		transform.LookAt (target);
-		this.GetComponent<Monster> ().InBattle = true;
 		animator.SetTrigger ("M_Attack");
 	}
 	public void manual_die(){
-		this.LootReady = true;
-		this.GetComponent<Monster> ().InMovement = false;
-		this.GetComponent<Monster> ().InBattle = false;
 		animator.SetTrigger ("M_Die");
 	}
 	public void manual_patrol(){
 		animator.SetTrigger("M_Patrol");
-		this.GetComponent<Monster> ().InMovement = false;
-		this.GetComponent<Monster> ().InBattle = false;
-        this.GetComponent<Monster>().Current_health = this.GetComponent<Monster>().Health;
 
     }
 
@@ -343,6 +381,7 @@ public class AutoAttack : MonoBehaviour {
 		int iUp=10; 
 		int iDown=1;
 		int result = Random.Range (iDown, iUp);
+		Debug.Log (result);
 		int[] lootlist = new int[result];
 		for (int i = 0; i < result; i++) {
 			int[] temptable = this.GetComponent<Monster> ().LootTable;
