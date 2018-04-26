@@ -21,7 +21,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 				bool monsterInRange = false;
 				for (int i = 0; i < mst.Length; i++) {
-					if (Vector3.Distance (mst [i].transform.position, tc.transform.position) < range) {
+					if (Vector3.Distance (mst [i].transform.position, tc.transform.position) < range && mst.Length > 0) {
 						Monster ms = mst [i].GetComponent<Monster> ();
 
 						if (ms.Current_health > 0) {
@@ -55,7 +55,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			}
 
-			tc.useSkill (buttonPressed, "Skill");
+			tc.useSkill (buttonPressed, "anotherSkill");
 		
 		}
 	}
