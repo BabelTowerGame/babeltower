@@ -47,6 +47,10 @@ public class Item : ScriptableObject{
         return this;
     }
 
+    public void OnEnable() {
+        //hideFlags = HideFlags.HideAndDontSave;
+    }
+
     public virtual void OnGUI() {
         Editor.CreateEditor(this).DrawDefaultInspector();
     }

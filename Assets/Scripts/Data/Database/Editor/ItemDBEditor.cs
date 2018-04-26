@@ -8,6 +8,8 @@ public class ItemDBEditor {
     [MenuItem("Assets/Create/Databases/ItemDB")]
     public static void CreateDatabase() {
         string assetPath = GetSavePath();
+        DataHolder data = (DataHolder)ScriptableObject.CreateInstance<DataHolder>();
+        AssetDatabase.CreateAsset(data, ItemDB.dataAssetPath);
         ItemDB asset = ScriptableObject.CreateInstance("ItemDB") as ItemDB;  //scriptable object
         AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(assetPath));
         AssetDatabase.Refresh();
