@@ -25,69 +25,67 @@ namespace Tob {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cgl0b2IucHJvdG8SA3RvYiIHCgVFbXB0eSI2ChFTZXJ2ZXJDaGFuZ2VFdmVu",
-            "dBIQCghwcmV2aW91cxgBIAEoCRIPCgdjdXJyZW50GAIgASgJImUKC1NlcnZl",
+            "dBIQCghwcmV2aW91cxgBIAEoCRIPCgdjdXJyZW50GAIgASgJIj0KC1NlcnZl",
             "ckV2ZW50EgoKAmlkGAEgASgJEiIKBHR5cGUYAiABKA4yFC50b2IuU2VydmVy",
-            "RXZlbnRUeXBlEiYKBmNoYW5nZRgDIAEoCzIWLnRvYi5TZXJ2ZXJDaGFuZ2VF",
-            "dmVudCIpCgZWZWN0b3ISCQoBeBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyAB",
-            "KAIiQQoPUGxheWVyTW92ZUV2ZW50Eg4KBm1vdmluZxgBIAEoCBIeCglkaXJl",
-            "Y3Rpb24YAiABKAsyCy50b2IuVmVjdG9yIlQKD1BsYXllckNhc3RFdmVudBIK",
-            "CgJpZBgBIAEoCRIQCgh0YXJnZXRJZBgCIAEoCRIjCg50YXJnZXRQb3NpdGlv",
-            "bhgDIAEoCzILLnRvYi5WZWN0b3IiUAoQUGxheWVyQXBwZWFyYW5jZRIMCgRu",
-            "YW1lGAEgASgJEhsKBmdlbmRlchgCIAEoDjILLnRvYi5HZW5kZXISEQoJaGFp",
-            "ckNvbG9yGAMgASgFImkKDVBsYXllckVxdWlwZWQSDgoGd2VhcG9uGAEgASgJ",
-            "EgwKBGhlYWQYAiABKAkSDQoFY2hlc3QYAyABKAkSDAoEbGVncxgEIAEoCRIN",
-            "CgVzaG9lcxgFIAEoCRIOCgZzaGllbGQYBiABKAkihgIKC1BsYXllckV2ZW50",
-            "EgoKAmlkGAEgASgJEiIKBHR5cGUYAiABKA4yFC50b2IuUGxheWVyRXZlbnRU",
-            "eXBlEiIKBG1vdmUYAyABKAsyFC50b2IuUGxheWVyTW92ZUV2ZW50Eh0KCHBv",
-            "c2l0aW9uGAQgASgLMgsudG9iLlZlY3RvchIiCgRjYXN0GAUgASgLMhQudG9i",
-            "LlBsYXllckNhc3RFdmVudBIQCghkYW5tYWdlZBgGIAEoAhIpCgphcHBlYXJh",
-            "bmNlGAcgASgLMhUudG9iLlBsYXllckFwcGVhcmFuY2USIwoHZXF1aXBlZBgI",
-            "IAEoCzISLnRvYi5QbGF5ZXJFcXVpcGVkIngKEU1vbnN0ZXJTcGF3bkV2ZW50",
-            "EgoKAmlkGAEgASgJEhEKCWRlbW9uVHlwZRgCIAEoBRIRCglkZW1vblNraW4Y",
-            "AyABKAUSEgoKd2VhcG9uVHlwZRgEIAEoBRIdCghwb3NpdGlvbhgFIAEoCzIL",
-            "LnRvYi5WZWN0b3IiTgoQTW9uc3Rlck1vdmVFdmVudBIdCghwb3NpdGlvbhgB",
-            "IAEoCzILLnRvYi5WZWN0b3ISGwoGdGFyZ2V0GAIgASgLMgsudG9iLlZlY3Rv",
-            "ciJHChBNb25zdGVyTG9vdEV2ZW50EhAKCHBsYXllcklkGAEgASgJEg4KBml0",
-            "ZW1JZBgCIAEoCRIRCgltb25zdGVySWQYAyABKAkisAEKDE1vbnN0ZXJFdmVu",
-            "dBIKCgJpZBgBIAEoCRIjCgR0eXBlGAIgASgOMhUudG9iLk1vbnN0ZXJFdmVu",
-            "dFR5cGUSJQoFc3Bhd24YAyABKAsyFi50b2IuTW9uc3RlclNwYXduRXZlbnQS",
-            "IwoEbG9vdBgEIAEoCzIVLnRvYi5Nb25zdGVyTG9vdEV2ZW50EiMKBG1vdmUY",
-            "BSABKAsyFS50b2IuTW9uc3Rlck1vdmVFdmVudCJ/CgVFdmVudBIeCgV0b3Bp",
-            "YxgBIAEoDjIPLnRvYi5FdmVudFRvcGljEhsKAXMYAiABKAsyEC50b2IuU2Vy",
-            "dmVyRXZlbnQSGwoBcBgDIAEoCzIQLnRvYi5QbGF5ZXJFdmVudBIcCgFtGAUg",
-            "ASgLMhEudG9iLk1vbnN0ZXJFdmVudCIWCghOb2RlSW5mbxIKCgJpZBgBIAEo",
-            "CSpDCgpFdmVudFRvcGljEhAKDFNFUlZFUl9FVkVOVBAAEhAKDFBMQVlFUl9F",
-            "VkVOVBABEhEKDU1PTlNURVJfRVZFTlQQAyo2Cg9TZXJ2ZXJFdmVudFR5cGUS",
-            "EQoNU0VSVkVSX0NIQU5HRRAAEhAKDFNFUlZFUl9ZSUVMRBABKskBCg9QbGF5",
-            "ZXJFdmVudFR5cGUSEAoMUExBWUVSX0VOVEVSEAASDwoLUExBWUVSX0VYSVQQ",
-            "ARIPCgtQTEFZRVJfTU9WRRACEg8KC1BMQVlFUl9DQVNUEAMSEwoPUExBWUVS",
-            "X0RBTk1BR0VEEAQSDgoKUExBWUVSX0RJRRAFEg8KC1BMQVlFUl9KVU1QEAYS",
-            "EQoNUExBWUVSX0NST1VDSBAHEhMKD1BMQVlFUl9QT1NJVElPThAIEhMKD1BM",
-            "QVlFUl9FUVVJUFBFRBAJKh4KBkdlbmRlchIICgRNQUxFEAASCgoGRkVNQUxF",
-            "EAEqnAEKEE1vbnN0ZXJFdmVudFR5cGUSEQoNTU9OU1RFUl9TUEFXThAAEhAK",
-            "DE1PTlNURVJfTU9WRRABEhIKDk1PTlNURVJfQVRUQUNLEAISDwoLTU9OU1RF",
-            "Ul9ESUUQAxITCg9NT05TVEVSX0RFU1RST1kQBBIQCgxNT05TVEVSX0xPT1QQ",
-            "BRIXChNNT05TVEVSX0xPT1RfUkVTVUxUEAYyVAoDVG9CEigKCVN1YnNjcmli",
-            "ZRINLnRvYi5Ob2RlSW5mbxoKLnRvYi5FdmVudDABEiMKB1B1Ymxpc2gSCi50",
-            "b2IuRXZlbnQaCi50b2IuRW1wdHkoAWIGcHJvdG8z"));
+            "RXZlbnRUeXBlIikKBlZlY3RvchIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoB",
+            "ehgDIAEoAiJBCg9QbGF5ZXJNb3ZlRXZlbnQSDgoGbW92aW5nGAEgASgIEh4K",
+            "CWRpcmVjdGlvbhgCIAEoCzILLnRvYi5WZWN0b3IiVAoPUGxheWVyQ2FzdEV2",
+            "ZW50EgoKAmlkGAEgASgJEhAKCHRhcmdldElkGAIgASgJEiMKDnRhcmdldFBv",
+            "c2l0aW9uGAMgASgLMgsudG9iLlZlY3RvciJQChBQbGF5ZXJBcHBlYXJhbmNl",
+            "EgwKBG5hbWUYASABKAkSGwoGZ2VuZGVyGAIgASgOMgsudG9iLkdlbmRlchIR",
+            "CgloYWlyQ29sb3IYAyABKAUiaQoNUGxheWVyRXF1aXBlZBIOCgZ3ZWFwb24Y",
+            "ASABKAkSDAoEaGVhZBgCIAEoCRINCgVjaGVzdBgDIAEoCRIMCgRsZWdzGAQg",
+            "ASgJEg0KBXNob2VzGAUgASgJEg4KBnNoaWVsZBgGIAEoCSKEAgoLUGxheWVy",
+            "RXZlbnQSCgoCaWQYASABKAkSIgoEdHlwZRgCIAEoDjIULnRvYi5QbGF5ZXJF",
+            "dmVudFR5cGUSIgoEbW92ZRgDIAEoCzIULnRvYi5QbGF5ZXJNb3ZlRXZlbnQS",
+            "HQoIcG9zaXRpb24YBCABKAsyCy50b2IuVmVjdG9yEiIKBGNhc3QYBSABKAsy",
+            "FC50b2IuUGxheWVyQ2FzdEV2ZW50Eg4KBmRhbWFnZRgGIAEoAhIpCgphcHBl",
+            "YXJhbmNlGAcgASgLMhUudG9iLlBsYXllckFwcGVhcmFuY2USIwoHZXF1aXBl",
+            "ZBgIIAEoCzISLnRvYi5QbGF5ZXJFcXVpcGVkIngKEU1vbnN0ZXJTcGF3bkV2",
+            "ZW50EgoKAmlkGAEgASgJEhEKCWRlbW9uVHlwZRgCIAEoBRIRCglkZW1vblNr",
+            "aW4YAyABKAUSEgoKd2VhcG9uVHlwZRgEIAEoBRIdCghwb3NpdGlvbhgFIAEo",
+            "CzILLnRvYi5WZWN0b3IiTgoQTW9uc3Rlck1vdmVFdmVudBIdCghwb3NpdGlv",
+            "bhgBIAEoCzILLnRvYi5WZWN0b3ISGwoGdGFyZ2V0GAIgASgLMgsudG9iLlZl",
+            "Y3RvciJHChBNb25zdGVyTG9vdEV2ZW50EhAKCHBsYXllcklkGAEgASgJEg4K",
+            "Bml0ZW1JZBgCIAEoCRIRCgltb25zdGVySWQYAyABKAkisAEKDE1vbnN0ZXJF",
+            "dmVudBIKCgJpZBgBIAEoCRIjCgR0eXBlGAIgASgOMhUudG9iLk1vbnN0ZXJF",
+            "dmVudFR5cGUSJQoFc3Bhd24YAyABKAsyFi50b2IuTW9uc3RlclNwYXduRXZl",
+            "bnQSIwoEbG9vdBgEIAEoCzIVLnRvYi5Nb25zdGVyTG9vdEV2ZW50EiMKBG1v",
+            "dmUYBSABKAsyFS50b2IuTW9uc3Rlck1vdmVFdmVudCJ/CgVFdmVudBIeCgV0",
+            "b3BpYxgBIAEoDjIPLnRvYi5FdmVudFRvcGljEhsKAXMYAiABKAsyEC50b2Iu",
+            "U2VydmVyRXZlbnQSGwoBcBgDIAEoCzIQLnRvYi5QbGF5ZXJFdmVudBIcCgFt",
+            "GAQgASgLMhEudG9iLk1vbnN0ZXJFdmVudCpDCgpFdmVudFRvcGljEhAKDFNF",
+            "UlZFUl9FVkVOVBAAEhAKDFBMQVlFUl9FVkVOVBABEhEKDU1PTlNURVJfRVZF",
+            "TlQQAio2Cg9TZXJ2ZXJFdmVudFR5cGUSEQoNU0VSVkVSX0NIQU5HRRAAEhAK",
+            "DFNFUlZFUl9ZSUVMRBABKsgBCg9QbGF5ZXJFdmVudFR5cGUSEAoMUExBWUVS",
+            "X0VOVEVSEAASDwoLUExBWUVSX0VYSVQQARIPCgtQTEFZRVJfTU9WRRACEg8K",
+            "C1BMQVlFUl9DQVNUEAMSEgoOUExBWUVSX0RBTUFHRUQQBBIOCgpQTEFZRVJf",
+            "RElFEAUSDwoLUExBWUVSX0pVTVAQBhIRCg1QTEFZRVJfQ1JPVUNIEAcSEwoP",
+            "UExBWUVSX1BPU0lUSU9OEAgSEwoPUExBWUVSX0VRVUlQUEVEEAkqHgoGR2Vu",
+            "ZGVyEggKBE1BTEUQABIKCgZGRU1BTEUQASqcAQoQTW9uc3RlckV2ZW50VHlw",
+            "ZRIRCg1NT05TVEVSX1NQQVdOEAASEAoMTU9OU1RFUl9NT1ZFEAESEgoOTU9O",
+            "U1RFUl9BVFRBQ0sQAhIPCgtNT05TVEVSX0RJRRADEhMKD01PTlNURVJfREVT",
+            "VFJPWRAEEhAKDE1PTlNURVJfTE9PVBAFEhcKE01PTlNURVJfTE9PVF9SRVNV",
+            "TFQQBjJRCgNUb0ISJQoJU3Vic2NyaWJlEgoudG9iLkVtcHR5GgoudG9iLkV2",
+            "ZW50MAESIwoHUHVibGlzaBIKLnRvYi5FdmVudBoKLnRvYi5FbXB0eSgBYgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Tob.EventTopic), typeof(global::Tob.ServerEventType), typeof(global::Tob.PlayerEventType), typeof(global::Tob.Gender), typeof(global::Tob.MonsterEventType), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.Empty), global::Tob.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.ServerChangeEvent), global::Tob.ServerChangeEvent.Parser, new[]{ "Previous", "Current" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.ServerEvent), global::Tob.ServerEvent.Parser, new[]{ "Id", "Type", "Change" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.ServerEvent), global::Tob.ServerEvent.Parser, new[]{ "Id", "Type" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.Vector), global::Tob.Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.PlayerMoveEvent), global::Tob.PlayerMoveEvent.Parser, new[]{ "Moving", "Direction" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.PlayerCastEvent), global::Tob.PlayerCastEvent.Parser, new[]{ "Id", "TargetId", "TargetPosition" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.PlayerAppearance), global::Tob.PlayerAppearance.Parser, new[]{ "Name", "Gender", "HairColor" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.PlayerEquiped), global::Tob.PlayerEquiped.Parser, new[]{ "Weapon", "Head", "Chest", "Legs", "Shoes", "Shield" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.PlayerEvent), global::Tob.PlayerEvent.Parser, new[]{ "Id", "Type", "Move", "Position", "Cast", "Danmaged", "Appearance", "Equiped" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.PlayerEvent), global::Tob.PlayerEvent.Parser, new[]{ "Id", "Type", "Move", "Position", "Cast", "Damage", "Appearance", "Equiped" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.MonsterSpawnEvent), global::Tob.MonsterSpawnEvent.Parser, new[]{ "Id", "DemonType", "DemonSkin", "WeaponType", "Position" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.MonsterMoveEvent), global::Tob.MonsterMoveEvent.Parser, new[]{ "Position", "Target" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.MonsterLootEvent), global::Tob.MonsterLootEvent.Parser, new[]{ "PlayerId", "ItemId", "MonsterId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tob.MonsterEvent), global::Tob.MonsterEvent.Parser, new[]{ "Id", "Type", "Spawn", "Loot", "Move" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.Event), global::Tob.Event.Parser, new[]{ "Topic", "S", "P", "M" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.NodeInfo), global::Tob.NodeInfo.Parser, new[]{ "Id" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tob.Event), global::Tob.Event.Parser, new[]{ "Topic", "S", "P", "M" }, null, null, null)
           }));
     }
     #endregion
@@ -97,7 +95,7 @@ namespace Tob {
   public enum EventTopic {
     [pbr::OriginalName("SERVER_EVENT")] ServerEvent = 0,
     [pbr::OriginalName("PLAYER_EVENT")] PlayerEvent = 1,
-    [pbr::OriginalName("MONSTER_EVENT")] MonsterEvent = 3,
+    [pbr::OriginalName("MONSTER_EVENT")] MonsterEvent = 2,
   }
 
   public enum ServerEventType {
@@ -113,7 +111,7 @@ namespace Tob {
     /// </summary>
     [pbr::OriginalName("PLAYER_MOVE")] PlayerMove = 2,
     [pbr::OriginalName("PLAYER_CAST")] PlayerCast = 3,
-    [pbr::OriginalName("PLAYER_DANMAGED")] PlayerDanmaged = 4,
+    [pbr::OriginalName("PLAYER_DAMAGED")] PlayerDamaged = 4,
     [pbr::OriginalName("PLAYER_DIE")] PlayerDie = 5,
     [pbr::OriginalName("PLAYER_JUMP")] PlayerJump = 6,
     [pbr::OriginalName("PLAYER_CROUCH")] PlayerCrouch = 7,
@@ -433,7 +431,6 @@ namespace Tob {
     public ServerEvent(ServerEvent other) : this() {
       id_ = other.id_;
       type_ = other.type_;
-      Change = other.change_ != null ? other.Change.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -464,17 +461,6 @@ namespace Tob {
       }
     }
 
-    /// <summary>Field number for the "change" field.</summary>
-    public const int ChangeFieldNumber = 3;
-    private global::Tob.ServerChangeEvent change_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Tob.ServerChangeEvent Change {
-      get { return change_; }
-      set {
-        change_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as ServerEvent);
@@ -490,7 +476,6 @@ namespace Tob {
       }
       if (Id != other.Id) return false;
       if (Type != other.Type) return false;
-      if (!object.Equals(Change, other.Change)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -499,7 +484,6 @@ namespace Tob {
       int hash = 1;
       if (Id.Length != 0) hash ^= Id.GetHashCode();
       if (Type != 0) hash ^= Type.GetHashCode();
-      if (change_ != null) hash ^= Change.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -521,10 +505,6 @@ namespace Tob {
         output.WriteRawTag(16);
         output.WriteEnum((int) Type);
       }
-      if (change_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(Change);
-      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -538,9 +518,6 @@ namespace Tob {
       }
       if (Type != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
-      }
-      if (change_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Change);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -559,12 +536,6 @@ namespace Tob {
       if (other.Type != 0) {
         Type = other.Type;
       }
-      if (other.change_ != null) {
-        if (change_ == null) {
-          change_ = new global::Tob.ServerChangeEvent();
-        }
-        Change.MergeFrom(other.Change);
-      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -582,13 +553,6 @@ namespace Tob {
           }
           case 16: {
             type_ = (global::Tob.ServerEventType) input.ReadEnum();
-            break;
-          }
-          case 26: {
-            if (change_ == null) {
-              change_ = new global::Tob.ServerChangeEvent();
-            }
-            input.ReadMessage(change_);
             break;
           }
         }
@@ -1620,7 +1584,7 @@ namespace Tob {
       Move = other.move_ != null ? other.Move.Clone() : null;
       Position = other.position_ != null ? other.Position.Clone() : null;
       Cast = other.cast_ != null ? other.Cast.Clone() : null;
-      danmaged_ = other.danmaged_;
+      damage_ = other.damage_;
       Appearance = other.appearance_ != null ? other.Appearance.Clone() : null;
       Equiped = other.equiped_ != null ? other.Equiped.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -1686,14 +1650,14 @@ namespace Tob {
       }
     }
 
-    /// <summary>Field number for the "danmaged" field.</summary>
-    public const int DanmagedFieldNumber = 6;
-    private float danmaged_;
+    /// <summary>Field number for the "damage" field.</summary>
+    public const int DamageFieldNumber = 6;
+    private float damage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Danmaged {
-      get { return danmaged_; }
+    public float Damage {
+      get { return damage_; }
       set {
-        danmaged_ = value;
+        damage_ = value;
       }
     }
 
@@ -1737,7 +1701,7 @@ namespace Tob {
       if (!object.Equals(Move, other.Move)) return false;
       if (!object.Equals(Position, other.Position)) return false;
       if (!object.Equals(Cast, other.Cast)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Danmaged, other.Danmaged)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Damage, other.Damage)) return false;
       if (!object.Equals(Appearance, other.Appearance)) return false;
       if (!object.Equals(Equiped, other.Equiped)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -1751,7 +1715,7 @@ namespace Tob {
       if (move_ != null) hash ^= Move.GetHashCode();
       if (position_ != null) hash ^= Position.GetHashCode();
       if (cast_ != null) hash ^= Cast.GetHashCode();
-      if (Danmaged != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Danmaged);
+      if (Damage != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Damage);
       if (appearance_ != null) hash ^= Appearance.GetHashCode();
       if (equiped_ != null) hash ^= Equiped.GetHashCode();
       if (_unknownFields != null) {
@@ -1787,9 +1751,9 @@ namespace Tob {
         output.WriteRawTag(42);
         output.WriteMessage(Cast);
       }
-      if (Danmaged != 0F) {
+      if (Damage != 0F) {
         output.WriteRawTag(53);
-        output.WriteFloat(Danmaged);
+        output.WriteFloat(Damage);
       }
       if (appearance_ != null) {
         output.WriteRawTag(58);
@@ -1822,7 +1786,7 @@ namespace Tob {
       if (cast_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Cast);
       }
-      if (Danmaged != 0F) {
+      if (Damage != 0F) {
         size += 1 + 4;
       }
       if (appearance_ != null) {
@@ -1866,8 +1830,8 @@ namespace Tob {
         }
         Cast.MergeFrom(other.Cast);
       }
-      if (other.Danmaged != 0F) {
-        Danmaged = other.Danmaged;
+      if (other.Damage != 0F) {
+        Damage = other.Damage;
       }
       if (other.appearance_ != null) {
         if (appearance_ == null) {
@@ -1922,7 +1886,7 @@ namespace Tob {
             break;
           }
           case 53: {
-            Danmaged = input.ReadFloat();
+            Damage = input.ReadFloat();
             break;
           }
           case 58: {
@@ -2879,7 +2843,7 @@ namespace Tob {
     }
 
     /// <summary>Field number for the "m" field.</summary>
-    public const int MFieldNumber = 5;
+    public const int MFieldNumber = 4;
     private global::Tob.MonsterEvent m_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Tob.MonsterEvent M {
@@ -2942,7 +2906,7 @@ namespace Tob {
         output.WriteMessage(P);
       }
       if (m_ != null) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(34);
         output.WriteMessage(M);
       }
       if (_unknownFields != null) {
@@ -3026,140 +2990,11 @@ namespace Tob {
             input.ReadMessage(p_);
             break;
           }
-          case 42: {
+          case 34: {
             if (m_ == null) {
               m_ = new global::Tob.MonsterEvent();
             }
             input.ReadMessage(m_);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class NodeInfo : pb::IMessage<NodeInfo> {
-    private static readonly pb::MessageParser<NodeInfo> _parser = new pb::MessageParser<NodeInfo>(() => new NodeInfo());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<NodeInfo> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Tob.TobReflection.Descriptor.MessageTypes[14]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public NodeInfo() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public NodeInfo(NodeInfo other) : this() {
-      id_ = other.id_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public NodeInfo Clone() {
-      return new NodeInfo(this);
-    }
-
-    /// <summary>Field number for the "id" field.</summary>
-    public const int IdFieldNumber = 1;
-    private string id_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Id {
-      get { return id_; }
-      set {
-        id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as NodeInfo);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(NodeInfo other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Id != other.Id) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Id.Length != 0) hash ^= Id.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Id.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Id);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Id.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(NodeInfo other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Id.Length != 0) {
-        Id = other.Id;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            Id = input.ReadString();
             break;
           }
         }

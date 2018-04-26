@@ -12,15 +12,14 @@ namespace Tob {
   {
     static readonly string __ServiceName = "tob.ToB";
 
-    static readonly grpc::Marshaller<global::Tob.NodeInfo> __Marshaller_NodeInfo = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Tob.NodeInfo.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Tob.Event> __Marshaller_Event = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Tob.Event.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Tob.Empty> __Marshaller_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Tob.Empty.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Tob.Event> __Marshaller_Event = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Tob.Event.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Tob.NodeInfo, global::Tob.Event> __Method_Subscribe = new grpc::Method<global::Tob.NodeInfo, global::Tob.Event>(
+    static readonly grpc::Method<global::Tob.Empty, global::Tob.Event> __Method_Subscribe = new grpc::Method<global::Tob.Empty, global::Tob.Event>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "Subscribe",
-        __Marshaller_NodeInfo,
+        __Marshaller_Empty,
         __Marshaller_Event);
 
     static readonly grpc::Method<global::Tob.Event, global::Tob.Empty> __Method_Publish = new grpc::Method<global::Tob.Event, global::Tob.Empty>(
@@ -39,7 +38,7 @@ namespace Tob {
     ///// <summary>Base class for server-side implementations of ToB</summary>
     //public abstract partial class ToBBase
     //{
-    //  public virtual global::System.Threading.Tasks.Task Subscribe(global::Tob.NodeInfo request, grpc::IServerStreamWriter<global::Tob.Event> responseStream, grpc::ServerCallContext context)
+    //  public virtual global::System.Threading.Tasks.Task Subscribe(global::Tob.Empty request, grpc::IServerStreamWriter<global::Tob.Event> responseStream, grpc::ServerCallContext context)
     //  {
     //    throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
     //  }
@@ -74,11 +73,11 @@ namespace Tob {
       {
       }
 
-      public virtual grpc::AsyncServerStreamingCall<global::Tob.Event> Subscribe(global::Tob.NodeInfo request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::Grpc.Core.GrpcCancellationToken cancellationToken = default(global::Grpc.Core.GrpcCancellationToken))
+      public virtual grpc::AsyncServerStreamingCall<global::Tob.Event> Subscribe(global::Tob.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::Grpc.Core.GrpcCancellationToken cancellationToken = default(global::Grpc.Core.GrpcCancellationToken))
       {
         return Subscribe(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncServerStreamingCall<global::Tob.Event> Subscribe(global::Tob.NodeInfo request, grpc::CallOptions options)
+      public virtual grpc::AsyncServerStreamingCall<global::Tob.Event> Subscribe(global::Tob.Empty request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_Subscribe, null, options, request);
       }

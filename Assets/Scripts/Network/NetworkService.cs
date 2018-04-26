@@ -13,7 +13,7 @@ public class NetworkService : MonoBehaviour {
 
     private Channel channel;
     private ToB.ToBClient client;
-    private NodeInfo nodeInfo;
+    private Metadata metadata;
 
     // Use this for initialization
     void Awake()
@@ -23,6 +23,7 @@ public class NetworkService : MonoBehaviour {
             NetworkService.Instance = this;
             this.ServiceStart();
             Debug.Log("NetworkService: Awake");
+            this.ServiceRun();
         }
     }
 
@@ -34,19 +35,22 @@ public class NetworkService : MonoBehaviour {
     // Update is called once per frame
     private void ServiceStart() {
         NetworkID.Local_ID = NetworkID.generateNewID(128);
-        this.nodeInfo = new NodeInfo();
-        nodeInfo.Id = NetworkID.Local_ID;
-        this.channel = new Channel("127.0.0.1:50051", ChannelCredentials.Insecure);
+        this.channel = new Channel("127.0.0.1:16882", ChannelCredentials.Insecure);
         this.client = new Tob.ToB.ToBClient(this.channel);
+        this.metadata = new Metadata {
+            { "id", NetworkID.Local_ID}
+        };
     }
 
     private async void ServiceRun() {
-        using (var handle = this.client.Subscribe(this.nodeInfo)) {
+        Debug.Log("NetworkService: Run");
+        using (var handle = this.client.Subscribe(new Empty(), metadata)) {
             while (await handle.ResponseStream.MoveNext()) {
                 Tob.Event e = handle.ResponseStream.Current;
                 Debug.Log("[Received] EventType:" + e.Topic);
                 switch(e.Topic) {
                     case EventTopic.ServerEvent:
+                        Debug.Log(e.S);
                         this.OnServerEvent(e.S);
                         break;
                     case EventTopic.PlayerEvent:
@@ -72,7 +76,7 @@ public class NetworkService : MonoBehaviour {
         Debug.Log("[ServerEvent] EventType:" + e.Type);
         switch (e.Type) {
             case ServerEventType.ServerChange:
-                if(e.Id.Equals(this.nodeInfo.Id)) {
+                if(e.Id.Equals(NetworkID.Local_ID)) {
                     NetworkService.isServer = true;
                 }
                 break;
@@ -84,19 +88,19 @@ public class NetworkService : MonoBehaviour {
     private void OnPlayerEvent(PlayerEvent e) {
         Debug.Log("[PlayerEvent] EventType:" + e.Type);
         switch (e.Type) {
+            case PlayerEventType.PlayerEnter:
+                break;
+            case PlayerEventType.PlayerExit:
+                break;
             case PlayerEventType.PlayerCast:
                 break;
             case PlayerEventType.PlayerCrouch:
                 break;
-            case PlayerEventType.PlayerDanmaged:
+            case PlayerEventType.PlayerDamaged:
                 break;
             case PlayerEventType.PlayerDie:
                 break;
-            case PlayerEventType.PlayerEnter:
-                break;
             case PlayerEventType.PlayerEquipped:
-                break;
-            case PlayerEventType.PlayerExit:
                 break;
             case PlayerEventType.PlayerJump:
                 break;
