@@ -9,10 +9,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[HideInInspector]public float damage;
 		private float range = 10;
 		ThirdPersonCharacter tc;
+		abilityCast ac;
 
 		// Use this for initialization
 		void Start () {
 			tc = GetComponent<ThirdPersonCharacter> ();
+			ac = GetComponent<abilityCast> ();
 		}
 		
 		// Update is called once per frame
@@ -21,11 +23,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				Vector3 pos = tc.transform.position;
 				pos.y += 1.42f;
 
-				GameObject effect = Instantiate (Resources.Load ("FireExplosionEffects/Prefabs/FlameThrowerEffect") as GameObject, pos, tc.transform.rotation);
-				effect.transform.parent = tc.transform;
-
-				Destroy (effect, 1f);
-
+				ac.cast ("flameShoot", pos, tc.transform.rotation, 1);
 
 				GameObject[] mst = GameObject.FindGameObjectsWithTag ("Monster");
 				for (int i = 0; i < mst.Length; i++) {
@@ -34,7 +32,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 						float angle = Vector3.Angle (tc.transform.forward, ms.transform.position);
 						if (angle < 30) {
 							ms.applyDamage (damage);
-							Debug.Log (ms.Current_health);
 						}
 					}
 				}

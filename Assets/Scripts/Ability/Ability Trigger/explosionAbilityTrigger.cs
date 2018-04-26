@@ -8,12 +8,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	public class explosionAbilityTrigger : MonoBehaviour {
 
 		ThirdPersonCharacter tc;
+		abilityCast ac;
 		[HideInInspector]public float damage;
 		[HideInInspector]public float range;
 		[HideInInspector]public float radius;
 
 		private void Start() {
 			tc = GetComponent<ThirdPersonCharacter> ();
+			ac = GetComponent<abilityCast> ();
 		}
 
 		public bool launch(bool buttonPressed){
@@ -27,9 +29,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 						for (int i = 0; i < mst.Length; i++) {
 							Monster ms = mst [i].GetComponent<Monster> ();
 
-							GameObject effect = Instantiate (Resources.Load ("FireExplosionEffects/Prefabs/BigExplosionEffect") as GameObject, hit.point, tc.transform.rotation);
-
-							Destroy (effect, 2f);
+							ac.cast ("explosion", hit.point, Quaternion.identity, 1.5f);
 
 							if (Vector3.Distance (hit.point, ms.transform.position) < radius && ms.Current_health > 0) {
 								ms.applyDamage (damage);

@@ -9,9 +9,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		ThirdPersonCharacter tc;
 		[HideInInspector]public float damage;
 		[HideInInspector]public float range;
+		abilityCast ac;
 
 		private void Start() {
 			tc = GetComponent<ThirdPersonCharacter> ();
+			ac = GetComponent<abilityCast> ();
 		}
 
 		public bool launch(bool buttonPressed){
@@ -25,14 +27,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 						Monster ms = mst [i].GetComponent<Monster> ();
 
 						if (ms.Current_health > 0) {
-
 							ms.applyDamage (damage);
 
-							GameObject effect = Instantiate (Resources.Load ("FireExplosionEffects/Prefabs/PlasmaExplosionEffect") as GameObject, ms.transform.position, ms.transform.rotation);
-
-							effect.transform.parent = ms.transform;
-
-							Destroy (effect, 1.5f);
+							ac.cast ("plasma", ms, 1.5f);
 
 							monsterInRange = true;
 						}
@@ -45,8 +42,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
 					{
 						if (Vector3.Distance (hit.point, tc.transform.position) < range) {
-							GameObject effect = Instantiate (Resources.Load ("FireExplosionEffects/Prefabs/PlasmaExplosionEffect") as GameObject, hit.point, tc.transform.rotation);
-							Destroy (effect, 1.5f);
+
+							ac.cast ("plasma", hit.point, tc.transform.rotation, 1.5f);
+
 						} else {
 							buttonPressed = false;
 						}
