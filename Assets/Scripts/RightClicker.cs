@@ -13,11 +13,13 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 	public ArmorManager armorManager;
 	public PickupManager pickupManager;
 	public ItemDB db;
+	private UnityStandardAssets.Characters.ThirdPerson.equipWeapon ew;
 
 	// Use this for initialization
 	void Start () {
 		db = ItemDB.Instance;
-
+		ew = GameObject.FindGameObjectWithTag ("Skill")
+			.GetComponent<UnityStandardAssets.Characters.ThirdPerson.equipWeapon> ();
 	}
 
 	// Update is called once per frame
@@ -98,6 +100,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						player.equips.weapon = (Weapon)equipItem;
 						bagManager.replaceItem (slot, tempItem);
 					}
+					ew.equip ((Weapon)equipItem);
 					
 				} else if (equipItem.Type.ToString () == "Shield") {
 					if (player.equips.shield == null) {
@@ -110,6 +113,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						player.equips.shield = (Shield)equipItem;
 						bagManager.replaceItem (slot, tempItem);
 					}
+					ew.equip ((Shield)equipItem);
 				}
 				armorManager.updateGui ();
 			} else if (this.tag == "Pickup") {

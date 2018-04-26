@@ -8,15 +8,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	public class equipWeapon : MonoBehaviour {
 
 		public void equip(Weapon wp){
-			PlayerMarker pm = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<PlayerMarker>();
-			abilityCoolDown[] abilityButtons = GetComponentsInChildren<abilityCoolDown> ();
 
+			GameObject obj = GameObject.FindGameObjectWithTag ("Player");
+			abilityCoolDown[] abilityButtons = GetComponentsInChildren<abilityCoolDown> ();
+			
 			Ability itemAbility = AbilityDB.Instance.get (wp.Ab_ID);
 
-			if (wp is Weapon) {
-				abilityButtons [0].Initialize (itemAbility, pm.gameObject);
-			} else if (wp is Shield) {
-				abilityButtons [1].Initialize (itemAbility, pm.gameObject);
+			if (wp is Shield) {
+				Debug.Log("shield");
+				abilityButtons [0].Initialize (itemAbility, obj);
+			} else if (wp is Weapon) {
+				Debug.Log ("weapon");
+				abilityButtons [1].Initialize (itemAbility, obj);
 			}
 		}
 	}

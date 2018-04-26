@@ -11,8 +11,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public Text cooldownDisplay;
 		public Image darkMask;
 
-		[SerializeField] private Ability ability;
-		[SerializeField]private GameObject weaponHolder;
+		private Ability ability;
+		private GameObject weaponHolder;
 		private float coolDownDuration;
 		private float nextReadyTime;
 		private float coolDownTimeLeft;
@@ -24,7 +24,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		// Use this for initialization
 		void Start () {
-			Initialize (ability, weaponHolder);
+//			Initialize (ability, weaponHolder);
 		}
 
 		public void Initialize(Ability selectedAbility, GameObject obj){
