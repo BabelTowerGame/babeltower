@@ -33,7 +33,7 @@ public class BagManager : MonoBehaviour {
 		}
 
 		//only for testing
-		testing();
+//		testing();
 	}
 	
 	// Update is called once per frame
@@ -54,9 +54,7 @@ public class BagManager : MonoBehaviour {
 		if (player.inventory.list.Count < player.inventory.capacity) {
 			player.inventory.list.Add (item);
 			//if the window is open, update immediately
-			if (bagObject.activeSelf) {
-				updateGui ();
-			}
+			updateGui ();
 			return 1;
 		} else {
 			Debug.Log ("Exceeds the capacity");
@@ -103,6 +101,7 @@ public class BagManager : MonoBehaviour {
 			player.inventory.list [i] = temp;
 			//update the icon
 			slots [i].newAssign (player.inventory.list [i], null);
+			updateGui ();
 		}
 	}
 
@@ -123,7 +122,7 @@ public class BagManager : MonoBehaviour {
 
 	//function that contorls gui to show/hide
 	void openGui(){
-		updateGui ();
+//		updateGui ();
 		bagObject.SetActive (true);
 	}
 
@@ -131,31 +130,31 @@ public class BagManager : MonoBehaviour {
 		bagObject.SetActive (false);
 	}
 
-	void testing(){
-		Item testItem = new global::Shoes().Init(1, "1shoes", 10, 5);
-		testItem.Icon = Shoes;
-		Item testchest = new global::Armor ().Init (2, "chest", 5, Armor.armor_type.chest, 4);
-		testchest.Icon = Shoes;
-		Item testhead = new Armor().Init (3, "head", 10, Armor.armor_type.head, 5);
-		testhead.Icon = Shoes;
-		Item testleg = new Armor().Init (4, "leg", 5, Armor.armor_type.leg, 4);
-		testleg.Icon = Shoes;
-		Item replaceShoes = new global::Shoes().Init (5, "2shoes", 20, 50);
-		Item testweapon = new Weapon ().Init (6, "weapon1", 10, 5, 2, 1);
-		testweapon.Icon = Shoes;
-		Item testshield = new Shield().Init(7, "shield", 10, 10, 1, 4, 10);
-		testshield.Icon = Shoes;
-
-		player.inventory.list.Add (testItem);
-		player.inventory.list.Add (testchest);
-		player.inventory.list.Add (testhead);
-		player.inventory.list.Add (testleg);
-		player.inventory.list.Add (replaceShoes);
-		player.inventory.list.Add (testweapon);
-		player.inventory.list.Add (testshield);
-
-
-//		Debug.Log (player.inventory.list.Count);
-	}
+//	void testing(){
+//		Item testItem = new global::Shoes().Init(1, "1shoes", 10, 5);
+//		testItem.Icon = Shoes;
+//		Item testchest = new global::Armor ().Init (2, "chest", 5, Armor.armor_type.chest, 4);
+//		testchest.Icon = Shoes;
+//		Item testhead = new Armor().Init (3, "head", 10, Armor.armor_type.head, 5);
+//		testhead.Icon = Shoes;
+//		Item testleg = new Armor().Init (4, "leg", 5, Armor.armor_type.leg, 4);
+//		testleg.Icon = Shoes;
+//		Item replaceShoes = new global::Shoes().Init (5, "2shoes", 20, 50);
+//		Item testweapon = new Weapon ().Init (6, "weapon1", 10, 5, 2, 1);
+//		testweapon.Icon = Shoes;
+//		Item testshield = new Shield().Init(7, "shield", 10, 10, 1, 4, 10);
+//		testshield.Icon = Shoes;
+//
+//		player.inventory.list.Add (testItem);
+//		player.inventory.list.Add (testchest);
+//		player.inventory.list.Add (testhead);
+//		player.inventory.list.Add (testleg);
+//		player.inventory.list.Add (replaceShoes);
+//		player.inventory.list.Add (testweapon);
+//		player.inventory.list.Add (testshield);
+//
+//
+////		Debug.Log (player.inventory.list.Count);
+//	}
 
 }

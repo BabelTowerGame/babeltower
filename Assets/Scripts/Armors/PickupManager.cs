@@ -88,7 +88,11 @@ public class PickupManager : MonoBehaviour {
 						if (templist [i] != -1) {
 							Pickitem temp = new Pickitem (tempmon, i, templist[i]);
 							Debug.Log ("add item" + temp);
-							pickupList.Add (temp);
+							if (pickupList.Count < 42) {
+								pickupList.Add (temp);
+							} else {
+								return;
+							}
 						}
 					}
 				}
