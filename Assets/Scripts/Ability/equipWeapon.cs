@@ -11,11 +11,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			PlayerMarker pm = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<PlayerMarker>();
 			abilityCoolDown[] abilityButtons = GetComponentsInChildren<abilityCoolDown> ();
 			Ability itemAbility = wp.Ab;
-
-			for (int i = 0; i < abilityButtons.Length; i++) {
-				if (!abilityButtons [i].isInitialize()) {
-					abilityButtons [i].Initialize (itemAbility, pm.gameObject);
-				}
+			if (wp is Weapon) {
+				abilityButtons [0].Initialize (itemAbility, pm.gameObject);
+			} else if (wp is Shield) {
+				abilityButtons [1].Initialize (itemAbility, pm.gameObject);
 			}
 		}
 	}
