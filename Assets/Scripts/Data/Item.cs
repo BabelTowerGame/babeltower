@@ -97,7 +97,7 @@ public class Shield : Weapon {
         this.defense = defense;
         this.Type = ItemType.Shield;
         return this;
-		this.Type = ItemType.Shield;
+//		this.Type = ItemType.Shield;
     }
     public int Defense {
         get { return this.defense; }

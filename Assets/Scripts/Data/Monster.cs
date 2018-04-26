@@ -9,12 +9,59 @@ public class Monster: MonoBehaviour  {
     [SerializeField]private float current_health;
     [SerializeField]private int damage;
     [SerializeField]private int defense;
-    [SerializeField]private int type;
     [SerializeField]private string name;
     [SerializeField]private Location location;
     [SerializeField]private bool inBattle;
     [SerializeField]private bool inMovement;
+	[SerializeField]private int level;
+	private DemonSkin DS;
+	private DemonType DT;
+	private WeaponType WT;
+	private float x;
+	private float y;
+	private float z;
+	private int[] Lootlist = new int[10];
+	private int[] Loottable;
+	public enum DemonType {
+		Demon1,
+		Demon2,
+		Demon3,
+		Demon4
+	}
+	public enum DemonSkin
+	{
+		Demons1,
+		Demons2,
+		Demons3,
+		Demons4,
+		Demons5,
+		Demons6,
+		Demons7,
+		Demons8,
+		Demons9,
+		Demons10,
+		Demons11,
+		Demons12,
+		Demons13,
+		Demons14,
+		Demons15,
+		Demons16,
+		Demons17,
+		Demons18,
+		Demons19,
+		Demons20,
+		Demons21
 
+	}
+	public enum WeaponType{
+		Sword,
+		Scythe,
+		Trident,
+		Pike,
+		Hammer,
+		Axe
+
+	}
     public int ID {
         get {
             return id;
@@ -64,16 +111,7 @@ public class Monster: MonoBehaviour  {
             defense = value;
         }
     }
-
-    public int Type {
-        get {
-            return type;
-        }
-
-        set {
-            type = value;
-        }
-    }
+		
 
     public string Name {
         get {
@@ -114,5 +152,78 @@ public class Monster: MonoBehaviour  {
             inMovement = value;
         }
     }
+	public int[] LootList{
+		get{ 
+			return Lootlist;
+		
+		}
+		set{ 
+			Lootlist = value;
+		}
+	}
+	public int Level{
+		get{ 
+			return level;
+		}
+		set{ 
+			level = value;
+		}
+	}
+	public int[] LootTable{
+		get{ 
+			return Loottable;
+		}
+		set{ 
+			Loottable = value;
+		}
+	}
+	public DemonSkin Skin{
+		get{ 
+			return DS;
+		}
+		set{ 
+			DS = value;
+		}
+	}
+	public DemonType Type{
+		get{ 
+			return DT;
+		}
+		set{ 
+			DT = value;
+		}
+	}
+	public WeaponType Weapon{
+		get{ 
+			return WT;
+		}
+		set{ 
+			WT = value;
+		}
+	}
+	public float X{
+		get{ 
+			return x;
+		}
+		set{ 
+			x = value;
+		}
+	}
+	public float Y{
+		get{ 
+			return y;
+		}
+		set{ 
+			y = value;
+		}
+	}
+	public float Z{
+		get{ 
+			return z;
+		}
+		set{ 
+			z = value;
+		}
+	}
 
 }

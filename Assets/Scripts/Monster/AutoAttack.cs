@@ -86,7 +86,7 @@ public class AutoAttack : MonoBehaviour {
 				this.GetComponent<Monster> ().X = this.transform.position.x;
 				this.GetComponent<Monster> ().Y = this.transform.position.y;
 				this.GetComponent<Monster> ().Z = this.transform.position.z;
-				//LootlistGen();
+				LootlistGen();
 				Die = true;
 			}
 			//if target player moved out the active range of monster. Go back to original poisition.
@@ -254,6 +254,22 @@ public class AutoAttack : MonoBehaviour {
 		}
 		return -1;
 	}
+
+	public int backItem(int id){
+		int[] lootlist = gameObject.GetComponent<Monster> ().LootList;
+		if (lootlist.Length < 10) {
+			//<10, we can add item
+			int[] newlootlist = new int[lootlist.Length + 1];
+			for (int i = 0; i < lootlist.Length + 1; i++) {
+				newlootlist [i] = lootlist [i];
+			}
+			this.GetComponent<Monster> ().LootList = newlootlist;
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
 	void reset_hit(){
 		animator.SetBool ("Hitted", false);
 	}
@@ -348,6 +364,7 @@ public class AutoAttack : MonoBehaviour {
 			int[] temptable = this.GetComponent<Monster> ().LootTable;
 			lootlist [i] = temptable [Random.Range (0, temptable.Length)];
 		}
+//		Debug.Log ("Monster lootList = " + lootlist.Length);
 		this.GetComponent<Monster> ().LootList = lootlist;
 	}
 }

@@ -174,6 +174,29 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 							bagManager.replaceItem (old_slot, tempItem);
 						}
 					}
+				} else if (temp.Type.ToString () == curEnter.name.ToString () && temp.Type.ToString() == "Weapon") {
+					if (player.equips.weapon == null) {
+						player.equips.weapon = (Weapon)temp;
+						//TODO: After equipped, delete the item from inventory
+						bagManager.deleteByID (old_slot);
+					} else {
+						//replace with the current item
+						Item tempItem = player.equips.weapon;
+						player.equips.weapon = (Weapon)temp;
+						bagManager.replaceItem (old_slot, tempItem);
+					}
+
+				} else if (temp.Type.ToString () == curEnter.name.ToString () && temp.Type.ToString() == "Shield") {
+					if (player.equips.shield == null) {
+						player.equips.shield = (Shield)temp;
+						//TODO: After equipped, delete the item from inventory
+						bagManager.deleteByID (old_slot);
+					} else {
+						//replace with the current item
+						Item tempItem = player.equips.shield;
+						player.equips.shield = (Shield)temp;
+						bagManager.replaceItem (old_slot, tempItem);
+					}
 				}
 				armorManager.updateGui ();
 			}

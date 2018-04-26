@@ -50,16 +50,18 @@ public class BagManager : MonoBehaviour {
 	}
 
 	//add items to bag
-	public void addItem(Item item){
+	public int addItem(Item item){
 		if (player.inventory.list.Count < player.inventory.capacity) {
 			player.inventory.list.Add (item);
 			//if the window is open, update immediately
 			if (bagObject.activeSelf) {
 				updateGui ();
 			}
-
+			return 1;
 		} else {
 			Debug.Log ("Exceeds the capacity");
+			//return for checking
+			return -1;
 		}
 	}
 
@@ -138,16 +140,22 @@ public class BagManager : MonoBehaviour {
 		testhead.Icon = Shoes;
 		Item testleg = new Armor().Init (4, "leg", 5, Armor.armor_type.leg, 4);
 		testleg.Icon = Shoes;
-
 		Item replaceShoes = new global::Shoes().Init (5, "2shoes", 20, 50);
+		Item testweapon = new Weapon ().Init (6, "weapon1", 10, 5, 2, 1);
+		testweapon.Icon = Shoes;
+		Item testshield = new Shield().Init(7, "shield", 10, 10, 1, 4, 10);
+		testshield.Icon = Shoes;
 
-		player.inventory.list.Add(testItem);
+		player.inventory.list.Add (testItem);
 		player.inventory.list.Add (testchest);
 		player.inventory.list.Add (testhead);
 		player.inventory.list.Add (testleg);
 		player.inventory.list.Add (replaceShoes);
+		player.inventory.list.Add (testweapon);
+		player.inventory.list.Add (testshield);
 
-		Debug.Log (player.inventory.list.Count);
+
+//		Debug.Log (player.inventory.list.Count);
 	}
 
 }
