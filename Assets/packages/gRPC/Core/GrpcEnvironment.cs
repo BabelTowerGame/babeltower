@@ -123,7 +123,7 @@ namespace Grpc.Core
         /// <summary>
         /// Decrements the reference count for currently active environment and asynchronously shuts down the gRPC environment if reference count drops to zero.
         /// </summary>
-        internal static UniRx.IObservable<Unit> ReleaseAsync()
+        internal static IObservable<Unit> ReleaseAsync()
         {
             GrpcEnvironment instanceToShutdown = null;
             lock (staticLock)
@@ -176,7 +176,7 @@ namespace Grpc.Core
         /// <summary>
         /// Requests shutdown of all channels created by the current process.
         /// </summary>
-        public static UniRx.IObservable<Unit> ShutdownChannelsAsync()
+        public static IObservable<Unit> ShutdownChannelsAsync()
         {
             HashSet<Channel> snapshot = null;
             lock (staticLock)
@@ -322,7 +322,7 @@ namespace Grpc.Core
         /// <summary>
         /// Shuts down this environment.
         /// </summary>
-        private UniRx.IObservable<Unit> ShutdownAsync()
+        private IObservable<Unit> ShutdownAsync()
         {
             if (isClosed)
             {

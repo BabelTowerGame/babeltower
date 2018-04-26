@@ -133,7 +133,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Starts a unary request - unary response call.
         /// </summary>
-        public UniRx.IObservable<TResponse> UnaryCallAsync(TRequest msg)
+        public IObservable<TResponse> UnaryCallAsync(TRequest msg)
         {
             lock (myLock)
             {
@@ -160,7 +160,7 @@ namespace Grpc.Core.Internal
         /// Starts a streamed request - unary response call.
         /// Use StartSendMessage and StartSendCloseFromClient to stream requests.
         /// </summary>
-        public UniRx.IObservable<TResponse> ClientStreamingCallAsync()
+        public IObservable<TResponse> ClientStreamingCallAsync()
         {
             lock (myLock)
             {
@@ -231,7 +231,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Sends a streaming request. Only one pending send action is allowed at any given time.
         /// </summary>
-        public UniRx.IObservable<Unit> SendMessageAsync(TRequest msg, WriteFlags writeFlags)
+        public IObservable<Unit> SendMessageAsync(TRequest msg, WriteFlags writeFlags)
         {
             return SendMessageInternalAsync(msg, writeFlags);
         }
@@ -239,7 +239,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Receives a streaming response. Only one pending read action is allowed at any given time.
         /// </summary>
-        public UniRx.IObservable<TResponse> ReadMessageAsync()
+        public IObservable<TResponse> ReadMessageAsync()
         {
             return ReadMessageInternalAsync();
         }
@@ -248,7 +248,7 @@ namespace Grpc.Core.Internal
         /// Sends halfclose, indicating client is done with streaming requests.
         /// Only one pending send action is allowed at any given time.
         /// </summary>
-        public UniRx.IObservable<Unit> SendCloseFromClientAsync()
+        public IObservable<Unit> SendCloseFromClientAsync()
         {
             lock (myLock)
             {
@@ -279,7 +279,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Get the task that completes once if streaming response call finishes with ok status and throws RpcException with given status otherwise.
         /// </summary>
-        public UniRx.IObservable<object> StreamingResponseCallFinishedTask
+        public IObservable<object> StreamingResponseCallFinishedTask
         {
             get
             {
@@ -290,7 +290,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Get the task that completes once response headers are received.
         /// </summary>
-        public UniRx.IObservable<Metadata> ResponseHeadersAsync
+        public IObservable<Metadata> ResponseHeadersAsync
         {
             get
             {
@@ -347,7 +347,7 @@ namespace Grpc.Core.Internal
             return new RpcException(finishedStatus.Value.Status, GetTrailers);
         }
 
-        protected override UniRx.IObservable<Unit> CheckSendAllowedOrEarlyResult()
+        protected override IObservable<Unit> CheckSendAllowedOrEarlyResult()
         {
             var earlyResult = CheckSendPreconditionsClientSide();
             if (earlyResult != null)
@@ -370,7 +370,7 @@ namespace Grpc.Core.Internal
             return null;
         }
 
-        private UniRx.IObservable<Unit> CheckSendPreconditionsClientSide()
+        private IObservable<Unit> CheckSendPreconditionsClientSide()
         {
             GrpcPreconditions.CheckState(!halfcloseRequested, "Request stream has already been completed.");
             GrpcPreconditions.CheckState(streamingWriteTcs == null, "Only one write can be pending at a time.");

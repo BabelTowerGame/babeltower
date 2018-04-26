@@ -46,7 +46,7 @@ namespace Grpc.Core
     /// <param name="context">The interceptor context.</param>
     /// <param name="metadata">Metadata to populate with entries that will be added to outgoing call's headers.</param>
     /// <returns></returns>
-    public delegate UniRx.IObservable<Unit> AsyncAuthInterceptor(AuthInterceptorContext context, Metadata metadata);
+    public delegate IObservable<Unit> AsyncAuthInterceptor(AuthInterceptorContext context, Metadata metadata);
 
     /// <summary>
     /// Context for an RPC being intercepted by <see cref="AsyncAuthInterceptor"/>.

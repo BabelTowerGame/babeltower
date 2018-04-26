@@ -48,12 +48,12 @@ namespace Grpc.Core.Internal
             this.writeOptions = call.Details.Options.WriteOptions;
         }
 
-        public UniRx.IObservable<Unit> WriteAsync(TRequest message)
+        public IObservable<Unit> WriteAsync(TRequest message)
         {
             return call.SendMessageAsync(message, GetWriteFlags());
         }
 
-        public UniRx.IObservable<Unit> CompleteAsync()
+        public IObservable<Unit> CompleteAsync()
         {
             return call.SendCloseFromClientAsync();
         }

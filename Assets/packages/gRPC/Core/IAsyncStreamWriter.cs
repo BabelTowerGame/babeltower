@@ -49,7 +49,7 @@ namespace Grpc.Core
         /// Writes a single asynchronously. Only one write can be pending at a time.
         /// </summary>
         /// <param name="message">the message to be written. Cannot be null.</param>
-        UniRx.IObservable<Unit> WriteAsync(T message);
+        IObservable<Unit> WriteAsync(T message);
 
         /// <summary>
         /// Write options that will be used for the next write.

@@ -96,7 +96,7 @@ namespace Grpc.Core.Internal
             }
         }
 
-        public UniRx.IObservable<Unit> StopAsync()
+        public IObservable<Unit> StopAsync()
         {
             lock (myLock)
             {

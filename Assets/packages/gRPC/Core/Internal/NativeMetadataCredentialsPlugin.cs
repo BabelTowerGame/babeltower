@@ -88,7 +88,7 @@ namespace Grpc.Core.Internal
             }
         }
 
-        private UniRx.IObservable<Unit> GetMetadataAsync(AuthInterceptorContext context, IntPtr callbackPtr, IntPtr userDataPtr)
+        private IObservable<Unit> GetMetadataAsync(AuthInterceptorContext context, IntPtr callbackPtr, IntPtr userDataPtr)
         {
             try
             {

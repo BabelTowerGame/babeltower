@@ -43,13 +43,13 @@ namespace Grpc.Core
     /// <typeparam name="TResponse">Response message type for this call.</typeparam>
     public sealed class AsyncUnaryCall<TResponse> : IDisposable
     {
-        readonly UniRx.IObservable<TResponse> responseAsync;
-        readonly UniRx.IObservable<Metadata> responseHeadersAsync;
+        readonly IObservable<TResponse> responseAsync;
+        readonly IObservable<Metadata> responseHeadersAsync;
         readonly Func<Status> getStatusFunc;
         readonly Func<Metadata> getTrailersFunc;
         readonly Action disposeAction;
 
-        internal AsyncUnaryCall(UniRx.IObservable<TResponse> responseAsync, UniRx.IObservable<Metadata> responseHeadersAsync, Func<Status> getStatusFunc, Func<Metadata> getTrailersFunc, Action disposeAction)
+        internal AsyncUnaryCall(IObservable<TResponse> responseAsync, IObservable<Metadata> responseHeadersAsync, Func<Status> getStatusFunc, Func<Metadata> getTrailersFunc, Action disposeAction)
         {
             this.responseAsync = responseAsync;
             this.responseHeadersAsync = responseHeadersAsync;
@@ -61,7 +61,7 @@ namespace Grpc.Core
         /// <summary>
         /// Asynchronous call result.
         /// </summary>
-        public UniRx.IObservable<TResponse> ResponseAsync
+        public IObservable<TResponse> ResponseAsync
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Grpc.Core
         /// <summary>
         /// Asynchronous access to response headers.
         /// </summary>
-        public UniRx.IObservable<Metadata> ResponseHeadersAsync
+        public IObservable<Metadata> ResponseHeadersAsync
         {
             get
             {

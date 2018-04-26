@@ -128,7 +128,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Initiates sending a message. Only one send operation can be active at a time.
         /// </summary>
-        protected UniRx.IObservable<Unit> SendMessageInternalAsync(TWrite msg, WriteFlags writeFlags)
+        protected IObservable<Unit> SendMessageInternalAsync(TWrite msg, WriteFlags writeFlags)
         {
             byte[] payload = UnsafeSerialize(msg);
 
@@ -153,7 +153,7 @@ namespace Grpc.Core.Internal
         /// <summary>
         /// Initiates reading a message. Only one read operation can be active at a time.
         /// </summary>
-        protected UniRx.IObservable<TRead> ReadMessageInternalAsync()
+        protected IObservable<TRead> ReadMessageInternalAsync()
         {
             lock (myLock)
             {
@@ -222,7 +222,7 @@ namespace Grpc.Core.Internal
         /// Checks if sending is allowed and possibly returns a Task that allows short-circuiting the send
         /// logic by directly returning the write operation result task. Normally, null is returned.
         /// </summary>
-        protected abstract UniRx.IObservable<Unit> CheckSendAllowedOrEarlyResult();
+        protected abstract IObservable<Unit> CheckSendAllowedOrEarlyResult();
 
         protected byte[] UnsafeSerialize(TWrite msg)
         {

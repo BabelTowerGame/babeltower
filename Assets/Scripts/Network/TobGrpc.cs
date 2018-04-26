@@ -36,20 +36,20 @@ namespace Tob {
       get { return global::Tob.TobReflection.Descriptor.Services[0]; }
     }
 
-    /// <summary>Base class for server-side implementations of ToB</summary>
-    public abstract partial class ToBBase
-    {
-      public virtual global::System.Threading.Tasks.Task Subscribe(global::Tob.NodeInfo request, grpc::IServerStreamWriter<global::Tob.Event> responseStream, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
+    ///// <summary>Base class for server-side implementations of ToB</summary>
+    //public abstract partial class ToBBase
+    //{
+    //  public virtual global::System.Threading.Tasks.Task Subscribe(global::Tob.NodeInfo request, grpc::IServerStreamWriter<global::Tob.Event> responseStream, grpc::ServerCallContext context)
+    //  {
+    //    throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    //  }
 
-      public virtual global::System.Threading.Tasks.Task<global::Tob.Empty> Publish(grpc::IAsyncStreamReader<global::Tob.Event> requestStream, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
+    //  public virtual global::System.Threading.Tasks.Task<global::Tob.Empty> Publish(grpc::IAsyncStreamReader<global::Tob.Event> requestStream, grpc::ServerCallContext context)
+    //  {
+    //    throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+    //  }
 
-    }
+    //}
 
     /// <summary>Client for ToB</summary>
     public partial class ToBClient : grpc::ClientBase<ToBClient>
@@ -74,7 +74,7 @@ namespace Tob {
       {
       }
 
-      public virtual grpc::AsyncServerStreamingCall<global::Tob.Event> Subscribe(global::Tob.NodeInfo request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncServerStreamingCall<global::Tob.Event> Subscribe(global::Tob.NodeInfo request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::Grpc.Core.GrpcCancellationToken cancellationToken = default(global::Grpc.Core.GrpcCancellationToken))
       {
         return Subscribe(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
@@ -82,7 +82,7 @@ namespace Tob {
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_Subscribe, null, options, request);
       }
-      public virtual grpc::AsyncClientStreamingCall<global::Tob.Event, global::Tob.Empty> Publish(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncClientStreamingCall<global::Tob.Event, global::Tob.Empty> Publish(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::Grpc.Core.GrpcCancellationToken cancellationToken = default(global::Grpc.Core.GrpcCancellationToken))
       {
         return Publish(new grpc::CallOptions(headers, deadline, cancellationToken));
       }
@@ -97,14 +97,14 @@ namespace Tob {
       }
     }
 
-    /// <summary>Creates service definition that can be registered with a server</summary>
-    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-    public static grpc::ServerServiceDefinition BindService(ToBBase serviceImpl)
-    {
-      return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_Subscribe, serviceImpl.Subscribe)
-          .AddMethod(__Method_Publish, serviceImpl.Publish).Build();
-    }
+    ///// <summary>Creates service definition that can be registered with a server</summary>
+    ///// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    //public static grpc::ServerServiceDefinition BindService(ToBBase serviceImpl)
+    //{
+    //  return grpc::ServerServiceDefinition.CreateBuilder()
+    //      .AddMethod(__Method_Subscribe, serviceImpl.Subscribe)
+    //      .AddMethod(__Method_Publish, serviceImpl.Publish).Build();
+    //}
 
   }
 }

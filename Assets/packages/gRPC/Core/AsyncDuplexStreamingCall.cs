@@ -45,12 +45,12 @@ namespace Grpc.Core
     {
         readonly IClientStreamWriter<TRequest> requestStream;
         readonly IAsyncStreamReader<TResponse> responseStream;
-        readonly UniRx.IObservable<Metadata> responseHeadersAsync;
+        readonly IObservable<Metadata> responseHeadersAsync;
         readonly Func<Status> getStatusFunc;
         readonly Func<Metadata> getTrailersFunc;
         readonly Action disposeAction;
 
-        internal AsyncDuplexStreamingCall(IClientStreamWriter<TRequest> requestStream, IAsyncStreamReader<TResponse> responseStream, UniRx.IObservable<Metadata> responseHeadersAsync, Func<Status> getStatusFunc, Func<Metadata> getTrailersFunc, Action disposeAction)
+        internal AsyncDuplexStreamingCall(IClientStreamWriter<TRequest> requestStream, IAsyncStreamReader<TResponse> responseStream, IObservable<Metadata> responseHeadersAsync, Func<Status> getStatusFunc, Func<Metadata> getTrailersFunc, Action disposeAction)
         {
             this.requestStream = requestStream;
             this.responseStream = responseStream;
@@ -85,7 +85,7 @@ namespace Grpc.Core
         /// <summary>
         /// Asynchronous access to response headers.
         /// </summary>
-        public UniRx.IObservable<Metadata> ResponseHeadersAsync
+        public IObservable<Metadata> ResponseHeadersAsync
         {
             get
             {

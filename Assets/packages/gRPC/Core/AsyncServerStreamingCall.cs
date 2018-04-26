@@ -43,12 +43,12 @@ namespace Grpc.Core
     public sealed class AsyncServerStreamingCall<TResponse> : IDisposable
     {
         readonly IAsyncStreamReader<TResponse> responseStream;
-        readonly UniRx.IObservable<Metadata> responseHeadersAsync;
+        readonly IObservable<Metadata> responseHeadersAsync;
         readonly Func<Status> getStatusFunc;
         readonly Func<Metadata> getTrailersFunc;
         readonly Action disposeAction;
 
-        internal AsyncServerStreamingCall(IAsyncStreamReader<TResponse> responseStream, UniRx.IObservable<Metadata> responseHeadersAsync, Func<Status> getStatusFunc, Func<Metadata> getTrailersFunc, Action disposeAction)
+        internal AsyncServerStreamingCall(IAsyncStreamReader<TResponse> responseStream, IObservable<Metadata> responseHeadersAsync, Func<Status> getStatusFunc, Func<Metadata> getTrailersFunc, Action disposeAction)
         {
             this.responseStream = responseStream;
             this.responseHeadersAsync = responseHeadersAsync;
@@ -71,7 +71,7 @@ namespace Grpc.Core
         /// <summary>
         /// Asynchronous access to response headers.
         /// </summary>
-        public UniRx.IObservable<Metadata> ResponseHeadersAsync
+        public IObservable<Metadata> ResponseHeadersAsync
         {
             get
             {

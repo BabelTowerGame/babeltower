@@ -62,7 +62,7 @@ namespace Grpc.Core.Internal
             }
         }
 
-        public UniRx.IObservable<bool> MoveNext()
+        public IObservable<bool> MoveNext()
         {
             return call.ReadMessageAsync().ContinueWith(result =>
             {

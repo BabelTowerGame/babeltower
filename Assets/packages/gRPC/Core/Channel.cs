@@ -142,7 +142,7 @@ namespace Grpc.Core
         /// given lastObservedState. 
         /// If deadline is reached or and error occurs, returned task is cancelled.
         /// </summary>
-        public UniRx.IObservable<bool> WaitForStateChangedAsync(ChannelState lastObservedState, DateTime? deadline = null)
+        public IObservable<bool> WaitForStateChangedAsync(ChannelState lastObservedState, DateTime? deadline = null)
         {
             GrpcPreconditions.CheckArgument(lastObservedState != ChannelState.Shutdown,
                 "Shutdown is a terminal state. No further state changes can occur.");
@@ -194,7 +194,7 @@ namespace Grpc.Core
         /// Starting an RPC on a new channel will request connection implicitly.
         /// </summary>
         /// <param name="deadline">The deadline. <c>null</c> indicates no deadline.</param>
-        public UniRx.IObservable<Unit> ConnectAsync(DateTime? deadline = null)
+        public IObservable<Unit> ConnectAsync(DateTime? deadline = null)
         {
             var currentState = GetConnectivityState(true);
             if (currentState == ChannelState.Ready)
@@ -255,7 +255,7 @@ namespace Grpc.Core
         /// before shutting down the channel to ensure channel shutdown won't impact
         /// the outcome of those remote calls.
         /// </remarks>
-        public UniRx.IObservable<Unit> ShutdownAsync()
+        public IObservable<Unit> ShutdownAsync()
         {
             lock (myLock)
             {
