@@ -11,7 +11,7 @@ public class ItemWizard : EditorWindow {
         EditorWindow.GetWindow(typeof(ItemWizard));
     }
     public void OnEnable() {
-        hideFlags = HideFlags.HideAndDontSave;
+        //hideFlags = HideFlags.HideAndDontSave;
         db = ItemDB.Instance;
     }
     public void OnGUI() {
@@ -19,6 +19,7 @@ public class ItemWizard : EditorWindow {
         GUILayout.Label("Item Database Wizard", EditorStyles.boldLabel);
         if(GUILayout.Button("Save Data")) {
             EditorUtility.SetDirty(db);
+            EditorUtility.SetDirty(db.data);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }

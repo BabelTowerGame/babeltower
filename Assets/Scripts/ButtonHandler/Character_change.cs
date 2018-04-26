@@ -8,9 +8,11 @@ public class Character_change : MonoBehaviour {
 	[SerializeField] private GameObject Hookobj;
 	[SerializeField] private Sprite source1;
 	[SerializeField] private Toggle Hooktoggle;
-	//[SerializeField] private Sprite source2;
-	// Use this for initialization
-	void Start () {
+    [SerializeField] private GameObject male;
+    [SerializeField] private GameObject female;
+    //[SerializeField] private Sprite source2;
+    // Use this for initialization
+    void Start () {
 		Hooktoggle.onValueChanged.AddListener (Outlookchange);
 	}
 	
@@ -22,6 +24,8 @@ public class Character_change : MonoBehaviour {
 		if (flag == true) {
 			Image img = Hookobj.GetComponent<Image>();
 			img.sprite = source1;
-		}
+            male.SetActive(!male.activeSelf);
+            female.SetActive(!female.activeSelf);
+        }
 	}
 }

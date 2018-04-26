@@ -23,7 +23,10 @@ namespace UnityStandardAssets.Utility
 		private float heightDamping;
 
 		// Use this for initialization
-		void Start() { }
+		void Start() {
+            GameObject playerObject = GameObject.FindWithTag("Player");
+            this.target = playerObject.transform;
+        }
 
         void Update() {
             if (Input.GetAxis("Mouse ScrollWheel") > 0f) {
