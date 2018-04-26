@@ -7,8 +7,8 @@ public class Sprint2TestGenerator : MonoBehaviour {
     [SerializeField]
     private Transform player;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Vector3 mobLocation1 = player.position;
         Vector3 mobLocation2 = player.position;
         Vector3 mobLocation3 = player.position;
@@ -41,10 +41,14 @@ public class Sprint2TestGenerator : MonoBehaviour {
         monster4 = gen.GenerateMonster(M_generator.DemonType.Demon4, M_generator.DemonSkin.Demons4,
                 M_generator.WeaponType.Pike, mobLocation4, new Vector3(0, 180, 0));
 
-        monster1.GetComponent<Monster>().Current_health = 20.0f;
-        monster2.GetComponent<Monster>().Current_health = 20.0f;
-        monster3.GetComponent<Monster>().Current_health = 20.0f;
-        monster4.GetComponent<Monster>().Current_health = 20.0f;
+        monster1.GetComponent<Monster>().Current_health = 10.0f;
+        monster2.GetComponent<Monster>().Current_health = 10.0f;
+        monster3.GetComponent<Monster>().Current_health = 10.0f;
+        monster4.GetComponent<Monster>().Current_health = 10.0f;
+        monster1.GetComponent<Monster>().Health = 30.0f;
+        monster2.GetComponent<Monster>().Health = 30.0f;
+        monster3.GetComponent<Monster>().Health = 30.0f;
+        monster4.GetComponent<Monster>().Health = 30.0f;
 
 
 
@@ -52,6 +56,6 @@ public class Sprint2TestGenerator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 }
