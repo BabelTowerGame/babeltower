@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System;
+[Serializable]
 public class ItemDB : ScriptableObject {
+
+    public static string dataAssetPath = "Assets/Resources/Databases/ItemDBData.asset";
 
     #region singleton
     private static ItemDB m_Instance;
@@ -15,11 +19,10 @@ public class ItemDB : ScriptableObject {
     }
     #endregion
 
-
     [SerializeField]
     public List<Item> items;
-
-
+    [SerializeField]
+    public DataHolder data;
 
     public Item get(int index) {
         return (this.items[index]);
@@ -44,10 +47,14 @@ public class ItemDB : ScriptableObject {
     }
 
     public void OnEnable() {
-        if (items == null)
+        if (items == null) {
             items = new List<Item>();
+        }
+        if (data == null)
+            data = (DataHolder)AssetDatabase.LoadAssetAtPath(dataAssetPath, typeof(DataHolder));
 
         //hideFlags = HideFlags.HideAndDontSave;
+
     }
 
     //private void showItem(Item it, Item.ItemType type) {
@@ -74,22 +81,43 @@ public class ItemDB : ScriptableObject {
     //}
 
     public void OnGUI() {
+        if (data == null)
+            data = (DataHolder)AssetDatabase.LoadAssetAtPath(dataAssetPath, typeof(DataHolder));
         foreach (var instance in items) {
             GUILayout.Label(instance.ID.ToString());
             instance.OnGUI();
             if(GUILayout.Button("Remove")) {
                 items.Remove(instance);
+                DestroyImmediate(instance,true);
+
             }
         }
-        if (GUILayout.Button("Add Item"))
-            items.Add(CreateInstance<Item>().Init(items.Count + 1,"New Item",1));
-        if (GUILayout.Button("Add Weapon"))
-            items.Add(CreateInstance<Weapon>().Init(items.Count + 1, "New Weapon", 1, 0, 0, 0));
-        if (GUILayout.Button("Add Shield"))
-            items.Add(CreateInstance<Shield>().Init(items.Count + 1, "New Shield", 1, 0, 0, 0, 1));
-        if (GUILayout.Button("Add Armor"))
-            items.Add(CreateInstance<Armor>().Init(items.Count + 1, "New Armor", 1, Armor.armor_type.chest, 0));
-        if (GUILayout.Button("Add Shoes"))
-            items.Add(CreateInstance<Shoes>().Init(items.Count + 1, "New Shoes", 1, 1));
+        if (GUILayout.Button("Add Item")) {
+            Item i = CreateInstance<Item>().Init(items.Count + 1, "New Item", 1);
+            AssetDatabase.AddObjectToAsset(i, data);
+            items.Add(i);
+        }
+        if (GUILayout.Button("Add Weapon")) {
+            Weapon i = CreateInstance<Weapon>().Init(items.Count + 1, "New Weapon", 1, 0, 0, 0);
+            Debug.Log(i.ToString());
+            Debug.Log(data.ToString());
+            AssetDatabase.AddObjectToAsset(i, data);
+            items.Add(i);
+        }
+        if (GUILayout.Button("Add Shield")) {
+            Shield i = CreateInstance<Shield>().Init(items.Count + 1, "New Shield", 1, 0, 0, 0, 1);
+            AssetDatabase.AddObjectToAsset(i, data);
+            items.Add(i);
+        }
+        if (GUILayout.Button("Add Armor")) {
+            Armor i = CreateInstance<Armor>().Init(items.Count + 1, "New Armor", 1, Armor.armor_type.chest, 0);
+            AssetDatabase.AddObjectToAsset(i, data);
+            items.Add(i);
+        }
+        if (GUILayout.Button("Add Shoes")) {
+            Shoes i = CreateInstance<Shoes>().Init(items.Count + 1, "New Shoes", 1, 1);
+            AssetDatabase.AddObjectToAsset(i, data);
+            items.Add(i);
+        }
     }
 }
