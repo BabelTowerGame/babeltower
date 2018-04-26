@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateCharacter : MonoBehaviour {
+public class CreateCharacter : MonoBehaviour
+{
+    public GameObject MalePrefab;
+    public GameObject FemalePrefab;
 
-	void Awake(){
+
+    void Awake(){
 		Character c = CharacterManager.character;
 
 		Debug.Log (transform.position);
@@ -22,11 +26,16 @@ public class CreateCharacter : MonoBehaviour {
 		Vector3 spawn = hit.point;
 
 		spawn.y += 10;
+        GameObject go;
 
-		if (c.appearance.gender == Appearance.Gender.Male) {
-			GameObject go = GameObject.Instantiate (Resources.Load ("Prefabs/PlayerModels/MaleCharacterController"), spawn, Quaternion.identity) as GameObject;
-			go.GetComponent<EasyEquipmentSystem.EquipmentSystem> ().onHairColorChanged (c.appearance.hairColor);
+        if (c.appearance.gender == Appearance.Gender.Male) {
+			go = GameObject.Instantiate (MalePrefab, spawn, Quaternion.identity) as GameObject;
 		}
+        else {
+            go = GameObject.Instantiate(FemalePrefab, spawn, Quaternion.identity) as GameObject;
+        }
 
-	}
+        go.GetComponent<EasyEquipmentSystem.EquipmentSystem>().onHairColorChanged(c.appearance.hairColor);
+
+    }
 }
