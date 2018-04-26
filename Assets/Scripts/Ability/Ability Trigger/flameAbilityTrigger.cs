@@ -14,7 +14,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			tc = GetComponent<ThirdPersonCharacter> ();
 		}
 
-		public void launch(bool buttonPressed){
+		public bool launch(bool buttonPressed){
 			if (buttonPressed) {
 				// Find Monster within range
 				GameObject[] mst = GameObject.FindGameObjectsWithTag ("Monster");
@@ -56,6 +56,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			}
 
 			tc.useSkill (buttonPressed, "Skill");
+			return buttonPressed;
 		}
 	}
 }

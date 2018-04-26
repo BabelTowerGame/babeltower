@@ -17,8 +17,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			tt.range = range;
 		}
 
-		public override void TriggerAbility(bool buttonPressed) {
-			tt.launch (buttonPressed);
+		public override bool TriggerAbility(bool buttonPressed) {
+			return tt.launch (buttonPressed);
 		}
 	}
 }

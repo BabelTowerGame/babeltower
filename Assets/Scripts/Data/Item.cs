@@ -150,7 +150,7 @@ public abstract class Ability : ScriptableObject{
 	public Sprite aSprite;
 
 	public abstract void Initialize (GameObject obj);
-	public abstract void TriggerAbility(bool buttonPressed);
+	public abstract bool TriggerAbility(bool buttonPressed);
 
 
 }

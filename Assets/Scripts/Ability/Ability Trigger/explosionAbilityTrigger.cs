@@ -16,7 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			tc = GetComponent<ThirdPersonCharacter> ();
 		}
 
-		public void launch(bool buttonPressed){
+		public bool launch(bool buttonPressed){
 
 			if (buttonPressed) {
 				GameObject[] mst = GameObject.FindGameObjectsWithTag ("Monster");
@@ -42,8 +42,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				}
 			}
 			tc.useSkill (buttonPressed, "Skill");
-
+			return buttonPressed;
 		}
-
 	}
 }

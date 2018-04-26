@@ -16,7 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		}
 		
 		// Update is called once per frame
-		public void launch(bool buttonPressed){
+		public bool launch(bool buttonPressed){
 			if (buttonPressed) {
 				Vector3 pos = tc.transform.position;
 				pos.y += 1.42f;
@@ -39,6 +39,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					}
 				}
 			}
+			return buttonPressed;
 		}
 	}
 }

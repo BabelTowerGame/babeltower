@@ -76,13 +76,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		private void ButtonTriggered(bool buttonPressed)
 		{
+			buttonPressed = ability.TriggerAbility (buttonPressed);
 			if (buttonPressed) {
 				nextReadyTime = coolDownDuration + Time.time;
 				coolDownTimeLeft = coolDownDuration;
 				darkMask.enabled = true;
 				cooldownDisplay.enabled = true;
 			}
-			ability.TriggerAbility (buttonPressed);
 		}
 	}
 }

@@ -21,8 +21,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			tt.radius = radius;
 		}
 
-		public override void TriggerAbility(bool buttonPressed) {
-			tt.launch (buttonPressed);
+		public override bool TriggerAbility(bool buttonPressed) {
+			return tt.launch (buttonPressed);
 		}
 	}
 }
