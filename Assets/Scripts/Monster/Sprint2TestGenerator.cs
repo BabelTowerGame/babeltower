@@ -13,6 +13,7 @@ public class Sprint2TestGenerator : MonoBehaviour {
         Vector3 mobLocation2 = player.position;
         Vector3 mobLocation3 = player.position;
         Vector3 mobLocation4 = player.position;
+		Debug.Log ("I am here");
         mobLocation1.x += 50.0f;
         mobLocation1.z += 50.0f;
         mobLocation1.y = 150.0f;
@@ -28,7 +29,7 @@ public class Sprint2TestGenerator : MonoBehaviour {
 
         M_generator gen = this.transform.GetComponent<M_generator>();
 
-        GameObject monster1;
+        /*GameObject monster1;
         GameObject monster2;
         GameObject monster3;
         GameObject monster4;
@@ -49,7 +50,7 @@ public class Sprint2TestGenerator : MonoBehaviour {
         monster2.GetComponent<Monster>().Health = 30.0f;
         monster3.GetComponent<Monster>().Health = 30.0f;
         monster4.GetComponent<Monster>().Health = 30.0f;
-
+		*/
 
 
     }

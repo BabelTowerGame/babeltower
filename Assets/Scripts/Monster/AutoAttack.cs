@@ -39,8 +39,8 @@ public class AutoAttack : MonoBehaviour {
 		int[] Loottable = new int[dblength];
 		for (int i = 0; i < dblength; i++) {
 			Item tempItem = DB.get (i);
-			Debug.Log (tempItem);
-			Loottable [i] = tempItem.ID;
+			//Debug.Log (tempItem);
+			//Loottable [i] = tempItem.ID;
 		}
 		this.GetComponent<Monster> ().LootTable = Loottable;
 
@@ -57,6 +57,8 @@ public class AutoAttack : MonoBehaviour {
 			//
 			new_gravity ();
 			if (playerobj == null||animator.GetCurrentAnimatorStateInfo (0).IsName ("Patrolling")) {
+				Debug.Log ("I am patrolling");
+				oriPos = transform.position;
 				playerobj = FindClosestPlayer ();
 			}
 			if (grounded == false) {
@@ -78,6 +80,12 @@ public class AutoAttack : MonoBehaviour {
 				targetPos.y = transform.position.y;
 				float distance = Vector3.Distance (targetPos, transform.position);
 				float rangeDistance = Vector3.Distance (oriPos, transform.position);
+				Debug.Log ("Player is not null");
+				if (distance < awakeDistance) {
+					Debug.Log (distance);
+				}
+				//Debug.Log (distance);
+
 
 				if(gameObject.GetComponent<Monster>().Current_health <= 0.0 && Die == false){
 					Debug.Log ("Monster died");
@@ -193,9 +201,9 @@ public class AutoAttack : MonoBehaviour {
 				this.GetComponent<Monster> ().Updated = false;
 
 			}
-			if (this.GetComponent<Monster> ().Current_health <= 0.0f) {
+			/*if (this.GetComponent<Monster> ().Current_health <= 0.0f) {
 				manual_die();
-			}
+			}*/
 			else if (this.GetComponent<Monster> ().InMovement == false && this.GetComponent<Monster> ().InBattle == false) {
 				manual_patrol();
 			}
@@ -204,13 +212,9 @@ public class AutoAttack : MonoBehaviour {
 			Vector3 dTargetPos = new Vector3 (this.GetComponent<Monster> ().PX, this.GetComponent<Monster> ().PY, this.GetComponent<Monster> ().PZ);
 			Vector3 diff = dTargetPos - this.transform.position;
 			float curDistance = diff.sqrMagnitude;
-			if (curDistance <= attackDistance) {
-				manual_attack (dTargetPos);
-			} else {
-				this.transform.LookAt (dTargetPos);
-				animator.SetTrigger ("M_Go");
-				cc.SimpleMove (transform.forward * runspeed);
-			}
+			this.transform.LookAt (dTargetPos);
+			animator.SetTrigger ("M_Go");
+			cc.SimpleMove (transform.forward * runspeed);
 
 
 		}
@@ -220,11 +224,11 @@ public class AutoAttack : MonoBehaviour {
 
 
 	GameObject FindClosestPlayer(){
+		//Debug.Log ("Finding player");
 		GameObject[] players;
 		players = GameObject.FindGameObjectsWithTag("Player");
 		GameObject closest = null;
         float distance = Mathf.Infinity;
-
         Vector3 position = transform.position;
 		foreach (GameObject target in players)
 		{
@@ -236,6 +240,7 @@ public class AutoAttack : MonoBehaviour {
 				distance = curDistance;
 			}
 		}
+		//Debug.Log (closest.transform.position);
 		return closest;
 	}
 	public void initAttack(){
@@ -338,7 +343,11 @@ public class AutoAttack : MonoBehaviour {
 
 	public void dealthDmage(){
 		if (player != null) {
-			//player.GetComponent<Character> ().currentHealth -= this.GetComponent<Monster> ().Damage;
+			//TODO:
+
+
+			//Should be an event
+			player.GetComponent<Character> ().CurrentHealth -= (this.GetComponent<Monster> ().Damage-player.GetComponent<Character> ().Defense);
 
 		}
 	}
@@ -381,7 +390,7 @@ public class AutoAttack : MonoBehaviour {
 		int iUp=10; 
 		int iDown=1;
 		int result = Random.Range (iDown, iUp);
-		Debug.Log (result);
+		//Debug.Log (result);
 		int[] lootlist = new int[result];
 		for (int i = 0; i < result; i++) {
 			int[] temptable = this.GetComponent<Monster> ().LootTable;
