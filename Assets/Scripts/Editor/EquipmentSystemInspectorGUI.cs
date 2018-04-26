@@ -25,9 +25,10 @@ namespace EasyEquipmentSystem
 			equipSystem.hideOther = EditorGUILayout.Toggle ("Hide non-selected", equipSystem.hideOther);
 
 			// Hiding mode info text
-			EditorGUILayout.HelpBox ("'Hide non-selected' automatically hides all objects which are not active in the system, using the above hiding mode.", MessageType.Info);
+			//EditorGUILayout.HelpBox ("'Hide non-selected' automatically hides all objects which are not active in the system, using the above hiding mode.", MessageType.Info);
 			EditorGUILayout.Space ();
 
+            //equipSystem.HairColorToggleGroup = EditorGUILayout.ObjectField(null, typeof(GameObject), true) as GameObject;
 
 
 			// BODY PARTS

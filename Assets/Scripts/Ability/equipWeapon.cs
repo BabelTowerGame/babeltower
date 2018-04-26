@@ -10,7 +10,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public void equip(Weapon wp){
 			PlayerMarker pm = GameObject.FindGameObjectWithTag ("Player").GetComponentInChildren<PlayerMarker>();
 			abilityCoolDown[] abilityButtons = GetComponentsInChildren<abilityCoolDown> ();
-			Ability itemAbility = wp.Ab;
+
+			Ability itemAbility = AbilityDB.Instance.get (wp.Ab_ID);
+
 			if (wp is Weapon) {
 				abilityButtons [0].Initialize (itemAbility, pm.gameObject);
 			} else if (wp is Shield) {

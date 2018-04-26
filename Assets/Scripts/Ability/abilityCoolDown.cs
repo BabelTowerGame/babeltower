@@ -11,8 +11,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		public Text cooldownDisplay;
 		public Image darkMask;
 
-		private Ability ability;
-		private GameObject weaponHolder;
+		[SerializeField] private Ability ability;
+		[SerializeField]private GameObject weaponHolder;
 		private float coolDownDuration;
 		private float nextReadyTime;
 		private float coolDownTimeLeft;

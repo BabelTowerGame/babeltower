@@ -25,6 +25,8 @@ namespace DuloGames.UI
 			get { return this.m_EquipType; }
 			set { this.m_EquipType = value; }
 		}
+
+		private Item m_Item;
 		
 		/// <summary>
 		/// The assigned item info.
@@ -131,6 +133,34 @@ namespace DuloGames.UI
             
 			// Default
 			return false;
+		}
+
+		public bool newAssign(Item itemInfo, Object source)
+		{
+			if (itemInfo == null)
+				return false;
+
+			// Make sure we unassign first, so the event is called before new assignment
+			this.Unassign();
+
+			// Use the base class assign to set the icon
+			this.Assign(itemInfo.Icon);
+
+			// Set the spell info
+			this.m_Item = itemInfo;
+
+			// Invoke the on assign event
+			if (this.onAssign != null)
+				//Debug.Log("Assign without source");
+				this.onAssign.Invoke(this);
+
+			// Invoke the on assign event
+			if (this.onAssignWithSource != null)
+				//Debug.Log("Assign with source");
+				this.onAssignWithSource.Invoke(this, source);
+
+			// Success
+			return true;
 		}
 		
 		/// <summary>

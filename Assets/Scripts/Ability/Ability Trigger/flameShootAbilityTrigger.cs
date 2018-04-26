@@ -28,10 +28,11 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				GameObject[] mst = GameObject.FindGameObjectsWithTag ("Monster");
 				for (int i = 0; i < mst.Length; i++) {
 					Monster ms = mst [i].GetComponent<Monster> ();
+					AutoAttack aa = mst [i].GetComponent<AutoAttack> ();
 					if (Vector3.Distance (ms.transform.position, tc.transform.position) < range) {
 						float angle = Vector3.Angle (tc.transform.forward, ms.transform.position);
 						if (angle < 30) {
-							ms.applyDamage (damage);
+							aa.applyDamage (damage, tc.transform);
 						}
 					}
 				}

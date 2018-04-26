@@ -25,9 +25,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				for (int i = 0; i < mst.Length; i++) {
 					if (Vector3.Distance (mst [i].transform.position, tc.transform.position) < range && mst.Length > 0) {
 						Monster ms = mst [i].GetComponent<Monster> ();
+						AutoAttack aa = mst [i].GetComponent<AutoAttack> ();
 
 						if (ms.Current_health > 0) {
-							ms.applyDamage (damage);
+							aa.applyDamage (damage, tc.transform);
 
 							ac.cast ("plasma", ms, 1.5f);
 

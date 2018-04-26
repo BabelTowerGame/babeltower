@@ -20,6 +20,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	public BagManager bagManager;
 	public Character player;
 	public GameObject confirmWindow;
+	public ArmorManager armorManager;
+
 
 	// Use this for initialization
 	void Start()
@@ -37,6 +39,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	void Update()
 	{
 		lastID = oldID;
+		gameObject.transform.SetAsLastSibling();
 	}
 
 	public void OnBeginDrag(PointerEventData eventData)
@@ -73,12 +76,15 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		}
 		lastID = oldID;
 //		GameObject curEnter = eventData.pointerEnter;
+		gameObject.transform.SetAsLastSibling();
 
 	}
 
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
+		gameObject.transform.SetAsLastSibling();
+
 		lastID = oldID;
 		//Debug.Log ("end : lastID = " + lastID);
 
@@ -87,9 +93,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		//the gameobject we want to move into
 		GameObject curEnter = eventData.pointerEnter;
 		//Debug.Log ("End Dragging... ");
-
 		Debug.Log ("CurEnter = " + curEnter.name);
         
+
 		//if out of the window
 		if (curEnter == null) {
 			//Debug.Log ("CurEnter2 = " + curEnter);
@@ -111,8 +117,89 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
 		//out of the bag, back to the slot
 		if (curEnter.tag != "Slot") {
-			Debug.Log ("Out! Moving back...");
+//			Debug.Log ("Out! Moving back...");
 			//myTransform.position = originalPosition;
+//			Item tempItem = player.inventory.list [old_slot];
+			if (curEnter.name == "Icon") {
+				curEnter = curEnter.transform.parent.gameObject;
+				Debug.Log ("test: " + curEnter.name);
+			}
+			if (curEnter.tag == "Equip") {
+//				Debug.Log (curEnter.name);
+				if (temp.Type.ToString () == curEnter.name.ToString () && temp.Type.ToString() == "Shoes"){
+					if (player.equips.shoes == null) {
+						player.equips.shoes = (Shoes)temp;
+						//TODO: After equipped, delete the item from inventory
+						bagManager.deleteByID(old_slot);
+					} else {
+						//replace with the current item
+						Item tempItem = player.equips.shoes;
+						player.equips.shoes = (Shoes)temp;
+						bagManager.replaceItem (old_slot, tempItem);
+					}
+				} else if (temp.Type.ToString () == "Armor"){
+					//TODO: we have 3 types of armors
+					Armor temp2 = (Armor)player.inventory.list [old_slot];
+					if(temp2.Armor_Type == Armor.armor_type.chest && curEnter.name.ToString() == "Chest"){
+						if (player.equips.chest == null) {
+							player.equips.chest = temp2;
+							//TODO: After equipped, delete the item from inventory
+							bagManager.deleteByID(old_slot);
+						} else {
+							//replace with the current item
+							Item tempItem = player.equips.chest;
+							player.equips.chest = temp2;
+							bagManager.replaceItem (old_slot, tempItem);
+						}
+					} else if(temp2.Armor_Type == Armor.armor_type.head && curEnter.name.ToString() == "Head"){
+						if (player.equips.head == null) {
+							player.equips.head = temp2;
+							//TODO: After equipped, delete the item from inventory
+							bagManager.deleteByID(old_slot);
+						} else {
+							//replace with the current item
+							Item tempItem = player.equips.head;
+							player.equips.head = temp2;
+							bagManager.replaceItem (old_slot, tempItem);
+						}
+					} else if(temp2.Armor_Type == Armor.armor_type.leg && curEnter.name.ToString() == "Leg"){
+						if (player.equips.legs == null) {
+							player.equips.legs = temp2;
+							//TODO: After equipped, delete the item from inventory
+							bagManager.deleteByID(old_slot);
+						} else {
+							//replace with the current item
+							Item tempItem = player.equips.legs;
+							player.equips.legs = temp2;
+							bagManager.replaceItem (old_slot, tempItem);
+						}
+					}
+				} else if (temp.Type.ToString () == curEnter.name.ToString () && temp.Type.ToString() == "Weapon") {
+					if (player.equips.weapon == null) {
+						player.equips.weapon = (Weapon)temp;
+						//TODO: After equipped, delete the item from inventory
+						bagManager.deleteByID (old_slot);
+					} else {
+						//replace with the current item
+						Item tempItem = player.equips.weapon;
+						player.equips.weapon = (Weapon)temp;
+						bagManager.replaceItem (old_slot, tempItem);
+					}
+
+				} else if (temp.Type.ToString () == curEnter.name.ToString () && temp.Type.ToString() == "Shield") {
+					if (player.equips.shield == null) {
+						player.equips.shield = (Shield)temp;
+						//TODO: After equipped, delete the item from inventory
+						bagManager.deleteByID (old_slot);
+					} else {
+						//replace with the current item
+						Item tempItem = player.equips.shield;
+						player.equips.shield = (Shield)temp;
+						bagManager.replaceItem (old_slot, tempItem);
+					}
+				}
+				armorManager.updateGui ();
+			}
 
 			//if we drag it to the background, set a confirm window for delete it
 			if (curEnter.name == "Background") {
@@ -133,18 +220,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 				
 				int new_slot = int.Parse (newID) - 1;
 
-//				if (old_slot > player.inventory.list.Count) {
-//					return;
-//				}
-				Debug.Log("old slot = " + old_slot);
-				Debug.Log ("new slot = " + new_slot);
-				Debug.Log ("Drag item: " + temp.Name);
-
 				player.inventory.list[old_slot] = player.inventory.list[new_slot];
 				player.inventory.list[new_slot] = temp;
-				for (int i = 0; i < player.inventory.list.Count; i++) {
-					Debug.Log (i + " " + player.inventory.list [i].Name);
-				}
+//				for (int i = 0; i < player.inventory.list.Count; i++) {
+//					Debug.Log (i + " " + player.inventory.list [i].Name);
+//				}
 
 			} else {
 				//if move to the end
@@ -157,7 +237,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 				}
 				player.inventory.list [i] = temp;
 			}
-			Debug.Log ("Updating bag...");
+//			Debug.Log ("Updating bag...");
 			//update the bag now
 			bagManager.updateGui ();
 		}
@@ -166,17 +246,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		canvasGroup.blocksRaycasts = true; 
 	}
 
-//	public void deleteItem(){
-//		Debug.Log ("lastID = " + this.transform.name);
-//		oldID = Regex.Replace(this.name, @"[^\d.\d]", "");
-//		int old_slot = int.Parse (oldID) - 1;
-//		//Item temp = player.inventory.list [old_slot];
-//		bagManager.deleteByID(old_slot);
-//		//close the confirm window
-//		confirmWindow.SetActive (false);
-//		canvasGroup.blocksRaycasts = true; 
-//
-//	}
+
+
+
 
 	public void closeWindow(){
 		if (confirmWindow.activeSelf) {

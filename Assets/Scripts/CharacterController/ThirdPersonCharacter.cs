@@ -15,6 +15,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		[SerializeField] float m_MoveSpeedMultiplier = 1f;
 		[SerializeField] float m_AnimSpeedMultiplier = 1f;
 		[SerializeField] float m_GroundCheckDistance = 0.1f;
+		// adding foley for waking 
+//		AudioSource man_walking;
+		[SerializeField] AudioSource man_stop;
+		[SerializeField] AudioSource man_running;
 
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
@@ -29,6 +33,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+
+
 
 
 		void Start()
@@ -76,13 +82,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			UpdateAnimator(move);
 		}
 
-		public void useSkill(bool buttonPressed, string skillName){
-			m_Animator.SetBool (skillName, buttonPressed);
+		public void useSkill(bool buttonPressed, string name){
+			m_Animator.SetBool (name, buttonPressed);
 		}
 
 		public bool inTransition(){
-			return (m_Animator.GetCurrentAnimatorStateInfo (1).normalizedTime > 1
-			&& !m_Animator.IsInTransition (1)) ? false : true;
+			return m_Animator.IsInTransition(1);
 		}
 
 
@@ -160,6 +165,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				// don't use that while airborne
 				m_Animator.speed = 1;
+			}
+
+			//adding foleys
+			if (m_ForwardAmount != 0 && !man_running.isPlaying && m_IsGrounded) {
+				man_running.Play ();
+			} else if(m_TurnAmount != 0 && !man_running.isPlaying && m_IsGrounded){
+				man_running.Play ();	
+			} else if (m_ForwardAmount == 0 && m_TurnAmount == 0) {
+				if (man_running.isPlaying) {
+					man_running.Stop ();
+					man_stop.Play ();
+				}
 			}
 		}
 

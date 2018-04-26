@@ -28,11 +28,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					if (Vector3.Distance (hit.point, tc.transform.position) < range) {
 						for (int i = 0; i < mst.Length; i++) {
 							Monster ms = mst [i].GetComponent<Monster> ();
+							AutoAttack aa = mst [i].GetComponent<AutoAttack> ();
 
 							ac.cast ("explosion", hit.point, Quaternion.identity, 1.5f);
 
 							if (Vector3.Distance (hit.point, ms.transform.position) < radius && ms.Current_health > 0) {
-								ms.applyDamage (damage);
+								aa.applyDamage (damage, tc.transform);
 								Debug.Log (ms.Current_health);
 							}
 						}

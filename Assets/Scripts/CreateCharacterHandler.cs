@@ -13,19 +13,17 @@ public class CreateCharacterHandler : MonoBehaviour {
 
 
     protected void OnEnable() {
-        submitButton.onClick.AddListener(loadData);
+        submitButton.onClick.AddListener(onCreateCharacter);
     }
 
 
     protected void OnDisable() {
-        submitButton.onClick.RemoveListener(loadData);
+        submitButton.onClick.RemoveListener(onCreateCharacter);
     }
 
-    public void loadData() {
+    public void onCreateCharacter() {
 
-        //ConstIntDB db = ConstIntDB.Instance;
 		string name = nameField.text;
-		//Appearance.Gender gender;
 
         Toggle t = genderToggle.ActiveToggles().FirstOrDefault();
         string genderString = t.gameObject.transform.name.ToUpper();
@@ -41,31 +39,12 @@ public class CreateCharacterHandler : MonoBehaviour {
 
         uint hairColorVal = ConstIntDB.Instance.getByKey(hairColorString).Value;
 
-        Appearance ap = new Appearance();
-        ap.gender = gender;
-        //ap.hairColor = 
-        //ap.skinColor = 
-
-        //Character character = new Character(name, ap);
-
-
+        CharacterManager.character.setGender(gender);
+        CharacterManager.character.Name = name;
+        
         Debug.Log("Character created: name: " + name + " gender: " + genderString + " hairColor: " + hairColorString + " " + hairColorVal);
 
-        //TODO: place character data to Global Game Manager
-
-		//if (male.isOn) {
-		//	gender = Appearance.Gender.Male;
-		//	Debug.Log ("male");
-		//} else if (female.isOn) {
-		//	gender = Appearance.Gender.Female;
-		//	Debug.Log ("female");
-		//}
-
-			
 	}
 
-//	public Character createCharacter(string name, Appearance.Gender gender){
-//		return new Character (name, app);
-//	}
 
 }
