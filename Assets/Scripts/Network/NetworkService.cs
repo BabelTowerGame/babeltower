@@ -12,6 +12,8 @@ public class NetworkService : MonoBehaviour {
 
     public static bool isServer = false;
 
+    private bool isActive = false;
+
     private Channel channel;
     private ToB.ToBClient client;
     private Metadata metadata;
@@ -38,7 +40,7 @@ public class NetworkService : MonoBehaviour {
 
     private void ServiceStart() {
         NetworkID.Local_ID = NetworkID.generateNewID(128);
-        this.channel = new Channel("127.0.0.1:16882", ChannelCredentials.Insecure);
+        this.channel = new Channel("51.15.190.233:16882", ChannelCredentials.Insecure);
         this.client = new Tob.ToB.ToBClient(this.channel);
         this.metadata = new Metadata {
             { "id", NetworkID.Local_ID}
@@ -53,10 +55,6 @@ public class NetworkService : MonoBehaviour {
         Debug.Log("NetworkService: Run");
         this.sendhandle = this.client.Publish(metadata);
         this.StartListen();
-
-        Tob.Event e = new Tob.Event();
-        e.Topic = EventTopic.PlayerEvent;
-        this.SendEvent(e);
     }
 
     private async void StartListen() {
@@ -84,6 +82,7 @@ public class NetworkService : MonoBehaviour {
     }
 
     public async void SendEvent(Tob.Event e) {
+        if (!isActive) return;
         Debug.Log("NetworkService: StartSendWindow");
         Debug.Log("[Sent] EventType:" + e.Topic);
         await sendhandle.RequestStream.WriteAsync(e);
@@ -99,6 +98,7 @@ public class NetworkService : MonoBehaviour {
         Debug.Log("[ServerEvent] EventType:" + e.Type);
         switch (e.Type) {
             case ServerEventType.ServerChange:
+                isActive = true;
                 if(e.Id.Equals(NetworkID.Local_ID)) {
                     NetworkService.isServer = true;
                 }

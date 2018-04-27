@@ -52,7 +52,10 @@ public class NetworkPlayerManager : MonoBehaviour {
     }
 
     void OnPlayerCast(PlayerEvent e) {
-
+        GameObject go;
+        if (players.TryGetValue(e.Id, out go)) {
+            //go.GetComponent<AbilityCast>().onAbilityCast(e);
+        }
     }
 
     void OnPlayerDie(PlayerEvent e) {

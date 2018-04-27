@@ -112,6 +112,7 @@ public class NetworkIDController : MonoBehaviour {
         if (!HasMoved()) return;
 
         Tob.Event e = new Tob.Event();
+        e.Topic = Tob.EventTopic.PlayerEvent;
         e.P = new Tob.PlayerEvent();
         e.P.Type = Tob.PlayerEventType.PlayerPosition;
         e.P.Move = new Tob.PlayerMoveEvent();
