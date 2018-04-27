@@ -95,6 +95,7 @@ public class AutoAttack : MonoBehaviour {
 					MonsterEvent e0 = new MonsterEvent();
 					MonsterDieEvent e1 = new MonsterDieEvent();
 					e0.Id = this.GetComponent<Monster>().ID.ToString();
+                    e0.Type = Tob.MonsterEventType.MonsterDie;
 					for (int i = 0; i < this.GetComponent<Monster> ().LootList.Length; i++) {
 						e1.Items.Add (this.GetComponent<Monster> ().LootList [i]);
 					}
@@ -123,7 +124,8 @@ public class AutoAttack : MonoBehaviour {
 					MonsterEvent e0 = new MonsterEvent();
 					MonsterMoveEvent e1 = new MonsterMoveEvent();
 					e0.Id = this.GetComponent<Monster>().ID.ToString();
-					Tob.Vector passpos = new Tob.Vector ();
+                    e0.Type = Tob.MonsterEventType.MonsterMove;
+                    Tob.Vector passpos = new Tob.Vector ();
 					Tob.Vector passpos1 = new Tob.Vector ();
 					passpos.X = oriPos.x;
 					passpos.Y = oriPos.y;
@@ -204,6 +206,7 @@ public class AutoAttack : MonoBehaviour {
 							Tob.Event e = new Tob.Event ();
 							e.Topic = EventTopic.MonsterEvent;
 							MonsterEvent e0 = new MonsterEvent();
+                            e0.Type = Tob.MonsterEventType.MonsterMove;
 							MonsterMoveEvent e1 = new MonsterMoveEvent();
 							e0.Id = this.GetComponent<Monster>().ID.ToString();
 							Tob.Vector passpos = new Tob.Vector ();
@@ -236,7 +239,8 @@ public class AutoAttack : MonoBehaviour {
 							MonsterEvent e0 = new MonsterEvent();
 							MonsterMoveEvent e1 = new MonsterMoveEvent();
 							e0.Id = this.GetComponent<Monster>().ID.ToString();
-							Tob.Vector passpos = new Tob.Vector ();
+                            e0.Type = Tob.MonsterEventType.MonsterMove;
+                            Tob.Vector passpos = new Tob.Vector ();
 							Tob.Vector passpos1 = new Tob.Vector ();
 							passpos.X = targetPos.x;
 							passpos.Y = targetPos.y;
@@ -268,7 +272,8 @@ public class AutoAttack : MonoBehaviour {
 						MonsterEvent e0 = new MonsterEvent();
 						MonsterMoveEvent e1 = new MonsterMoveEvent();
 						e0.Id = this.GetComponent<Monster>().ID.ToString();
-						Tob.Vector passpos = new Tob.Vector ();
+                        e0.Type = Tob.MonsterEventType.MonsterMove;
+                        Tob.Vector passpos = new Tob.Vector ();
 						Tob.Vector passpos1 = new Tob.Vector ();
 						passpos.X = targetPos.x;
 						passpos.Y = targetPos.y;
@@ -320,7 +325,7 @@ public class AutoAttack : MonoBehaviour {
 		GameObject[] players;
 		GameObject[] otherplayers;
 		players = GameObject.FindGameObjectsWithTag("Player");
-		otherplayers = GameObject.FindGameObjectsWithTag("OtherPlayer");
+		otherplayers = GameObject.FindGameObjectsWithTag("Other_Player");
 		GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;

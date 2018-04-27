@@ -105,8 +105,8 @@ public class M_generator : MonoBehaviour {
 			regenCounter [i] = 60.0f;
 			int iUp=2400; 
 			int iDown=1;
-			float resultX = Random.Range (1000, 1200);
-			float resultZ = Random.Range (500, 700);
+			float resultX = Random.Range (1000, 1300);
+			float resultZ = Random.Range (1000, 1300);
 			DemonType dt = RdType ();
 			DemonSkin ds = RdSkin ();
 			WeaponType wt = RdWeapon ();

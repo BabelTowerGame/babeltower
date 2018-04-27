@@ -14,6 +14,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 	public PickupManager pickupManager;
 	public ItemDB db;
 	public GameObject confirmWindow;
+    UnityStandardAssets.Characters.ThirdPerson.equipWeapon ew;
 
 
 	// Use this for initialization
@@ -21,7 +22,8 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 		db = ItemDB.Instance;
         GameObject playerObject = GameObject.FindWithTag("Player");
         player = CharacterManager.character;
-
+        ew = GameObject.FindGameObjectWithTag("Skill").
+            GetComponent<UnityStandardAssets.Characters.ThirdPerson.equipWeapon> ();
     }
 
 	// Update is called once per frame
@@ -102,6 +104,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						player.equips.weapon = (Weapon)equipItem;
 						bagManager.replaceItem (slot, tempItem);
 					}
+                    ew.equip((Weapon)equipItem);
 					
 				} else if (equipItem.Type.ToString () == "Shield") {
 					if (player.equips.shield == null) {
@@ -114,6 +117,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						player.equips.shield = (Shield)equipItem;
 						bagManager.replaceItem (slot, tempItem);
 					}
+                    ew.equip((Shield)equipItem);
 				}
 				armorManager.updateGui ();
 			} else if (this.tag == "Pickup") {
@@ -133,7 +137,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						pickupManager.deleteItem (slot);
 					} else {
 						//bag is full, then back item to the monster's lootlist
-						pick.monster.backItem (pick.id);
+						//pick.monster.backItem (pick.id);
 					}
 				}
 			} else if (this.tag == "Equip") {

@@ -42,14 +42,14 @@ public class CreateCharacterHandler : MonoBehaviour {
         CharacterManager.character.setGender(gender);
         CharacterManager.character.Name = name;
 
-        Character.Equipped eq = new Character.Equipped();
-        CharacterManager.character.equips = eq;
-        eq.chest = (Armor)ItemDB.Instance.getByID(3);
-        eq.legs = (Armor)ItemDB.Instance.getByID(4);
-        eq.head = (Armor)ItemDB.Instance.getByID(5);
-        eq.shield = (Shield)ItemDB.Instance.getByID(2);
-        eq.weapon = (Weapon)ItemDB.Instance.getByID(1);
-        eq.shoes = (Shoes)ItemDB.Instance.getByID(6);
+        //Character.Equipped eq = new Character.Equipped();
+        //CharacterManager.character.equips = eq;
+        //eq.chest = (Armor)ItemDB.Instance.getByID(3);
+        //eq.legs = (Armor)ItemDB.Instance.getByID(4);
+        //eq.head = (Armor)ItemDB.Instance.getByID(5);
+        //eq.shield = (Shield)ItemDB.Instance.getByID(2);
+        //eq.weapon = (Weapon)ItemDB.Instance.getByID(1);
+        //eq.shoes = (Shoes)ItemDB.Instance.getByID(6);
 
 
 

@@ -23,12 +23,15 @@ public class PickupManager : MonoBehaviour {
 	public UIItemSlot[] slots = new UIItemSlot[42];
 	[SerializeField] private GameObject Content;
 	public ItemDB DB;
+    public GameObject playerObject;
+   
 
 
 
 	// Use this for initialization
 	void Start () {
-		int i = 0;
+        playerObject = GameObject.FindWithTag("Player");
+        int i = 0;
 		foreach (Transform child in Content.transform)  
 		{  
 			//Debug.Log ("Child name is" + child.name);
@@ -71,16 +74,17 @@ public class PickupManager : MonoBehaviour {
 
 	void pickUpListGen(){
 		pickupList.Clear ();
-		foreach (Collider item in Physics.OverlapSphere (transform.position, 3.0f)) {
+		foreach (Collider item in Physics.OverlapSphere (playerObject.transform.position, 3.0f)) {
+            //Debug.Log(item.tag);
 			if (item.tag == "Monster") {
 				//if the monster is dead
-				item.GetComponent<AutoAttack>().applyDamage(5, this.transform);
-//				Debug.Log ("monster health = " + item.GetComponent<Monster> ().Current_health);
+				item.GetComponent<AutoAttack>().applyDamage(30, this.transform);
+				Debug.Log ("monster health = " + item.GetComponent<Monster> ().Current_health);
 				if (item.GetComponent<AutoAttack> ().LootReady) {
 					AutoAttack tempmon = item.GetComponent<AutoAttack> ();
-//					Debug.Log ("Monster = " + temp);
+					Debug.Log ("Monster = " + tempmon);
 					int[] templist = item.GetComponent<Monster> ().LootList;
-//					Debug.Log ("item amount = " + templist.Length);
+					Debug.Log ("item amount = " + templist.Length);
 					for (int i = 0; i < templist.Length; i++) {
 						if (templist [i] != -1) {
 							Pickitem temp = new Pickitem (tempmon, i, templist[i]);

@@ -20,8 +20,12 @@ public class Monster: MonoBehaviour  {
 	private float x;
 	private float y;
 	private float z;
+	private float px;
+	private float py;
+	private float pz;
 	private int[] Lootlist = new int[10];
 	private int[] Loottable;
+	private bool updated = false;
 	public enum DemonType {
 		Demon1,
 		Demon2,
@@ -223,6 +227,38 @@ public class Monster: MonoBehaviour  {
 		}
 		set{ 
 			z = value;
+		}
+	}
+	public float PX{
+		get{ 
+			return px;
+		}
+		set{ 
+			px = value;
+		}
+	}
+	public float PY{
+		get{ 
+			return py;
+		}
+		set{ 
+			py = value;
+		}
+	}
+	public float PZ{
+		get{ 
+			return pz;
+		}
+		set{ 
+			pz = value;
+		}
+	}
+	public bool Updated{
+		get{ 
+			return updated;
+		}
+		set{ 
+			updated = value;
 		}
 	}
 
