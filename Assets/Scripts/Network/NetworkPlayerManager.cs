@@ -8,12 +8,13 @@ public class NetworkPlayerManager : MonoBehaviour {
     public GameObject MalePrefab;
     public GameObject FemalePrefab;
 
-    private Dictionary<string, GameObject> players;
-    private Dictionary<string, PlayerAppearance> playerAppearence;
+    public Dictionary<string, GameObject> players;
+    public Dictionary<string, PlayerAppearance> playerAppearence;
 
     public void Awake() {
         players = new Dictionary<string, GameObject>();
         playerAppearence = new Dictionary<string, PlayerAppearance>();
+
     }
 
     //TODO: parse msg to player class
@@ -45,20 +46,26 @@ public class NetworkPlayerManager : MonoBehaviour {
 
         if(NetworkService.isServer) {
             Dictionary<string, GameObject>.Enumerator eu = players.GetEnumerator();
-            while (eu.MoveNext()) {
-                var pair = eu.Current;
+            foreach (var pair in players) {
+               // var pair = eu.Current;
                 Tob.Event ee = new Tob.Event();
                 ee.Topic = EventTopic.PlayerEvent;
+                ee.P = new Tob.PlayerEvent();
                 ee.P.Id = pair.Key;
                 ee.P = new PlayerEvent();
                 ee.P.Type = PlayerEventType.PlayerEnter;
-                PlayerAppearance ap;
-                playerAppearence.TryGetValue(ee.P.Id, out ap);
-                ee.P.Appearance = ap;
+                PlayerAppearance ap = playerAppearence[pair.Key];
+                Debug.Log(ap);
+                ee.P.Appearance = new Tob.PlayerAppearance();
+                ee.P.Appearance.Gender = ap.Gender;
+                ee.P.Appearance.HairColor = ap.HairColor;
+
                 ee.P.Position = new Vector();
                 ee.P.Position.X = pair.Value.transform.position.x;
                 ee.P.Position.Y = pair.Value.transform.position.y;
                 ee.P.Position.Z = pair.Value.transform.position.z;
+
+                Debug.Log("                                     "+ee.ToString());
 
                 NetworkService.Instance.SendEvent(ee);
             }

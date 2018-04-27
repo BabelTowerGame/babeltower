@@ -61,6 +61,7 @@ public class NetworkIDController : MonoBehaviour {
             e.P.Id = NetworkID.Local_ID;
             e.P.Appearance = new Tob.PlayerAppearance();
             e.P.Appearance.Gender = (Tob.Gender)c.appearance.gender;
+            e.P.Appearance.HairColor = CharacterManager.ColorToInt(c.appearance.hairColor);
             e.P.Equiped = new Tob.PlayerEquiped();
             e.P.Equiped.Head = "5";
             e.P.Equiped.Chest = "3";
@@ -77,6 +78,11 @@ public class NetworkIDController : MonoBehaviour {
             NetworkService.Instance.SendEvent(e);
 
             Debug.Log("-----------Send Enter Event");
+
+            NetworkPlayerManager mgr = GameObject.FindGameObjectWithTag("NetworkPlayer")
+                .GetComponent<NetworkPlayerManager>();
+            mgr.players.Add(NetworkID.Local_ID, this.gameObject);
+            mgr.playerAppearence.Add(NetworkID.Local_ID, e.P.Appearance);
         }
     }
 	// Update is called once per frame
