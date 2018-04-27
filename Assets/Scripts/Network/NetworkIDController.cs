@@ -149,19 +149,29 @@ public class NetworkIDController : MonoBehaviour {
         int[] stateHash = new int[charAnimator.layerCount];
         float[] normalizedTime = new float[charAnimator.layerCount];
 
-        bool hasChanged = false;
+        //bool hasChanged = false;
+        //for (int i = 0; i < charAnimator.layerCount; i++) {
+        //    if (CheckAnimStateChanged(i, out stateHash[i], out normalizedTime[i])) {
+        //        hasChanged = true;
+        //        pae.StateHash.Add(stateHash[i]);
+        //        pae.NormalizedTime.Add(normalizedTime[i]);
+        //    } else {
+        //        pae.StateHash.Add(prevAnimationHash[i]);
+        //        pae.NormalizedTime.Add(normalizedTime[i]);
+        //    }
+
+        //if(!hasChanged) return;
         for (int i = 0; i < charAnimator.layerCount; i++) {
-            if (CheckAnimStateChanged(i, out stateHash[i], out normalizedTime[i])) {
-                hasChanged = true;
-                pae.StateHash.Add(stateHash[i]);
-                pae.NormalizedTime.Add(normalizedTime[i]);
+            if (charAnimator.IsInTransition(i)) {
+                AnimatorStateInfo st = charAnimator.GetNextAnimatorStateInfo(i);
+                pae.StateHash.Add(st.fullPathHash);
+                pae.NormalizedTime.Add(st.normalizedTime);
             } else {
-                pae.StateHash.Add(prevAnimationHash[i]);
-                pae.NormalizedTime.Add(normalizedTime[i]);
+                AnimatorStateInfo st = charAnimator.GetCurrentAnimatorStateInfo(i);
+                pae.StateHash.Add(st.fullPathHash);
+                pae.NormalizedTime.Add(st.normalizedTime);
             }
         }
-        if(!hasChanged) return;
-
 
 
         for (int i = 0; i < charAnimator.parameters.Length; i++) {
@@ -251,7 +261,7 @@ public class NetworkIDController : MonoBehaviour {
 
     public void onReceiveMovement(Tob.PlayerMoveEvent e) {
 
-        Debug.Log(this.ToString() + "onReceiveMovement" + e.ToString());
+        //Debug.Log(this.ToString() + "onReceiveMovement" + e.ToString());
         //Save Network Message in a Buffer for next Fixed update
         if (networkID.IsLocalPlayer) {
             //LocalPlayer does not need to be updated by network
@@ -277,6 +287,8 @@ public class NetworkIDController : MonoBehaviour {
     public void onReceiveAnimation(Tob.PlayerAnimationEvent e) {
         //Animator will be updated in realtime once the message 
         //is receive since no sync issue is involved
+        Debug.Log(this.ToString() + "onReceiveAnimation" + e.ToString());
+
 
         if (networkID.IsLocalPlayer)
             return;
