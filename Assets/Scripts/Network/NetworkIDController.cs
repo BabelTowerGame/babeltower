@@ -177,11 +177,11 @@ public class NetworkIDController : MonoBehaviour {
             }
         }
         Tob.Event e = new Tob.Event();
-        e.P.Id = NetworkID.Local_ID;
         Tob.PlayerEvent pe = new Tob.PlayerEvent();
         pe.Type = Tob.PlayerEventType.PlayerAnimation;
         e.Topic = Tob.EventTopic.PlayerEvent;
         e.P = pe;
+        e.P.Id = NetworkID.Local_ID;
         pe.Animation = pae;
 
         NetworkService.Instance.SendEvent(e);
