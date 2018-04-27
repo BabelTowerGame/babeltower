@@ -8,6 +8,8 @@ public class NetworkPlayerManager : MonoBehaviour {
     public GameObject MalePrefab;
     public GameObject FemalePrefab;
 
+    private List<GameObject> players;
+
 
     //TODO: parse msg to player class
     void OnPlayerEnter(PlayerEvent e) {
@@ -15,39 +17,44 @@ public class NetworkPlayerManager : MonoBehaviour {
 
     }
 
-    void OnPlayerExit() {
+    void OnPlayerExit(PlayerEvent e) {
+
 
     }
 
-    void OnPlayerCrouch() {
+    void OnPlayerCrouch(PlayerEvent e) {
 
     }
 
-    void OnPlayerDamaged() {
+    void OnPlayerDamaged(PlayerEvent e) {
 
     }
 
-    void OnPlayerCast() {
+    void OnPlayerCast(PlayerEvent e) {
 
     }
 
-    void OnPlayerDie() {
+    void OnPlayerDie(PlayerEvent e) {
 
     }
 
-    void OnPlayerEquipped() {
+    void OnPlayerEquipped(PlayerEvent e) {
 
     }
 
-    void OnPlayerJump() {
+    void OnPlayerJump(PlayerEvent e) {
 
     }
 
-    void OnPlayerMove() {
+    void OnPlayerMove(PlayerEvent e) {
 
     }
 
-    void OnPlayerPosition() {
+    void OnPlayerPosition(PlayerEvent e) {
+
+    }
+
+    void OnPlayerAnimation(PlayerEvent e {
 
     }
 
