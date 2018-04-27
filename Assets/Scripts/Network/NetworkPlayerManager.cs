@@ -52,13 +52,21 @@ public class NetworkPlayerManager : MonoBehaviour {
                 ee.Topic = EventTopic.PlayerEvent;
                 ee.P = new Tob.PlayerEvent();
                 ee.P.Id = pair.Key;
-                ee.P = new PlayerEvent();
+                Debug.Log("Send ID: "+ee.P.Id);
                 ee.P.Type = PlayerEventType.PlayerEnter;
                 PlayerAppearance ap = playerAppearence[pair.Key];
                 Debug.Log(ap);
                 ee.P.Appearance = new Tob.PlayerAppearance();
                 ee.P.Appearance.Gender = ap.Gender;
                 ee.P.Appearance.HairColor = ap.HairColor;
+
+                ee.P.Equiped = new Tob.PlayerEquiped();
+                ee.P.Equiped.Head = "5";
+                ee.P.Equiped.Chest = "3";
+                ee.P.Equiped.Weapon = "1";
+                ee.P.Equiped.Legs = "4";
+                ee.P.Equiped.Shield = "2";
+                ee.P.Equiped.Shoes = "6";
 
                 ee.P.Position = new Vector();
                 ee.P.Position.X = pair.Value.transform.position.x;

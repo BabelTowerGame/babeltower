@@ -293,7 +293,7 @@ public class NetworkIDController : MonoBehaviour {
     public void onReceiveAnimation(Tob.PlayerAnimationEvent e) {
         //Animator will be updated in realtime once the message 
         //is receive since no sync issue is involved
-        Debug.Log(this.ToString() + "onReceiveAnimation" + e.ToString());
+        //Debug.Log(this.ToString() + "onReceiveAnimation" + e.ToString());
 
 
         if (networkID.IsLocalPlayer)
