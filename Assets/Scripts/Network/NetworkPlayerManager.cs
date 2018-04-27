@@ -8,7 +8,7 @@ public class NetworkPlayerManager : MonoBehaviour {
     public GameObject MalePrefab;
     public GameObject FemalePrefab;
 
-    private Dictionary<string, GameObject> players;
+	public Dictionary<string, GameObject> players;
 
 
     //TODO: parse msg to player class

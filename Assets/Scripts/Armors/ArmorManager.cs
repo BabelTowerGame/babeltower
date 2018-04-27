@@ -19,6 +19,8 @@ namespace EasyEquipmentSystem{
 		public UIEquipSlot[] weaponslots = new UIEquipSlot[2];
 		[SerializeField] private GameObject WeaponContent;
 		public EquipmentSystem equipSys;
+		ItemDB db;
+		NetworkPlayerManager npm;
 
 		public Text health_text;
 		public Text damage_text;
@@ -29,6 +31,7 @@ namespace EasyEquipmentSystem{
 
 		// Use this for initialization
 		void Start () {
+			db = ItemDB.Instance;
 			player = bagmanager.player;
 			int i = 0;
 			foreach (Transform child in ArmorContent.transform) {  
@@ -311,6 +314,48 @@ namespace EasyEquipmentSystem{
 
 			//TODO: send event message
 //			ns.SendEvent (e);
+		}
+
+
+		void receiveEvent(PlayerEvent e){
+//			Character[] otherplayers = GameObject.FindGameObjectsWithTag ("Other players");
+			//TODO: find the character with player id;
+//			GameObject[] otherChara = GameObject.FindGameObjectsWithTag("Other Players");
+			GameObject oth_player = npm.players[e.Id];
+			Character target = oth_player.GetComponent<Character> ();
+//			Character target = null;
+			PlayerEquiped otherEquips = e.Equiped;
+			if (e.Equiped.Head != "") {
+				target.equips.head = (Armor)db.getByID (int.Parse (e.Equiped.Head));
+			}
+			if (e.Equiped.Chest != "") {
+				target.equips.chest = (Armor)db.getByID (int.Parse (e.Equiped.Chest));
+			}
+			if (e.Equiped.Legs != "") {
+				target.equips.legs = (Armor)db.getByID (int.Parse (e.Equiped.Legs));
+			}
+			if (e.Equiped.Shoes != "") {
+				target.equips.shoes = (Shoes)db.getByID (int.Parse (e.Equiped.Shoes));
+			}
+			if (e.Equiped.Weapon != "") {
+				target.equips.weapon = (Weapon)db.getByID (int.Parse (e.Equiped.Weapon));
+			}
+			if (e.Equiped.Shield != "") {
+				target.equips.shield = (Shield)db.getByID (int.Parse (e.Equiped.Shield));
+			}
+
+			EquipmentSystem otherEquipSys = oth_player.GetComponent<EquipmentSystem> ();
+			if (e.Equiped.Weapon != null) {
+				otherEquipSys.chosenHandRightIndex = 1;
+			} else {
+				otherEquipSys.chosenHandRightIndex = 0;
+			}
+			if (e.Equiped.Shield != null) {
+				otherEquipSys.chosenHandLeftIndex = 4;
+			} else {
+				otherEquipSys.chosenHandLeftIndex = 0;
+			}
+			otherEquipSys.UpdateChoicesEquipment ();
 		}
 	}
 }
