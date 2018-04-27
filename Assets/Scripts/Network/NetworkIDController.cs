@@ -145,6 +145,7 @@ public class NetworkIDController : MonoBehaviour {
     }
 
     void SendAnimation() {
+        Tob.PlayerAnimationEvent pae = new Tob.PlayerAnimationEvent();
         int[] stateHash = new int[charAnimator.layerCount];
         float[] normalizedTime = new float[charAnimator.layerCount];
 
@@ -152,11 +153,16 @@ public class NetworkIDController : MonoBehaviour {
         for (int i = 0; i < charAnimator.layerCount; i++) {
             if (CheckAnimStateChanged(i, out stateHash[i], out normalizedTime[i])) {
                 hasChanged = true;
+                pae.StateHash.Add(stateHash[i]);
+                pae.NormalizedTime.Add(normalizedTime[i]);
+            } else {
+                pae.StateHash.Add(prevAnimationHash[i]);
+                pae.NormalizedTime.Add(normalizedTime[i]);
             }
         }
         if(!hasChanged) return;
 
-        Tob.PlayerAnimationEvent pae = new Tob.PlayerAnimationEvent();
+
 
         for (int i = 0; i < charAnimator.parameters.Length; i++) {
 
