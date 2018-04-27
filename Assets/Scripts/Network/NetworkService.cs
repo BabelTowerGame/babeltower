@@ -38,7 +38,7 @@ public class NetworkService : MonoBehaviour {
 
     private void ServiceStart() {
         NetworkID.Local_ID = NetworkID.generateNewID(128);
-        this.channel = new Channel("127.0.0.1:16882", ChannelCredentials.Insecure);
+        this.channel = new Channel("192.168.0.3:16882", ChannelCredentials.Insecure);
         this.client = new Tob.ToB.ToBClient(this.channel);
         this.metadata = new Metadata {
             { "id", NetworkID.Local_ID}
@@ -89,8 +89,10 @@ public class NetworkService : MonoBehaviour {
         await sendhandle.RequestStream.WriteAsync(e);
     }
 
-    private void Stop() {
-        this.channel.ShutdownAsync();
+    private async void Stop() {
+        Debug.Log("NetworkService: UnSub");
+        await this.sendhandle.RequestStream.CompleteAsync();
+        await this.channel.ShutdownAsync();
     }
 
     private void OnServerEvent(ServerEvent e) {

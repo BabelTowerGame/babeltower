@@ -190,7 +190,7 @@ public class NetworkIDController : MonoBehaviour {
     }
 
     //TODO:parameter message
-    public void onReceiveMovement() {
+    public void onReceiveMovement(Tob.PlayerMoveEvent e) {
         //Save Network Message in a Buffer for next Fixed update
         if (networkID.IsLocalPlayer) {
             //LocalPlayer does not need to be updated by network
@@ -212,7 +212,7 @@ public class NetworkIDController : MonoBehaviour {
     }
 
     //TODO:parameter message
-    public void onReceiveAnimation() {
+    public void onReceiveAnimation(Tob.PlayerAnimationEvent e) {
         //Animator will be updated in realtime once the message 
         //is receive since no sync issue is involved
 

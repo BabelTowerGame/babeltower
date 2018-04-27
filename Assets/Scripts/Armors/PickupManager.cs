@@ -43,7 +43,7 @@ public class PickupManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown ("Pickup") && window.activeSelf) {
-			Debug.Log ("close the gui!!!");
+//			Debug.Log ("close the gui!!!");
 			closeGui ();
 		} else if (Input.GetButtonDown ("Pickup") && !window.activeSelf) {
 			Debug.Log ("open the gui!!!");
@@ -53,9 +53,8 @@ public class PickupManager : MonoBehaviour {
 		}
 //		if (window.activeSelf) {
 ////			update too fast
-//			flag = 1;
 //			if (!IsInvoking ()) {
-//				InvokeRepeating ("updateGui", 1, 1); 
+//				InvokeRepeating ("pickUpListGen", 1.0f, 2.5f); 
 //			}
 //			updateGui ();
 //		} else if (!window.activeSelf) {
@@ -78,7 +77,7 @@ public class PickupManager : MonoBehaviour {
 			if (item.tag == "Monster") {
 				//if the monster is dead
 				item.GetComponent<AutoAttack>().applyDamage(5, this.transform);
-				Debug.Log ("monster health = " + item.GetComponent<Monster> ().Current_health);
+//				Debug.Log ("monster health = " + item.GetComponent<Monster> ().Current_health);
 				if (item.GetComponent<AutoAttack> ().LootReady) {
 					AutoAttack tempmon = item.GetComponent<AutoAttack> ();
 //					Debug.Log ("Monster = " + temp);
@@ -87,8 +86,12 @@ public class PickupManager : MonoBehaviour {
 					for (int i = 0; i < templist.Length; i++) {
 						if (templist [i] != -1) {
 							Pickitem temp = new Pickitem (tempmon, i, templist[i]);
-							Debug.Log ("add item" + temp);
-							pickupList.Add (temp);
+//							Debug.Log ("add item" + temp);
+							if (pickupList.Count < 42) {
+								pickupList.Add (temp);
+							} else {
+								return;
+							}
 						}
 					}
 				}
@@ -113,7 +116,7 @@ public class PickupManager : MonoBehaviour {
 		for (int i = 0; i < pickupList.Count; i++) {
 //			Debug.Log ("item id = " + pickupList[i].id);
 			Item it = DB.getByID(pickupList[i].id);
-			Debug.Log ("Item = " + it);
+//			Debug.Log ("Item = " + it);
 			slots [i].newAssign (it, null);
 		}
 
