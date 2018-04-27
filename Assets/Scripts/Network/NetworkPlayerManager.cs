@@ -12,7 +12,7 @@ public class NetworkPlayerManager : MonoBehaviour {
 
 
     //TODO: parse msg to player class
-    void OnPlayerEnter(PlayerEvent e) {
+    public void OnPlayerEnter(PlayerEvent e) {
         PlayerAppearance t = e.Appearance;
         Appearance app = new Appearance((Appearance.Gender)t.Gender, 
             CharacterManager.ToColor((uint)t.HairColor));
@@ -28,13 +28,13 @@ public class NetworkPlayerManager : MonoBehaviour {
         }
         go.GetComponent<EasyEquipmentSystem.EquipmentSystem>().onHairColorChanged(app.hairColor);
         NetworkID id = go.GetComponent<NetworkID>();
-        Debug.Log("                 OnPlayerEnter: " + go.ToString());
+        
         id.ID = e.Id;
         id.IsLocalPlayer = false;
         players.Add(e.Id, go);
     }
 
-    void OnPlayerExit(PlayerEvent e) {
+    public void OnPlayerExit(PlayerEvent e) {
         GameObject go;
         if(players.TryGetValue(e.Id, out go)) {
             Destroy(go);
@@ -43,47 +43,47 @@ public class NetworkPlayerManager : MonoBehaviour {
 
     }
 
-    void OnPlayerCrouch(PlayerEvent e) {
+    public void OnPlayerCrouch(PlayerEvent e) {
         //ditched
     }
 
-    void OnPlayerDamaged(PlayerEvent e) {
+    public void OnPlayerDamaged(PlayerEvent e) {
         if(e.Id == NetworkID.Local_ID) {
             CharacterManager.character.CurrentHealth -= e.Damage;
         }
     }
 
-    void OnPlayerCast(PlayerEvent e) {
+    public void OnPlayerCast(PlayerEvent e) {
         GameObject go;
         if (players.TryGetValue(e.Id, out go)) {
             //go.GetComponent<AbilityCast>().onAbilityCast(e);
         }
     }
 
-    void OnPlayerDie(PlayerEvent e) {
+    public void OnPlayerDie(PlayerEvent e) {
         //ditched
     }
 
-    void OnPlayerEquipped(PlayerEvent e) {
+    public void OnPlayerEquipped(PlayerEvent e) {
 
     }
 
-    void OnPlayerJump(PlayerEvent e) {
+    public void OnPlayerJump(PlayerEvent e) {
         //dictched
     }
 
-    void OnPlayerMove(PlayerEvent e) {
+    public void OnPlayerMove(PlayerEvent e) {
         //ditched
     }
 
-    void OnPlayerPosition(PlayerEvent e) {
+    public void OnPlayerPosition(PlayerEvent e) {
         GameObject go;
         if (players.TryGetValue(e.Id, out go)) {
             go.GetComponent<NetworkIDController>().onReceiveMovement(e.Move);
         }
     }
 
-    void OnPlayerAnimation(PlayerEvent e) {
+    public void OnPlayerAnimation(PlayerEvent e) {
         GameObject go;
         if (players.TryGetValue(e.Id, out go)) {
             go.GetComponent<NetworkIDController>().onReceiveAnimation(e.Animation);

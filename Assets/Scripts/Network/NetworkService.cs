@@ -110,29 +110,45 @@ public class NetworkService : MonoBehaviour {
     }
 
     private void OnPlayerEvent(PlayerEvent e) {
-        Debug.Log("[PlayerEvent] EventType:" + e.Type);
+
+        NetworkPlayerManager mgr = GameObject.FindGameObjectWithTag("NetworkPlayer")
+            .GetComponent<NetworkPlayerManager>();
+
+        Debug.Log("[!!PlayerEvent!!] EventType:" + e.Type);
+        Debug.Log("MGR: " + mgr.ToString());
         switch (e.Type) {
             case PlayerEventType.PlayerEnter:
+                mgr.OnPlayerEnter(e);
                 break;
             case PlayerEventType.PlayerExit:
+                mgr.OnPlayerExit(e);
                 break;
             case PlayerEventType.PlayerCast:
+                mgr.OnPlayerCast(e);
                 break;
             case PlayerEventType.PlayerCrouch:
+                mgr.OnPlayerCrouch(e);
                 break;
             case PlayerEventType.PlayerDamaged:
+                mgr.OnPlayerDamaged(e);
                 break;
             case PlayerEventType.PlayerDie:
+                mgr.OnPlayerDie(e);
                 break;
             case PlayerEventType.PlayerEquipped:
+                mgr.OnPlayerEquipped(e);
                 break;
             case PlayerEventType.PlayerJump:
+                mgr.OnPlayerJump(e);
                 break;
             case PlayerEventType.PlayerMove:
+                mgr.OnPlayerMove(e);
                 break;
             case PlayerEventType.PlayerPosition:
+                mgr.OnPlayerPosition(e);
                 break;
             case PlayerEventType.PlayerAnimation:
+                mgr.OnPlayerAnimation(e);
                 break;
             default:
                 break;
@@ -140,6 +156,8 @@ public class NetworkService : MonoBehaviour {
 
     }
 
+
+    // TODO: LINK FUNCTIONS
     private void OnMonsterEvent(MonsterEvent e) {
         Debug.Log("[MonsterEvent] EventType:" + e.Type);
         switch (e.Type) {

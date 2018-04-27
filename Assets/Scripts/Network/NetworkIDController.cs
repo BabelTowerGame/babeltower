@@ -66,7 +66,7 @@ public class NetworkIDController : MonoBehaviour {
             e.P.Equiped.Chest = "3";
             e.P.Equiped.Weapon = "1";
             e.P.Equiped.Legs = "4";
-            e.P.Equiped.Shield = "2";
+            e.P.Equiped.Shield = "2";   
             e.P.Equiped.Shoes = "6";
 
             NetworkService.Instance.SendEvent(e);
