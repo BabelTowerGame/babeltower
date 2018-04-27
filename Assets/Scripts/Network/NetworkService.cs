@@ -9,7 +9,7 @@ public class NetworkService : MonoBehaviour {
 
     static NetworkService Instance = null;
 
-    static bool isServer = false;
+    public static bool isServer = false;
 
     private Channel channel;
     private ToB.ToBClient client;

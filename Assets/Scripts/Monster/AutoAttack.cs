@@ -52,7 +52,7 @@ public class AutoAttack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (true) {
+		if (NetworkService.isServer) {
 			//server
 			//
 			new_gravity ();
@@ -374,8 +374,8 @@ public class AutoAttack : MonoBehaviour {
 		}
 
 	}
-	public void manual_attack(Vector3 target){
-		transform.LookAt (target);
+	public void manual_attack(){
+		//transform.LookAt (target);
 		animator.SetTrigger ("M_Attack");
 	}
 	public void manual_die(){

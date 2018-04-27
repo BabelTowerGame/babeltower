@@ -118,7 +118,7 @@ public class M_generator : MonoBehaviour {
 		if (true) {
 			//server;
 			for (int i = 0; i < regenCounter.Length; i++) {
-				if (regenCounter [i] <= 60.0f) {
+				if (regenCounter [i] < 60.0f) {
 					regenCounter [i] -= Time.deltaTime;
 				}
 				if (regenCounter [i] <= 0.0f) {
