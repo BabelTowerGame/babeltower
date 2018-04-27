@@ -20,7 +20,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	public BagManager bagManager;
 	public Character player;
 	public GameObject confirmWindow;
-	public ArmorManager armorManager;
+	public EasyEquipmentSystem.ArmorManager armorManager;
 
 
 	// Use this for initialization
@@ -130,7 +130,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 					if (player.equips.shoes == null) {
 						player.equips.shoes = (Shoes)temp;
 						//TODO: After equipped, delete the item from inventory
-						bagManager.deleteByID(old_slot);
+						bagManager.deleteByIndex(old_slot);
 					} else {
 						//replace with the current item
 						Item tempItem = player.equips.shoes;
@@ -144,7 +144,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 						if (player.equips.chest == null) {
 							player.equips.chest = temp2;
 							//TODO: After equipped, delete the item from inventory
-							bagManager.deleteByID(old_slot);
+							bagManager.deleteByIndex(old_slot);
 						} else {
 							//replace with the current item
 							Item tempItem = player.equips.chest;
@@ -155,7 +155,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 						if (player.equips.head == null) {
 							player.equips.head = temp2;
 							//TODO: After equipped, delete the item from inventory
-							bagManager.deleteByID(old_slot);
+							bagManager.deleteByIndex(old_slot);
 						} else {
 							//replace with the current item
 							Item tempItem = player.equips.head;
@@ -166,7 +166,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 						if (player.equips.legs == null) {
 							player.equips.legs = temp2;
 							//TODO: After equipped, delete the item from inventory
-							bagManager.deleteByID(old_slot);
+							bagManager.deleteByIndex(old_slot);
 						} else {
 							//replace with the current item
 							Item tempItem = player.equips.legs;
@@ -178,7 +178,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 					if (player.equips.weapon == null) {
 						player.equips.weapon = (Weapon)temp;
 						//TODO: After equipped, delete the item from inventory
-						bagManager.deleteByID (old_slot);
+						bagManager.deleteByIndex (old_slot);
 					} else {
 						//replace with the current item
 						Item tempItem = player.equips.weapon;
@@ -190,7 +190,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 					if (player.equips.shield == null) {
 						player.equips.shield = (Shield)temp;
 						//TODO: After equipped, delete the item from inventory
-						bagManager.deleteByID (old_slot);
+						bagManager.deleteByIndex (old_slot);
 					} else {
 						//replace with the current item
 						Item tempItem = player.equips.shield;

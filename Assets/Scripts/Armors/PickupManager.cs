@@ -87,7 +87,7 @@ public class PickupManager : MonoBehaviour {
 					for (int i = 0; i < templist.Length; i++) {
 						if (templist [i] != -1) {
 							Pickitem temp = new Pickitem (tempmon, i, templist[i]);
-							Debug.Log ("add item" + temp);
+//							Debug.Log ("add item" + temp);
 							if (pickupList.Count < 42) {
 								pickupList.Add (temp);
 							} else {
@@ -117,7 +117,7 @@ public class PickupManager : MonoBehaviour {
 		for (int i = 0; i < pickupList.Count; i++) {
 //			Debug.Log ("item id = " + pickupList[i].id);
 			Item it = DB.getByID(pickupList[i].id);
-			Debug.Log ("Item = " + it);
+//			Debug.Log ("Item = " + it);
 			slots [i].newAssign (it, null);
 		}
 

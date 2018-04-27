@@ -26,7 +26,7 @@ public class DeleteButton : MonoBehaviour {
 		oldID = Regex.Replace(name, @"[^\d.\d]", "");
 		int old_slot = int.Parse (oldID) - 1;
 		//Item temp = player.inventory.list [old_slot];
-		bagManager.deleteByID(old_slot);
+		bagManager.deleteByIndex(old_slot);
 		//close the confirm window
 		confirmWindow.SetActive (false);
 		//canvasGroup.blocksRaycasts = true; 

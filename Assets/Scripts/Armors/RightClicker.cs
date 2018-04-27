@@ -10,7 +10,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 
 	public BagManager bagManager;
 	public Character player;
-	public ArmorManager armorManager;
+	public EasyEquipmentSystem.ArmorManager armorManager;
 	public PickupManager pickupManager;
 	public ItemDB db;
 
@@ -43,7 +43,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 					if (player.equips.shoes == null) {
 						player.equips.shoes = (Shoes)equipItem;
 						//TODO: After equipped, delete the item from inventory
-						bagManager.deleteByID (slot);
+						bagManager.deleteByIndex (slot);
 					} else {
 						//replace with the current item
 						Item tempItem = player.equips.shoes;
@@ -57,7 +57,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						if (player.equips.chest == null) {
 							player.equips.chest = temp2;
 							//TODO: After equipped, delete the item from inventory
-							bagManager.deleteByID (slot);
+							bagManager.deleteByIndex (slot);
 						} else {
 							//replace with the current item
 							Item tempItem = player.equips.chest;
@@ -68,7 +68,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						if (player.equips.head == null) {
 							player.equips.head = temp2;
 							//TODO: After equipped, delete the item from inventory
-							bagManager.deleteByID (slot);
+							bagManager.deleteByIndex (slot);
 						} else {
 							//replace with the current item
 							Item tempItem = player.equips.head;
@@ -79,7 +79,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 						if (player.equips.legs == null) {
 							player.equips.legs = temp2;
 							//TODO: After equipped, delete the item from inventory
-							bagManager.deleteByID (slot);
+							bagManager.deleteByIndex (slot);
 						} else {
 							//replace with the current item
 							Item tempItem = player.equips.legs;
@@ -91,7 +91,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 					if (player.equips.weapon == null) {
 						player.equips.weapon = (Weapon)equipItem;
 						//TODO: After equipped, delete the item from inventory
-						bagManager.deleteByID (slot);
+						bagManager.deleteByIndex (slot);
 					} else {
 						//replace with the current item
 						Item tempItem = player.equips.weapon;
@@ -103,7 +103,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 					if (player.equips.shield == null) {
 						player.equips.shield = (Shield)equipItem;
 						//TODO: After equipped, delete the item from inventory
-						bagManager.deleteByID (slot);
+						bagManager.deleteByIndex (slot);
 					} else {
 						//replace with the current item
 						Item tempItem = player.equips.shield;
