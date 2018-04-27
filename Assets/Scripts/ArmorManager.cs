@@ -72,16 +72,16 @@ public class ArmorManager : MonoBehaviour {
 		armorObject.SetActive (false);
 	}
 
-    void getDefense() {
-        float defense = 0.0f;
-        if (player.equips.head != null) {
-            defense += player.equips.head.Defense;
-        }
-        if (player.equips.chest != null) {
-            defense += player.equips.chest.Defense;
-        }
-        if (player.equips.legs != null) {
-            defense += player.equips.legs.Defense;
-        }
-    }
+	void getDefense(){
+		float defense = 0.0f;
+		if (player.equips.head != null) {
+			defense += player.equips.head.Defense;
+		}
+		if (player.equips.chest != null) {
+			defense += player.equips.chest.Defense;
+		}
+		if (player.equips.legs != null) {
+			defense += player.equips.legs.Defense;
+		}
+	}
 }

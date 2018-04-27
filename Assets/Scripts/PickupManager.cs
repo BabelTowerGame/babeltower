@@ -1,16 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DuloGames.UI;
+using System.Text.RegularExpressions;
+
+public struct Pickitem {
+	public AutoAttack monster;
+	public int index;
+	public int id;
+
+	public Pickitem(AutoAttack x, int y, int id){
+		this.monster = x;
+		this.index = y;
+		this.id = id;
+	}
+}
 
 public class PickupManager : MonoBehaviour {
-	public List<GameObject> pickupList;
+
+	public List<Pickitem> pickupList = new List<Pickitem>();
 	public GameObject window;
-	//testing
-	int flag = 0;
+	public UIItemSlot[] slots = new UIItemSlot[42];
+	[SerializeField] private GameObject Content;
+	public Character player;
+	public BagManager bagManager;
+	public ItemDB DB;
+
+
 
 	// Use this for initialization
 	void Start () {
-		
+		int i = 0;
+		foreach (Transform child in Content.transform)  
+		{  
+			//Debug.Log ("Child name is" + child.name);
+			slots [i++] = child.gameObject.GetComponent<UIItemSlot>();  
+		}
+		DB = ItemDB.Instance;
+
 	}
 	
 	// Update is called once per frame
@@ -21,41 +48,85 @@ public class PickupManager : MonoBehaviour {
 		} else if (Input.GetButtonDown ("Pickup") && !window.activeSelf) {
 			Debug.Log ("open the gui!!!");
 			//update then show the window
-			//updateGui();
+//			updateGui();
 			openGui ();
 		}
-		if (window.activeSelf) {
-			//update too fast
-			//flag = 1;
-			if (!IsInvoking ()) {
-				InvokeRepeating ("updateGui", 1, 1); 
-			}
-			//updateGui ();
-		} else if (!window.activeSelf) {
-			CancelInvoke();
-		}
+//		if (window.activeSelf) {
+////			update too fast
+//			flag = 1;
+//			if (!IsInvoking ()) {
+//				InvokeRepeating ("updateGui", 1, 1); 
+//			}
+//			updateGui ();
+//		} else if (!window.activeSelf) {
+//			CancelInvoke();
+//		}
 	}
 
 	void openGui(){
 		window.SetActive (true);
-		updateGui ();
+		pickUpListGen ();
 	}
 
 	void closeGui(){
 		window.SetActive (false);
 	}
 
-	void updateGui(){
+	void pickUpListGen(){
 		pickupList.Clear ();
-		foreach (Collider item in Physics.OverlapSphere (transform.position, 10.0f)) {
-			if (item.tag == "Items") {
-				pickupList.Add (item.gameObject);
+		foreach (Collider item in Physics.OverlapSphere (transform.position, 3.0f)) {
+			if (item.tag == "Monster") {
+				//if the monster is dead
+				item.GetComponent<AutoAttack>().applyDamage(5, this.transform);
+				Debug.Log ("monster health = " + item.GetComponent<Monster> ().Current_health);
+				if (item.GetComponent<AutoAttack> ().LootReady) {
+					AutoAttack tempmon = item.GetComponent<AutoAttack> ();
+//					Debug.Log ("Monster = " + temp);
+					int[] templist = item.GetComponent<Monster> ().LootList;
+//					Debug.Log ("item amount = " + templist.Length);
+					for (int i = 0; i < templist.Length; i++) {
+						if (templist [i] != -1) {
+							Pickitem temp = new Pickitem (tempmon, i, templist[i]);
+							Debug.Log ("add item" + temp);
+							pickupList.Add (temp);
+						}
+					}
+				}
 			}
 		}
-		if (pickupList.Count > 0) {
-			Debug.Log ("Found: " + pickupList.Count);
-		} else {
-			Debug.Log ("Nothing found.");
+
+//		if (pickupList.Count > 0) {
+//			for (int i = 0; i < pickupList.Count; i++) {
+//				Debug.Log ("Pick up monster : " + pickupList [i].monster);
+//				Debug.Log ("Pick up item : " + pickupList [i].index);
+//
+//			}
+//			Debug.Log ("Found: " + pickupList.Count);
+//		} else {
+//			Debug.Log ("Nothing found.");
+//		}
+
+		updateGui ();
+	}
+
+	void updateGui(){
+		for (int i = 0; i < pickupList.Count; i++) {
+//			Debug.Log ("item id = " + pickupList[i].id);
+			Item it = DB.getByID(pickupList[i].id);
+			Debug.Log ("Item = " + it);
+			slots [i].newAssign (it, null);
+		}
+
+		//clear other things
+		for (int i = pickupList.Count; i < 42; i++) {
+			slots [i].Unassign();
+		}
+	}
+
+	public void deleteItem(int index){
+		if (index < pickupList.Count) {
+			pickupList.RemoveAt (index);
+			updateGui ();
 		}
 	}
 }

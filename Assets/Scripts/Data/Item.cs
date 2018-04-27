@@ -97,7 +97,7 @@ public class Shield : Weapon {
         this.defense = defense;
         this.Type = ItemType.Shield;
         return this;
-		this.Type = ItemType.Shield;
+//		this.Type = ItemType.Shield;
     }
     public int Defense {
         get { return this.defense; }
@@ -159,39 +159,40 @@ public class Shoes : Item {
 }
 
 [Serializable]
-public class Ability {
-    [SerializeField] private int id;
-    [SerializeField] private int A_damage;
-    [SerializeField] private int A_range;
-    [SerializeField] private int A_type;
-    [SerializeField] private int A_cd;
-    public int Ability_damage {
-        get { return this.A_damage; }
-        set { this.A_damage = value; }
-    }
-    public int Ability_range {
-        get { return this.A_range; }
-        set { this.A_range = value; }
-    }
-    public int Ability_type {
-        get { return this.A_type; }
-        set { this.A_type = value; }
-    }
-    public int Ability_cd {
-        get { return this.A_cd; }
-        set { this.A_cd = value; }
-    }
+public abstract class Ability : ScriptableObject {
+    
+//    [SerializeField] private int A_damage;
+//    [SerializeField] private int A_range;
+//    [SerializeField] private int A_type;
+//    [SerializeField] private int A_cd;
+//    public int Ability_damage {
+//        get { return this.A_damage; }
+//        set { this.A_damage = value; }
+//    }
+//    public int Ability_range {
+//        get { return this.A_range; }
+//        set { this.A_range = value; }
+//    }
+//    public int Ability_type {
+//        get { return this.A_type; }
+//        set { this.A_type = value; }
+//    }
+//    public int Ability_cd {
+//        get { return this.A_cd; }
+//        set { this.A_cd = value; }
+//    }
+
+	[SerializeField] private int id;
+	public Sprite aSprite;
+	public float baseCoolDown;
 
     public int ID {
         get {   return this.id;}
         set {   this.id = value;}
     }
 
-    public Ability(int ID, int damage, int range, int type, int cd) {
-        this.ID = ID;
-        this.A_damage = damage;
-        this.A_range = range;
-        this.A_type = type;
-        this.A_cd = cd;
-    }
+	public abstract void Initialize (GameObject obj);
+
+	public abstract bool TriggerAbility (bool buttonPressed);
+
 }
