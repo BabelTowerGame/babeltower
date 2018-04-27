@@ -25,6 +25,9 @@ public class BagManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        player = CharacterManager.character;
+        equipSys = playerObject.GetComponent<EasyEquipmentSystem.EquipmentSystem>();
 		int i = 0;
 		foreach (Transform child in Content.transform)  
 		{  

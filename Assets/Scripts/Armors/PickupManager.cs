@@ -22,8 +22,6 @@ public class PickupManager : MonoBehaviour {
 	public GameObject window;
 	public UIItemSlot[] slots = new UIItemSlot[42];
 	[SerializeField] private GameObject Content;
-	public Character player;
-	public BagManager bagManager;
 	public ItemDB DB;
 
 

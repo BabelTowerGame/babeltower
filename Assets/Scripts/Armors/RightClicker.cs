@@ -19,8 +19,10 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 	// Use this for initialization
 	void Start () {
 		db = ItemDB.Instance;
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        player = CharacterManager.character;
 
-	}
+    }
 
 	// Update is called once per frame
 	void Update () {

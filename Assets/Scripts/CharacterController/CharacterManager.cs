@@ -40,6 +40,10 @@ public class CharacterManager : MonoBehaviour {
         return new Color32(R, G, B, 255);
     }
 
+    public static int ColorToInt(Color32 c) {
+        return c.r << 16 | c.g << 8 | c.b;
+    }
+
     void onHairColorToggleChanged(Toggle toggle) {
         string colorName = "COLOR_" + toggle.gameObject.name;
         Color32 color = ToColor(ConstIntDB.Instance.getByKey(colorName).Value);

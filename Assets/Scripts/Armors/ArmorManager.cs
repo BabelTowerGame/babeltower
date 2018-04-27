@@ -32,8 +32,10 @@ namespace EasyEquipmentSystem{
 		// Use this for initialization
 		void Start () {
 			db = ItemDB.Instance;
-			player = bagmanager.player;
-			int i = 0;
+            GameObject playerObject = GameObject.FindWithTag("Player");
+            player = CharacterManager.character;
+            equipSys = playerObject.GetComponent<EasyEquipmentSystem.EquipmentSystem>();
+            int i = 0;
 			foreach (Transform child in ArmorContent.transform) {  
 	//			Debug.Log ("Child name is" + child.name);
 				armorslots [i++] = child.gameObject.GetComponent<UIEquipSlot> ();  
