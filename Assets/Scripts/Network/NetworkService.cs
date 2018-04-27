@@ -162,22 +162,34 @@ public class NetworkService : MonoBehaviour {
 
     // TODO: LINK FUNCTIONS
     private void OnMonsterEvent(MonsterEvent e) {
+		NetworkMonsterManager mgr = GameObject.FindGameObjectWithTag("NetworkMonster")
+			.GetComponent<NetworkMonsterManager>();
         Debug.Log("[MonsterEvent] EventType:" + e.Type);
         switch (e.Type) {
-            case MonsterEventType.MonsterAttack:
+		case MonsterEventType.MonsterAttack:
+			mgr.OnMonsterAttack (e);
                 break;
-            case MonsterEventType.MonsterDestroy:
+		case MonsterEventType.MonsterDestroy:
+			mgr.OnMonsterDestory (e);
                 break;
-            case MonsterEventType.MonsterDie:
+		case MonsterEventType.MonsterDie:
+			mgr.OnMonsterDie (e);
                 break;
-            case MonsterEventType.MonsterLoot:
+		case MonsterEventType.MonsterLoot:
+			mgr.OnMonsterLoot (e);
                 break;
-            case MonsterEventType.MonsterLootResult:
+		case MonsterEventType.MonsterLootResult:
+			mgr.OnMonsterLootResult (e);
                 break;
-            case MonsterEventType.MonsterMove:
+		case MonsterEventType.MonsterMove:
+			mgr.OnMonsterMove (e);
                 break;
-            case MonsterEventType.MonsterSpawn:
+		case MonsterEventType.MonsterSpawn:
+			mgr.OnMonsterSpawn (e);
                 break;
+		case MonsterEventType.MonsterBack:
+			mgr.OnMonsterBack (e);
+				break;
         }
     }
 
