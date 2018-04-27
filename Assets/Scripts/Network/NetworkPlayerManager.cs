@@ -54,7 +54,7 @@ public class NetworkPlayerManager : MonoBehaviour {
 
     }
 
-    void OnPlayerAnimation(PlayerEvent e {
+	void OnPlayerAnimation(PlayerEvent e) {
 
     }
 

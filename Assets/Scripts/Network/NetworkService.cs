@@ -83,7 +83,7 @@ public class NetworkService : MonoBehaviour {
         }
     }
 
-    private async void SendEvent(Tob.Event e) {
+    public async void SendEvent(Tob.Event e) {
         Debug.Log("NetworkService: StartSendWindow");
         Debug.Log("[Sent] EventType:" + e.Topic);
         await sendhandle.RequestStream.WriteAsync(e);
