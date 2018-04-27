@@ -151,7 +151,10 @@ public class BagManager : MonoBehaviour {
 				slots [i].newAssign (player.inventory.list [i], null);
 			}
 		}
+		equipItemUI ();
+	}
 
+	void equipItemUI(){
 		if (numofShe > 0) {
 			equipSys.chosenBackShieldIndex = 1;
 		} else {
@@ -171,6 +174,8 @@ public class BagManager : MonoBehaviour {
 
 		equipSys.UpdateChoicesEquipment ();
 	}
+
+
 
 	//function that contorls gui to show/hide
 	void openGui(){

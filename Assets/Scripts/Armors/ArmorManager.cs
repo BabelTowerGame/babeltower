@@ -69,13 +69,15 @@ namespace EasyEquipmentSystem{
 			if (player.equips.weapon != null) {
 				weaponslots [0].newAssign (player.equips.weapon, null);
 				equipSys.chosenHandRightIndex = 1;
-//				equipSys.UpdateChoicesEquipment ();
 
 			}
 			if (player.equips.shield != null) {
 				weaponslots [1].newAssign (player.equips.shield, null);
 				equipSys.chosenHandLeftIndex = 4;
 			}
+
+
+			equipSys.UpdateChoicesEquipment ();
 
 
 
@@ -88,9 +90,8 @@ namespace EasyEquipmentSystem{
 			damage_text.text = damage.ToString();
 			level_text.text = level.ToString();
 			health_text.text = health.ToString();
-
 		}
-
+			
 		//function that contorls gui to show/hide
 		void openGui(){
 			//updateGui ();
@@ -184,5 +185,8 @@ namespace EasyEquipmentSystem{
 
 			return health;
 		}
+
+
+
 	}
 }
