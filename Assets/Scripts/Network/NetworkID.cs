@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class NetworkID : MonoBehaviour {
     public static string Local_ID;
+    public static GameObject Local_Player_GO;
+
     public string ID;
     public bool IsLocalPlayer;
-
 
     public static string generateNewID(int length) {
         string result = "";
