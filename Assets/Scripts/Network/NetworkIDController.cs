@@ -69,6 +69,11 @@ public class NetworkIDController : MonoBehaviour {
             e.P.Equiped.Shield = "2";   
             e.P.Equiped.Shoes = "6";
 
+            e.P.Position = new Tob.Vector();
+            e.P.Position.X = transform.position.x;
+            e.P.Position.Y = transform.position.y;
+            e.P.Position.Z = transform.position.z;
+
             NetworkService.Instance.SendEvent(e);
 
             Debug.Log("-----------Send Enter Event");
