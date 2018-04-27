@@ -38,6 +38,7 @@ public class CreateCharacter : MonoBehaviour
         go.GetComponent<EasyEquipmentSystem.EquipmentSystem>().onHairColorChanged(c.appearance.hairColor);
 
         NetworkID.Local_Player_GO = go;
+        go.GetComponent<NetworkID>().IsLocalPlayer = true;
 
     }
 }

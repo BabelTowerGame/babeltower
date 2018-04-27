@@ -13,23 +13,18 @@ public class NetworkIDController : MonoBehaviour {
 
     private NetworkID networkID;
 
-
     private Vector3 prevPosition;
-    private Quaternion prevRotation;
-
+    private UnityEngine.Quaternion prevRotation;
 
     private int[] prevAnimationHash;
     private int[] prevAnimationTransitionHash;
 
-
-
     private Vector3 targetPosition;
-    private Quaternion targetRotation;
+    private UnityEngine.Quaternion targetRotation;
     private bool targetJump;
     private bool targetCrouch;
 
     private Vector3 fixedPosDiff;
-
 
     const float k_LocalMovementThreshold = 0.00001f;
     const float k_LocalRotationThreshold = 0.00001f;
@@ -52,9 +47,30 @@ public class NetworkIDController : MonoBehaviour {
         prevAnimationHash = new int[charAnimator.layerCount];
         prevAnimationTransitionHash = new int[charAnimator.layerCount];
 
-
     }
-	
+
+    void Start() {
+        if(this.networkID.IsLocalPlayer) {
+
+            Character c = CharacterManager.character;
+            Tob.Event e = new Tob.Event();
+            e.Topic = Tob.EventTopic.PlayerEvent;
+            e.P = new Tob.PlayerEvent();
+            e.P.Type = Tob.PlayerEventType.PlayerEnter;
+            e.P.Id = NetworkID.Local_ID;
+            e.P.Appearance = new Tob.PlayerAppearance();
+            e.P.Appearance.Gender = (Tob.Gender)c.appearance.gender;
+            e.P.Equiped = new Tob.PlayerEquiped();
+            e.P.Equiped.Head = c.equips.head.ID.ToString();
+            e.P.Equiped.Chest = c.equips.chest.ID.ToString();
+            e.P.Equiped.Weapon = c.equips.weapon.ID.ToString();
+            e.P.Equiped.Legs = c.equips.legs.ID.ToString();
+            e.P.Equiped.Shield = c.equips.shield.ID.ToString();
+            e.P.Equiped.Shoes = c.equips.shoes.ID.ToString();
+
+            NetworkService.Instance.SendEvent(e);
+        }
+    }
 	// Update is called once per frame
 	void Update() {
         //networkTickrate enforcement
@@ -94,11 +110,24 @@ public class NetworkIDController : MonoBehaviour {
     void SendTransform() {
 
         if (!HasMoved()) return;
-        //TODO: Build Transform message and send to server
 
-        //Write position message
+        Tob.Event e = new Tob.Event();
+        e.P = new Tob.PlayerEvent();
+        e.P.Type = Tob.PlayerEventType.PlayerPosition;
+        e.P.Move = new Tob.PlayerMoveEvent();
 
-        //Write rotation message
+        e.P.Move.Target = new Tob.Vector();
+        e.P.Move.Target.X = transform.position.x;
+        e.P.Move.Target.Y = transform.position.y;
+        e.P.Move.Target.Z = transform.position.z;
+
+        e.P.Move.Direction = new Tob.Quad();
+        e.P.Move.Direction.A = transform.rotation.x;
+        e.P.Move.Direction.B = transform.rotation.y;
+        e.P.Move.Direction.C = transform.rotation.z;
+        e.P.Move.Direction.D = transform.rotation.w;
+
+        NetworkService.Instance.SendEvent(e);
 
         prevPosition = transform.position;
         prevRotation = transform.rotation;
@@ -116,23 +145,35 @@ public class NetworkIDController : MonoBehaviour {
         }
         if(!hasChanged) return;
 
+        Tob.PlayerAnimationEvent pae = new Tob.PlayerAnimationEvent();
+
         for (int i = 0; i < charAnimator.parameters.Length; i++) {
 
             AnimatorControllerParameter par = charAnimator.parameters[i];
             if (par.type == AnimatorControllerParameterType.Int) {
                 int value = charAnimator.GetInteger(par.nameHash);
+                pae.IntParams.Add(value);
             }
 
             if (par.type == AnimatorControllerParameterType.Float) {
                 float value = charAnimator.GetFloat(par.nameHash);
+                pae.FloatParams.Add(value);
             }
 
             if (par.type == AnimatorControllerParameterType.Bool) {
                 bool value = charAnimator.GetBool(par.nameHash);
+                pae.BoolParams.Add(value);
             }
         }
-        //TODO: Build network message using Hash and Time array above
-        //TODO: Send msg to network
+        Tob.Event e = new Tob.Event();
+        Tob.PlayerEvent pe = new Tob.PlayerEvent();
+        pe.Type = Tob.PlayerEventType.PlayerAnimation;
+        e.Topic = Tob.EventTopic.PlayerEvent;
+        e.P = pe;
+        pe.Animation = pae;
+
+        NetworkService.Instance.SendEvent(e);
+
     }
 
 
@@ -189,7 +230,6 @@ public class NetworkIDController : MonoBehaviour {
 
     }
 
-    //TODO:parameter message
     public void onReceiveMovement(Tob.PlayerMoveEvent e) {
         //Save Network Message in a Buffer for next Fixed update
         if (networkID.IsLocalPlayer) {
@@ -197,8 +237,9 @@ public class NetworkIDController : MonoBehaviour {
             return;
         }
 
-        //TODO:parse network message into targetPosition and targetRotation
-        //TODO:parse network message into jum and crouch as well
+
+        targetPosition = new Vector3(e.Target.X, e.Target.Y, e.Target.Z);
+        targetRotation = new Quaternion(e.Direction.A, e.Direction.B, e.Direction.C, e.Direction.D);
 
         var totalDistToTarget = (targetPosition - transform.position); 
         var perSecondDist = totalDistToTarget / k_NetWorkTickRate;
@@ -219,26 +260,30 @@ public class NetworkIDController : MonoBehaviour {
         if (networkID.IsLocalPlayer)
             return;
 
-        //TODO parse messageto stateHash and normalizedTime
-        //Since we have only two layers this will be good enough
-        //charAnimator.Play(msg.layer[0].stateHash, 0, msg.layer[0].normalizedTime);
-        //charAnimator.Play(msg.layer[1].stateHash, 1, msg.layer[1].normalizedTime);
+        int layerCount = this.charAnimator.layerCount;
+
+        for(int i = 0; i < layerCount; i++) {
+            charAnimator.Play(e.StateHash[i], i, e.NormalizedTime[i]);
+        }
+
+        int a = 0, b = 0, c = 0;
+
 
         for (int i = 0; i < charAnimator.parameters.Length; i++) {
 
             AnimatorControllerParameter par = charAnimator.parameters[i];
             if (par.type == AnimatorControllerParameterType.Int) {
-                int newValue = 0; //TODO: read from message
+                int newValue = e.IntParams[a++];
                 charAnimator.SetInteger(par.nameHash, newValue);
             }
 
             if (par.type == AnimatorControllerParameterType.Float) {
-                float newFloatValue = 0; //TODO: read from message
+                float newFloatValue = e.FloatParams[b++];
                 charAnimator.SetFloat(par.nameHash, newFloatValue);
             }
 
             if (par.type == AnimatorControllerParameterType.Bool) {
-                bool newBoolValue = false; //TODO: read from message
+                bool newBoolValue = e.BoolParams[c++];
                 charAnimator.SetBool(par.nameHash, newBoolValue);
             }
         }

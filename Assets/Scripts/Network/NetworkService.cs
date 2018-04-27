@@ -38,7 +38,7 @@ public class NetworkService : MonoBehaviour {
 
     private void ServiceStart() {
         NetworkID.Local_ID = NetworkID.generateNewID(128);
-        this.channel = new Channel("192.168.0.3:16882", ChannelCredentials.Insecure);
+        this.channel = new Channel("127.0.0.1:16882", ChannelCredentials.Insecure);
         this.client = new Tob.ToB.ToBClient(this.channel);
         this.metadata = new Metadata {
             { "id", NetworkID.Local_ID}
