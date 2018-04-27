@@ -37,6 +37,11 @@ public class NetworkMonsterManager : MonoBehaviour {
 		mgen.destroyMonster(id);
 		
 	}
+	void OnMonsterBack(MonsterEvent e){
+		int id =  int.Parse(e.Id);
+		mgen.monsterList [id].GetComponent<AutoAttack> ().manual_patrol ();
+		
+	}
 
 	void OnMonsterDie(MonsterEvent e) {
 		//TODO:
@@ -101,8 +106,7 @@ public class NetworkMonsterManager : MonoBehaviour {
 		//TODO:
 		//PARAMETER NEEDED ID, item index;
 		int itemID = int.Parse (e.Loot.ItemId);
-		if ((e.Loot.PlayerId == NetworkID.Local_ID) {
-
+		if ((e.Loot.PlayerId == NetworkID.Local_ID)) {
 			bg.addItembyID(itemID);
 		}
 		

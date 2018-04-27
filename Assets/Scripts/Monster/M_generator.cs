@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tob;
 
 public class M_generator : MonoBehaviour {
 	//testing part
@@ -11,6 +12,7 @@ public class M_generator : MonoBehaviour {
 	private int trident_num = 1;
 	private float[] regenCounter = new float[50];
 	public GameObject[] monsterList = new GameObject[50];
+	NetworkService NS = NetworkService.Instance;
 	public enum DemonType {
 		Demon1,
 		Demon2,
@@ -97,6 +99,8 @@ public class M_generator : MonoBehaviour {
 		monster4 = GenerateMonster(53,M_generator.DemonType.Demon4, M_generator.DemonSkin.Demons4,
 			M_generator.WeaponType.Pike, mobLocation4);
 		
+
+		NS.SendMessage("OnMonsterEvent",)
 		//random gen
 		for (int i = 0; i < 50; i++) {
 			regenCounter [i] = 60.0f;
@@ -109,13 +113,20 @@ public class M_generator : MonoBehaviour {
 			WeaponType wt = RdWeapon ();
 			Vector3 gencoord  = new Vector3(resultX,300,resultZ);
 			monsterList[i] = GenerateMonster(i, dt, ds, wt, gencoord);
+			MonsterEvent e = new MonsterSpawnEvent();
+			e.Spawn.Id = i.ToString();
+			e.Spawn.Position = gencoord;
+			e.Spawn.DemonSkin = ds;
+			e.Spawn.DemonType = dt;
+			e.Spawn.WeaponType = wt;
+			NS.SendMessage("OnMonsterEvent",e);
 		}
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (true) {
+		if (NetworkService.isServer) {
 			//server;
 			for (int i = 0; i < regenCounter.Length; i++) {
 				if (regenCounter [i] < 60.0f) {
@@ -131,6 +142,13 @@ public class M_generator : MonoBehaviour {
 					WeaponType wt = RdWeapon ();
 					Vector3 gencoord  = new Vector3(resultX,300,resultZ);
 					monsterList[i] = GenerateMonster(i, dt, ds, wt, gencoord);
+					MonsterEvent e = new MonsterSpawnEvent();
+					e.Spawn.Id = i.ToString();
+					e.Spawn.Position = gencoord;
+					e.Spawn.DemonSkin = ds;
+					e.Spawn.DemonType = dt;
+					e.Spawn.WeaponType = wt;
+					NS.SendMessage("OnMonsterEvent",e);
 					regenCounter [i] = 60.0f;
 				}
 			}

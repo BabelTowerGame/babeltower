@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tob;
 
 public class AutoAttack : MonoBehaviour {
 	private Transform player;
 	private GameObject playerobj;
-
+	private NetworkService NS = NetworkService.Instance;
 	//all constant value should be change in real gen
 	private float attackDistance = 2.0f;
 	private Animator animator;
@@ -80,11 +81,7 @@ public class AutoAttack : MonoBehaviour {
 				targetPos.y = transform.position.y;
 				float distance = Vector3.Distance (targetPos, transform.position);
 				float rangeDistance = Vector3.Distance (oriPos, transform.position);
-				Debug.Log ("Player is not null");
-				if (distance < awakeDistance) {
-					Debug.Log (distance);
-				}
-				//Debug.Log (distance);
+				//Debug.Log ("Player is not null");
 
 
 				if(gameObject.GetComponent<Monster>().Current_health <= 0.0 && Die == false){
@@ -96,8 +93,11 @@ public class AutoAttack : MonoBehaviour {
 					this.GetComponent<Monster> ().X = this.transform.position.x;
 					this.GetComponent<Monster> ().Y = this.transform.position.y;
 					this.GetComponent<Monster> ().Z = this.transform.position.z;
+					MonsterEvent e = new MonsterDieEvent();
+					e.Id = this.GetComponent<Monster>().ID.ToString();
 					LootlistGen();
 					Die = true;
+					NS.SendMessage("OnMonsterEvent",e);
 				}
 				//if target player moved out the active range of monster. Go back to original poisition.
 				if (rangeDistance >= activeDistance && gameObject.GetComponent<Monster>().InBattle == true) {
@@ -115,6 +115,9 @@ public class AutoAttack : MonoBehaviour {
 					set_back(true);
 					hitted =  false;
 					gameObject.GetComponent<Monster>().InBattle = false;
+					MonsterEvent e = new MonsterDieEvent();
+					e.Id = this.GetComponent<Monster>().ID.ToString();
+
 
 					//Debug.Log("Monster back to ori position");
 				}
@@ -195,6 +198,7 @@ public class AutoAttack : MonoBehaviour {
 			}
 		} else {
 			//client
+			new_gravity ();
 			Vector3 dPos = new Vector3 (this.GetComponent<Monster> ().X, this.GetComponent<Monster> ().Y, this.GetComponent<Monster> ().Z);
 			if(this.GetComponent<Monster>().Updated == true){
 				this.transform.position = dPos;

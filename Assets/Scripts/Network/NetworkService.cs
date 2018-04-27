@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using Grpc.Core;
 using Tob;
@@ -8,16 +7,13 @@ using UniRx;
 
 public class NetworkService : MonoBehaviour {
 
-    public static NetworkService Instance = null;
+    static NetworkService Instance = null;
 
     public static bool isServer = false;
 
     private Channel channel;
     private ToB.ToBClient client;
     private Metadata metadata;
-
-    private Grpc.Core.AsyncClientStreamingCall<Tob.Event, Empty> sendhandle;
-
 
     // Use this for initialization
     void Awake()
@@ -31,11 +27,12 @@ public class NetworkService : MonoBehaviour {
         }
     }
 
-    void OnDestroy() {
+    void OnDestroy()
+    {
         Stop();
     }
-    
 
+    // Update is called once per frame
     private void ServiceStart() {
         NetworkID.Local_ID = NetworkID.generateNewID(128);
         this.channel = new Channel("127.0.0.1:16882", ChannelCredentials.Insecure);
@@ -43,29 +40,15 @@ public class NetworkService : MonoBehaviour {
         this.metadata = new Metadata {
             { "id", NetworkID.Local_ID}
         };
-        
-
-
-
     }
 
-    private void ServiceRun() {
+    private async void ServiceRun() {
         Debug.Log("NetworkService: Run");
-        this.sendhandle = this.client.Publish(metadata);
-        this.StartListen();
-
-        Tob.Event e = new Tob.Event();
-        e.Topic = EventTopic.PlayerEvent;
-        this.SendEvent(e);
-    }
-
-    private async void StartListen() {
-        Debug.Log("NetworkService: StartListen");
         using (var handle = this.client.Subscribe(new Empty(), metadata)) {
             while (await handle.ResponseStream.MoveNext()) {
                 Tob.Event e = handle.ResponseStream.Current;
                 Debug.Log("[Received] EventType:" + e.Topic);
-                switch (e.Topic) {
+                switch(e.Topic) {
                     case EventTopic.ServerEvent:
                         Debug.Log(e.S);
                         this.OnServerEvent(e.S);
@@ -79,14 +62,10 @@ public class NetworkService : MonoBehaviour {
                     default:
                         break;
                 }
-            }
-        }
-    }
 
-    private async void SendEvent(Tob.Event e) {
-        Debug.Log("NetworkService: StartSendWindow");
-        Debug.Log("[Sent] EventType:" + e.Topic);
-        await sendhandle.RequestStream.WriteAsync(e);
+            }
+
+        }
     }
 
     private void Stop() {
@@ -129,15 +108,13 @@ public class NetworkService : MonoBehaviour {
                 break;
             case PlayerEventType.PlayerPosition:
                 break;
-            case PlayerEventType.PlayerAnimation:
-                break;
             default:
                 break;
         }
 
     }
 
-    private void OnMonsterEvent(MonsterEvent e) {
+	private void OnMonsterEvent(MonsterEvent e) {
         Debug.Log("[MonsterEvent] EventType:" + e.Type);
         switch (e.Type) {
             case MonsterEventType.MonsterAttack:
