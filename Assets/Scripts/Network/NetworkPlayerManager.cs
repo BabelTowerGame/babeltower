@@ -76,6 +76,26 @@ public class NetworkPlayerManager : MonoBehaviour {
 
                 NetworkService.Instance.SendEvent(ee);
             }
+            M_generator mg = GameObject.FindGameObjectWithTag("NetworkMonster").GetComponent<M_generator>();
+            for (int i = 0; i < mg.monsterList.Length; i++) {
+                Vector3 gencoord = new Vector3(mg.monsterList[i].GetComponent<Monster>().X, mg.monsterList[i].GetComponent<Monster>().Y, mg.monsterList[i].GetComponent<Monster>().Z);
+                Tob.Event ee = new Tob.Event();
+                ee.Topic = EventTopic.MonsterEvent;
+                MonsterEvent e0 = new MonsterEvent();
+                MonsterSpawnEvent e1 = new MonsterSpawnEvent();
+                e1.Id = i.ToString();
+                Tob.Vector passpos = new Tob.Vector();
+                passpos.X = gencoord.x;
+                passpos.Y = gencoord.y;
+                passpos.Z = gencoord.z;
+                e1.Position = passpos;
+                e1.DemonSkin = (int)mg.monsterList[i].GetComponent<Monster>().Skin;
+                e1.DemonType = (int)mg.monsterList[i].GetComponent<Monster>().Type;
+                e1.WeaponType = (int)mg.monsterList[i].GetComponent<Monster>().Weapon;
+                e0.Spawn = e1;
+                ee.M = e0;
+                NetworkService.Instance. SendEvent(ee);
+            }
         }
 
         players.Add(e.Id, go);

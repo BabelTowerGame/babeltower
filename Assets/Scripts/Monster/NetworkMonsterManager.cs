@@ -25,7 +25,8 @@ public class NetworkMonsterManager : MonoBehaviour {
 		Vector3 pos = new Vector3 (e.Spawn.Position.X,e.Spawn.Position.Y,e.Spawn.Position.Z);
 
 
-		mgen.GenerateMonster (id, dt, ds, wt,pos);
+		GameObject monsterTemp = mgen.GenerateMonster (id, dt, ds, wt,pos);
+        mgen.monsterList[id] = monsterTemp;
 
 
 	}
