@@ -295,7 +295,13 @@ public class AutoAttack : MonoBehaviour {
 			Vector3 dPos = new Vector3 (this.GetComponent<Monster> ().X, this.GetComponent<Monster> ().Y, this.GetComponent<Monster> ().Z);
 			if(this.GetComponent<Monster>().Updated == true){
 				this.transform.position = dPos;
-				this.GetComponent<Monster> ().Updated = false;
+                Vector3 dTargetPos = new Vector3(this.GetComponent<Monster>().PX, this.GetComponent<Monster>().PY, this.GetComponent<Monster>().PZ);
+                Vector3 diff = dTargetPos - this.transform.position;
+                float curDistance = diff.sqrMagnitude;
+                this.transform.LookAt(dTargetPos);
+                animator.SetTrigger("M_Go");
+                cc.SimpleMove(transform.forward * runspeed);
+                this.GetComponent<Monster> ().Updated = false;
 
 			}
 			/*if (this.GetComponent<Monster> ().Current_health <= 0.0f) {
@@ -306,12 +312,7 @@ public class AutoAttack : MonoBehaviour {
 			}
 
 
-			Vector3 dTargetPos = new Vector3 (this.GetComponent<Monster> ().PX, this.GetComponent<Monster> ().PY, this.GetComponent<Monster> ().PZ);
-			Vector3 diff = dTargetPos - this.transform.position;
-			float curDistance = diff.sqrMagnitude;
-			this.transform.LookAt (dTargetPos);
-			animator.SetTrigger ("M_Go");
-			cc.SimpleMove (transform.forward * runspeed);
+			
 
 
 		}
