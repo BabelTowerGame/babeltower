@@ -14,7 +14,7 @@ public class NetworkMonsterManager : MonoBehaviour {
 	}
 
 
-	void OnMonsterSpawn(MonsterEvent e) {
+	public void OnMonsterSpawn(MonsterEvent e) {
 		//generate monster based on the data sent from server
 		//TODO
 		int id = int.Parse(e.Spawn.Id);
@@ -30,14 +30,14 @@ public class NetworkMonsterManager : MonoBehaviour {
 
 	}
 
-	void OnMonsterDestory(MonsterEvent e) {
+	public void OnMonsterDestory(MonsterEvent e) {
 		//TODO:
 		//PARAMETER NEEDED MONSTER ID;
 		int id =  int.Parse(e.Id);
 		mgen.destroyMonster(id);
 		
 	}
-	void OnMonsterBack(MonsterEvent e){
+	public void OnMonsterBack(MonsterEvent e){
 		int id =  int.Parse(e.Id);
 		mgen.monsterList [id].GetComponent<AutoAttack> ().manual_patrol ();
 		mgen.monsterList[id].GetComponent<Monster>().InBattle = false;
@@ -45,7 +45,7 @@ public class NetworkMonsterManager : MonoBehaviour {
 		
 	}
 
-	void OnMonsterDie(MonsterEvent e) {
+	public void OnMonsterDie(MonsterEvent e) {
 		//TODO:
 		//PARAMETER NEEDED MONSTER ID;
 		int id =  int.Parse(e.Id);
@@ -62,35 +62,31 @@ public class NetworkMonsterManager : MonoBehaviour {
 		
 	}
 
-	void OnMonsterMove(MonsterEvent e) {
+	public void OnMonsterMove(MonsterEvent e) {
 		//TODO:
 		//PARAMETER NEEDED MONSTER ID,MONSTER POSITION, TARGET POSITION;
 
 
-		int id =  int.Parse(e.Id);
-		mgen.monsterList[id].GetComponent<Monster>().X = e.Move.Position.X;
-		mgen.monsterList[id].GetComponent<Monster>().Y = e.Move.Position.Y;
-		mgen.monsterList[id].GetComponent<Monster>().Z = e.Move.Position.Z;
-		mgen.monsterList[id].GetComponent<Monster>().PX = e.Move.Target.X;
-		mgen.monsterList[id].GetComponent<Monster>().PY = e.Move.Target.Y;
-		mgen.monsterList[id].GetComponent<Monster>().PZ = e.Move.Target.Z;
+		int id = int.Parse (e.Id);
+		mgen.monsterList [id].GetComponent<Monster> ().X = e.Move.Position.X;
+		mgen.monsterList [id].GetComponent<Monster> ().Y = e.Move.Position.Y;
+		mgen.monsterList [id].GetComponent<Monster> ().Z = e.Move.Position.Z;
+		mgen.monsterList [id].GetComponent<Monster> ().PX = e.Move.Target.X;
+		mgen.monsterList [id].GetComponent<Monster> ().PY = e.Move.Target.Y;
+		mgen.monsterList [id].GetComponent<Monster> ().PZ = e.Move.Target.Z;
 		mgen.monsterList [id].GetComponent<Monster> ().Updated = true;
 		
 		
 	}
-	void OnMonsterPatrol(MonsterEvent e){
-		//TODO:
-		//PARAMETER NEEDED,ID
-	}
 
-	void OnMonsterAttack(MonsterEvent e) {
+	public void OnMonsterAttack(MonsterEvent e) {
 		//TODO: 
 		//PARAMETER NEEDED MONSTER ID,TARGETPOSITION;
 		int id =  int.Parse(e.Id);
 		mgen.monsterList [id].GetComponent<AutoAttack> ().manual_attack ();		
 	}
 
-	void OnMonsterLoot(MonsterEvent e) {
+	public void OnMonsterLoot(MonsterEvent e) {
 		//TODO:
 		//PARAMETER NEEDED ID, item index;
 		//server 
@@ -111,7 +107,7 @@ public class NetworkMonsterManager : MonoBehaviour {
 
 	}
 
-	void OnMonsterLootResult(MonsterEvent e) {
+	public void OnMonsterLootResult(MonsterEvent e) {
 		//TODO:
 		//PARAMETER NEEDED ID, item index;
 		int itemID = int.Parse (e.Loot.ItemId);
