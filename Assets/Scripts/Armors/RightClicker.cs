@@ -13,6 +13,8 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 	public EasyEquipmentSystem.ArmorManager armorManager;
 	public PickupManager pickupManager;
 	public ItemDB db;
+	public GameObject confirmWindow;
+
 
 	// Use this for initialization
 	void Start () {
@@ -29,8 +31,8 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 		if (eventData.button == PointerEventData.InputButton.Right) {
 //			Debug.Log ("Right Mouse Button Clicked on: " + name);
 			string id = Regex.Replace(this.name, @"[^\d.\d]", "");
-			int slot = int.Parse (id) - 1;
 			if (this.tag == "Slot") {
+				int slot = int.Parse (id) - 1;
 				//bagmanager, equipped items
 				
 				if (slot >= player.inventory.list.Count) {
@@ -38,7 +40,7 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 				}
 
 				Item equipItem = player.inventory.list [slot];
-				Debug.Log("item type = " + equipItem.Type.ToString());
+//				Debug.Log("item type = " + equipItem.Type.ToString());
 				if (equipItem.Type.ToString () == "Shoes") {
 					if (player.equips.shoes == null) {
 						player.equips.shoes = (Shoes)equipItem;
@@ -114,22 +116,32 @@ public class RightClicker : MonoBehaviour, IPointerClickHandler{
 				armorManager.updateGui ();
 			} else if (this.tag == "Pickup") {
 				//pick up items
+				int slot = int.Parse (id) - 1;
 				if (slot >= pickupManager.pickupList.Count) {
 					return;
 				}
 				Pickitem pick = pickupManager.pickupList [slot];
-				Item it = db.getByID(pick.id);
-				if (pick.monster.lootItem(pick.index) != -1) {
+				Item it = db.getByID (pick.id);
+				if (pick.monster.lootItem (pick.index) != -1) {
 					//successfully delete from monster's lootlist
 					if (bagManager.addItem (it) == 1) {
 						//added
 //						Debug.Log ("Pick up " + it.name);
 						//update pickup's gui
-						pickupManager.deleteItem(slot);
+						pickupManager.deleteItem (slot);
 					} else {
 						//bag is full, then back item to the monster's lootlist
-						pick.monster.backItem(pick.id);
+						pick.monster.backItem (pick.id);
 					}
+				}
+			} else if (this.tag == "Equip") {
+				string equipname = this.name;
+				if (!confirmWindow.activeSelf && armorManager.ifExist(equipname)) {
+					confirmWindow.SetActive (true);
+					confirmWindow.transform.SetAsLastSibling ();
+					GameObject button = GameObject.Find("Delete_Yes_Button");
+					button.GetComponent<DeleteButton> ().type = "Equip";
+					button.GetComponent<DeleteButton> ().name = equipname;
 				}
 			}
 		}

@@ -93,7 +93,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		//the gameobject we want to move into
 		GameObject curEnter = eventData.pointerEnter;
 		//Debug.Log ("End Dragging... ");
-		Debug.Log ("CurEnter = " + curEnter.name);
+//		Debug.Log ("CurEnter = " + curEnter.name);
         
 
 		//if out of the window
@@ -205,7 +205,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 			if (curEnter.name == "Background") {
 				if (!confirmWindow.activeSelf) {
 					confirmWindow.SetActive (true);
+					confirmWindow.transform.SetAsLastSibling ();
 					GameObject button = GameObject.Find("Delete_Yes_Button");
+					button.GetComponent<DeleteButton> ().type = "Slot";
 					button.GetComponent<DeleteButton> ().name = this.transform.name;
 				}
 				//deleteItem (temp);
