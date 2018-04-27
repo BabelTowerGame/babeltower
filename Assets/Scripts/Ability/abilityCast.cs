@@ -40,5 +40,41 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			return null;
 		}
 
+		void sendMessage(Vector3 pos, string name, float destroyTime){
+			float x = pos.x;
+			float y = pos.y;
+			float z = pos.z;
+
+			// TODO: Send message to server with ability information
+			// send(x,y,z,name, destroyTime);
+		}
+
+		void sendMessage(Monster ms, string name, float destroyTime){
+			float x = ms.transform.position.x;
+			float y = ms.transform.position.y;
+			float z = ms.transform.position.z;
+
+			int monsterID = ms.ID;
+
+			// TODO: Send message to server with ability information
+			// send(x, y, z, monsterID, name, destroyTime);
+		}
+
+		void onCast(int x, int y, int z, string name, float destroyTime){
+			cast (name, new Vector3 (x, y, z), Quaternion.identity, destroyTime);
+		}
+
+		void onCast(int monsterID, string name, float destroyTime){
+			GameObject[] mst = GameObject.FindGameObjectsWithTag ("Monster");
+
+			for (int i = 0; i < mst.Length; i++) {
+				Monster ms = mst [i].GetComponent<Monster> ();
+				if (ms.ID == monsterID) {
+					cast (name, ms, destroyTime);
+				}
+			}
+
+		}
+
 	}
 }
