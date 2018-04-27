@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Threading;
 using UnityEngine;
 using Grpc.Core;
 using Tob;
@@ -19,18 +20,18 @@ public class NetworkService : MonoBehaviour {
     private Metadata metadata;
 
     private Grpc.Core.AsyncClientStreamingCall<Tob.Event, Empty> sendhandle;
-
-
     // Use this for initialization
     void Awake()
     {
         if (NetworkService.Instance == null)
         {
+
             NetworkService.Instance = this;
             this.ServiceStart();
             Debug.Log("NetworkService: Awake");
             this.ServiceRun();
         }
+        DontDestroyOnLoad(this);
     }
 
     void OnDestroy() {
@@ -45,16 +46,14 @@ public class NetworkService : MonoBehaviour {
         this.metadata = new Metadata {
             { "id", NetworkID.Local_ID}
         };
-        
-
-
 
     }
 
     private void ServiceRun() {
         Debug.Log("NetworkService: Run");
-        this.sendhandle = this.client.Publish(metadata);
         this.StartListen();
+        this.sendhandle = this.client.Publish(metadata);
+
     }
 
     private async void StartListen() {
@@ -82,9 +81,11 @@ public class NetworkService : MonoBehaviour {
     }
 
     public async void SendEvent(Tob.Event e) {
-        if (!isActive) return;
-        Debug.Log("NetworkService: StartSendWindow");
-        Debug.Log("[Sent] EventType:" + e.Topic);
+        //Debug.Log("NetworkService: StartSendWindow");
+        //Debug.Log("[Sent] EventType:" + e.Topic);
+
+        while (!isActive) { }
+        
         await sendhandle.RequestStream.WriteAsync(e);
     }
 
@@ -99,7 +100,7 @@ public class NetworkService : MonoBehaviour {
         switch (e.Type) {
             case ServerEventType.ServerChange:
                 isActive = true;
-                if(e.Id.Equals(NetworkID.Local_ID)) {
+                if (e.Id.Equals(NetworkID.Local_ID)) {
                     NetworkService.isServer = true;
                 }
                 break;

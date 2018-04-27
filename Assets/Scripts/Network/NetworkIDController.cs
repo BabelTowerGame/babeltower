@@ -50,7 +50,8 @@ public class NetworkIDController : MonoBehaviour {
     }
 
     void Start() {
-        if(this.networkID.IsLocalPlayer) {
+        //Debug.Log("-----------Send Enter Event");
+        if (this.networkID.IsLocalPlayer) {
 
             Character c = CharacterManager.character;
             Tob.Event e = new Tob.Event();
@@ -61,14 +62,16 @@ public class NetworkIDController : MonoBehaviour {
             e.P.Appearance = new Tob.PlayerAppearance();
             e.P.Appearance.Gender = (Tob.Gender)c.appearance.gender;
             e.P.Equiped = new Tob.PlayerEquiped();
-            e.P.Equiped.Head = c.equips.head.ID.ToString();
-            e.P.Equiped.Chest = c.equips.chest.ID.ToString();
-            e.P.Equiped.Weapon = c.equips.weapon.ID.ToString();
-            e.P.Equiped.Legs = c.equips.legs.ID.ToString();
-            e.P.Equiped.Shield = c.equips.shield.ID.ToString();
-            e.P.Equiped.Shoes = c.equips.shoes.ID.ToString();
+            e.P.Equiped.Head = "5";
+            e.P.Equiped.Chest = "3";
+            e.P.Equiped.Weapon = "1";
+            e.P.Equiped.Legs = "4";
+            e.P.Equiped.Shield = "2";
+            e.P.Equiped.Shoes = "6";
 
             NetworkService.Instance.SendEvent(e);
+
+            Debug.Log("-----------Send Enter Event");
         }
     }
 	// Update is called once per frame

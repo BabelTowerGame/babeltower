@@ -20,6 +20,7 @@ public class NetworkPlayerManager : MonoBehaviour {
         Vector3 locaion = new Vector3(e.Position.X, e.Position.Y, e.Position.Z);
 
         GameObject go;
+        
         if (app.gender == Appearance.Gender.Male) {
             go = GameObject.Instantiate(MalePrefab, locaion, Quaternion.identity) as GameObject;
         } else {
@@ -27,6 +28,7 @@ public class NetworkPlayerManager : MonoBehaviour {
         }
         go.GetComponent<EasyEquipmentSystem.EquipmentSystem>().onHairColorChanged(app.hairColor);
         NetworkID id = go.GetComponent<NetworkID>();
+        Debug.Log("                 OnPlayerEnter: " + go.ToString());
         id.ID = e.Id;
         id.IsLocalPlayer = false;
         players.Add(e.Id, go);
