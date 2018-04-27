@@ -10,6 +10,9 @@ public class NetworkPlayerManager : MonoBehaviour {
 
     private Dictionary<string, GameObject> players;
 
+    public void Awake() {
+        players = new Dictionary<string, GameObject>();
+    }
 
     //TODO: parse msg to player class
     public void OnPlayerEnter(PlayerEvent e) {
@@ -79,6 +82,7 @@ public class NetworkPlayerManager : MonoBehaviour {
     public void OnPlayerPosition(PlayerEvent e) {
         GameObject go;
         if (players.TryGetValue(e.Id, out go)) {
+            Debug.Log(go.ToString());
             go.GetComponent<NetworkIDController>().onReceiveMovement(e.Move);
         }
     }

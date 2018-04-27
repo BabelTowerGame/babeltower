@@ -115,7 +115,6 @@ public class NetworkService : MonoBehaviour {
             .GetComponent<NetworkPlayerManager>();
 
         Debug.Log("[!!PlayerEvent!!] EventType:" + e.Type);
-        Debug.Log("MGR: " + mgr.ToString());
         switch (e.Type) {
             case PlayerEventType.PlayerEnter:
                 mgr.OnPlayerEnter(e);

@@ -122,6 +122,7 @@ public class NetworkIDController : MonoBehaviour {
         Tob.Event e = new Tob.Event();
         e.Topic = Tob.EventTopic.PlayerEvent;
         e.P = new Tob.PlayerEvent();
+        e.P.Id = NetworkID.Local_ID;
         e.P.Type = Tob.PlayerEventType.PlayerPosition;
         e.P.Move = new Tob.PlayerMoveEvent();
 
@@ -175,6 +176,7 @@ public class NetworkIDController : MonoBehaviour {
             }
         }
         Tob.Event e = new Tob.Event();
+        e.P.Id = NetworkID.Local_ID;
         Tob.PlayerEvent pe = new Tob.PlayerEvent();
         pe.Type = Tob.PlayerEventType.PlayerAnimation;
         e.Topic = Tob.EventTopic.PlayerEvent;
@@ -240,6 +242,8 @@ public class NetworkIDController : MonoBehaviour {
     }
 
     public void onReceiveMovement(Tob.PlayerMoveEvent e) {
+
+        Debug.Log(this.ToString() + "onReceiveMovement" + e.ToString());
         //Save Network Message in a Buffer for next Fixed update
         if (networkID.IsLocalPlayer) {
             //LocalPlayer does not need to be updated by network
