@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Threading;
 using UnityEngine;
 using Grpc.Core;
 using Tob;
@@ -12,23 +13,25 @@ public class NetworkService : MonoBehaviour {
 
     public static bool isServer = false;
 
+    private bool isActive = false;
+
     private Channel channel;
     private ToB.ToBClient client;
     private Metadata metadata;
 
     private Grpc.Core.AsyncClientStreamingCall<Tob.Event, Empty> sendhandle;
-
-
     // Use this for initialization
     void Awake()
     {
         if (NetworkService.Instance == null)
         {
+
             NetworkService.Instance = this;
             this.ServiceStart();
             Debug.Log("NetworkService: Awake");
             this.ServiceRun();
         }
+        DontDestroyOnLoad(this);
     }
 
     void OnDestroy() {
@@ -38,25 +41,19 @@ public class NetworkService : MonoBehaviour {
 
     private void ServiceStart() {
         NetworkID.Local_ID = NetworkID.generateNewID(128);
-        this.channel = new Channel("192.168.0.3:16882", ChannelCredentials.Insecure);
+        this.channel = new Channel("51.15.190.233:16882", ChannelCredentials.Insecure);
         this.client = new Tob.ToB.ToBClient(this.channel);
         this.metadata = new Metadata {
             { "id", NetworkID.Local_ID}
         };
-        
-
-
 
     }
 
     private void ServiceRun() {
         Debug.Log("NetworkService: Run");
-        this.sendhandle = this.client.Publish(metadata);
         this.StartListen();
+        this.sendhandle = this.client.Publish(metadata);
 
-        Tob.Event e = new Tob.Event();
-        e.Topic = EventTopic.PlayerEvent;
-        this.SendEvent(e);
     }
 
     private async void StartListen() {
@@ -84,8 +81,11 @@ public class NetworkService : MonoBehaviour {
     }
 
     public async void SendEvent(Tob.Event e) {
-        Debug.Log("NetworkService: StartSendWindow");
-        Debug.Log("[Sent] EventType:" + e.Topic);
+        //Debug.Log("NetworkService: StartSendWindow");
+        //Debug.Log("[Sent] EventType:" + e.Topic);
+
+        while (!isActive) { }
+        
         await sendhandle.RequestStream.WriteAsync(e);
     }
 
@@ -99,7 +99,8 @@ public class NetworkService : MonoBehaviour {
         Debug.Log("[ServerEvent] EventType:" + e.Type);
         switch (e.Type) {
             case ServerEventType.ServerChange:
-                if(e.Id.Equals(NetworkID.Local_ID)) {
+                isActive = true;
+                if (e.Id.Equals(NetworkID.Local_ID)) {
                     NetworkService.isServer = true;
                 }
                 break;
@@ -109,29 +110,44 @@ public class NetworkService : MonoBehaviour {
     }
 
     private void OnPlayerEvent(PlayerEvent e) {
-        Debug.Log("[PlayerEvent] EventType:" + e.Type);
+
+        NetworkPlayerManager mgr = GameObject.FindGameObjectWithTag("NetworkPlayer")
+            .GetComponent<NetworkPlayerManager>();
+
+        Debug.Log("[!!PlayerEvent!!] EventType:" + e.Type);
         switch (e.Type) {
             case PlayerEventType.PlayerEnter:
+                mgr.OnPlayerEnter(e);
                 break;
             case PlayerEventType.PlayerExit:
+                mgr.OnPlayerExit(e);
                 break;
             case PlayerEventType.PlayerCast:
+                mgr.OnPlayerCast(e);
                 break;
             case PlayerEventType.PlayerCrouch:
+                mgr.OnPlayerCrouch(e);
                 break;
             case PlayerEventType.PlayerDamaged:
+                mgr.OnPlayerDamaged(e);
                 break;
             case PlayerEventType.PlayerDie:
+                mgr.OnPlayerDie(e);
                 break;
             case PlayerEventType.PlayerEquipped:
+                mgr.OnPlayerEquipped(e);
                 break;
             case PlayerEventType.PlayerJump:
+                mgr.OnPlayerJump(e);
                 break;
             case PlayerEventType.PlayerMove:
+                mgr.OnPlayerMove(e);
                 break;
             case PlayerEventType.PlayerPosition:
+                mgr.OnPlayerPosition(e);
                 break;
             case PlayerEventType.PlayerAnimation:
+                mgr.OnPlayerAnimation(e);
                 break;
             default:
                 break;
@@ -139,6 +155,8 @@ public class NetworkService : MonoBehaviour {
 
     }
 
+
+    // TODO: LINK FUNCTIONS
     private void OnMonsterEvent(MonsterEvent e) {
         Debug.Log("[MonsterEvent] EventType:" + e.Type);
         switch (e.Type) {
