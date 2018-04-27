@@ -9,6 +9,7 @@ public class NetworkPlayerManager : MonoBehaviour {
     public GameObject FemalePrefab;
 
     private Dictionary<string, GameObject> players;
+    private Dictionary<string, PlayerAppearance> playerAppearence;
 
     public void Awake() {
         players = new Dictionary<string, GameObject>();
@@ -16,6 +17,11 @@ public class NetworkPlayerManager : MonoBehaviour {
 
     //TODO: parse msg to player class
     public void OnPlayerEnter(PlayerEvent e) {
+
+        GameObject obj;
+
+        if (players.TryGetValue(e.Id,out obj)) return;
+        
         PlayerAppearance t = e.Appearance;
         Appearance app = new Appearance((Appearance.Gender)t.Gender, 
             CharacterManager.ToColor((uint)t.HairColor));
@@ -34,7 +40,33 @@ public class NetworkPlayerManager : MonoBehaviour {
         
         id.ID = e.Id;
         id.IsLocalPlayer = false;
+
+
+        if(NetworkService.isServer) {
+            Dictionary<string, GameObject>.Enumerator eu = players.GetEnumerator();
+            while (eu.MoveNext()) {
+                var pair = eu.Current;
+                Tob.Event ee = new Tob.Event();
+                ee.Topic = EventTopic.PlayerEvent;
+                ee.P.Id = pair.Key;
+                ee.P = new PlayerEvent();
+                ee.P.Type = PlayerEventType.PlayerEnter;
+                PlayerAppearance ap;
+                playerAppearence.TryGetValue(ee.P.Id, out ap);
+                ee.P.Appearance = ap;
+                ee.P.Position = new Vector();
+                ee.P.Position.X = pair.Value.transform.position.x;
+                ee.P.Position.Y = pair.Value.transform.position.y;
+                ee.P.Position.Z = pair.Value.transform.position.z;
+
+                NetworkService.Instance.SendEvent(ee);
+            }
+        }
+
         players.Add(e.Id, go);
+        playerAppearence.Add(e.Id, t);
+
+
     }
 
     public void OnPlayerExit(PlayerEvent e) {
