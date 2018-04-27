@@ -17,13 +17,13 @@ public class NetworkMonsterManager : MonoBehaviour {
 	void OnMonsterSpawn(MonsterEvent e) {
 		//generate monster based on the data sent from server
 		//TODO
-		e.Spawn.Id;
 		int id = int.Parse(e.Spawn.Id);
 
 		M_generator.DemonType  dt = (M_generator.DemonType)e.Spawn.DemonType;
 		M_generator.DemonSkin ds = (M_generator.DemonSkin)e.Spawn.DemonSkin;
 		M_generator.WeaponType wt = (M_generator.WeaponType)e.Spawn.WeaponType;
-		Vector3 pos = e.Spawn.Position;
+		Vector3 pos = new Vector3 (e.Spawn.Position.X,e.Spawn.Position.Y,e.Spawn.Position.Z);
+
 
 		mgen.GenerateMonster (id, dt, ds, wt,pos);
 
@@ -40,6 +40,8 @@ public class NetworkMonsterManager : MonoBehaviour {
 	void OnMonsterBack(MonsterEvent e){
 		int id =  int.Parse(e.Id);
 		mgen.monsterList [id].GetComponent<AutoAttack> ().manual_patrol ();
+		mgen.monsterList[id].GetComponent<Monster>().InBattle = false;
+		mgen.monsterList [id].GetComponent<Monster> ().InMovement = false;
 		
 	}
 
@@ -52,6 +54,11 @@ public class NetworkMonsterManager : MonoBehaviour {
 		mgen.monsterList [id].GetComponent<Monster> ().InBattle = false;
 		mgen.monsterList [id].GetComponent<Monster> ().InMovement = false;
 		mgen.monsterList [id].GetComponent<Monster> ().Current_health = 0.0f;
+		for (int i = 0; i < e.Die.Items.Count; i++) {
+			mgen.monsterList [id].GetComponent<Monster> ().LootList [i] = e.Die.Items [i];
+		}
+		//mgen.monsterList [id].GetComponent<Monster> ().LootList = e.Die.Items;
+
 		
 	}
 
@@ -74,9 +81,6 @@ public class NetworkMonsterManager : MonoBehaviour {
 	void OnMonsterPatrol(MonsterEvent e){
 		//TODO:
 		//PARAMETER NEEDED,ID
-		int id =  int.Parse(e.Id);
-		mgen.monsterList[id].GetComponent<Monster>().InBattle = false;
-		mgen.monsterList [id].GetComponent<Monster> ().InMovement = false;
 	}
 
 	void OnMonsterAttack(MonsterEvent e) {
@@ -86,14 +90,19 @@ public class NetworkMonsterManager : MonoBehaviour {
 		mgen.monsterList [id].GetComponent<AutoAttack> ().manual_attack ();		
 	}
 
-	int OnMonsterLoot(MonsterEvent e) {
+	void OnMonsterLoot(MonsterEvent e) {
 		//TODO:
 		//PARAMETER NEEDED ID, item index;
 		//server 
 		int id =  int.Parse(e.Loot.MonsterId);
 		int itemID = int.Parse (e.Loot.ItemId);
 		int[] templist = mgen.monsterList [id].GetComponent<Monster> ().LootList;
-		int pos = Array.IndexOf(templist, itemID);
+		int pos = -1;
+		for (int i = 0; i < templist.Length; i++) {
+			if (templist [i] == itemID) {
+				pos = i;
+			}
+		}
 		if (pos > 0) {
 			mgen.monsterList [id].GetComponent<Monster> ().LootList[pos] = -1;
 			//TODO;

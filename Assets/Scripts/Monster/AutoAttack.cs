@@ -41,7 +41,7 @@ public class AutoAttack : MonoBehaviour {
 		for (int i = 0; i < dblength; i++) {
 			Item tempItem = DB.get (i);
 			//Debug.Log (tempItem);
-			//Loottable [i] = tempItem.ID;
+			Loottable [i] = tempItem.ID;
 		}
 		this.GetComponent<Monster> ().LootTable = Loottable;
 
@@ -70,11 +70,6 @@ public class AutoAttack : MonoBehaviour {
 				}
 				grounded = true;
 			}
-			if (Input.GetKeyDown(KeyCode.Q))
-			{
-				applyDamage(20.0f, player);
-			}
-
 			if (player != null) {
 				player = playerobj.GetComponent<Transform> ();
 				Vector3 targetPos = player.position;
@@ -93,11 +88,19 @@ public class AutoAttack : MonoBehaviour {
 					this.GetComponent<Monster> ().X = this.transform.position.x;
 					this.GetComponent<Monster> ().Y = this.transform.position.y;
 					this.GetComponent<Monster> ().Z = this.transform.position.z;
-					MonsterEvent e = new MonsterDieEvent();
-					e.Id = this.GetComponent<Monster>().ID.ToString();
 					LootlistGen();
 					Die = true;
-					NS.SendMessage("OnMonsterEvent",e);
+					Tob.Event e = new Tob.Event ();
+					e.Topic = EventTopic.MonsterEvent;
+					MonsterEvent e0 = new MonsterEvent();
+					MonsterDieEvent e1 = new MonsterDieEvent();
+					e0.Id = this.GetComponent<Monster>().ID.ToString();
+					for (int i = 0; i < this.GetComponent<Monster> ().LootList.Length; i++) {
+						e1.Items.Add (this.GetComponent<Monster> ().LootList [i]);
+					}
+					e0.Die = e1;
+					e.M = e0;
+					NS.SendEvent(e);
 				}
 				//if target player moved out the active range of monster. Go back to original poisition.
 				if (rangeDistance >= activeDistance && gameObject.GetComponent<Monster>().InBattle == true) {
@@ -115,8 +118,24 @@ public class AutoAttack : MonoBehaviour {
 					set_back(true);
 					hitted =  false;
 					gameObject.GetComponent<Monster>().InBattle = false;
-					MonsterEvent e = new MonsterDieEvent();
-					e.Id = this.GetComponent<Monster>().ID.ToString();
+					Tob.Event e = new Tob.Event ();
+					e.Topic = EventTopic.MonsterEvent;
+					MonsterEvent e0 = new MonsterEvent();
+					MonsterMoveEvent e1 = new MonsterMoveEvent();
+					e0.Id = this.GetComponent<Monster>().ID.ToString();
+					Tob.Vector passpos = new Tob.Vector ();
+					Tob.Vector passpos1 = new Tob.Vector ();
+					passpos.X = oriPos.x;
+					passpos.Y = oriPos.y;
+					passpos.Z = oriPos.z;
+					passpos1.X = transform.position.x;
+					passpos1.Y = transform.position.y;
+					passpos1.Z = transform.position.z;
+					e1.Target = passpos;
+					e1.Position = passpos1;
+					e0.Move = e1;
+					e.M = e0;
+					NS.SendEvent (e);
 
 
 					//Debug.Log("Monster back to ori position");
@@ -136,6 +155,14 @@ public class AutoAttack : MonoBehaviour {
 						this.GetComponent<Monster> ().X = this.transform.position.x;
 						this.GetComponent<Monster> ().Y = this.transform.position.y;
 						this.GetComponent<Monster> ().Z = this.transform.position.z;
+						Tob.Event e = new Tob.Event ();
+						e.Topic = EventTopic.MonsterEvent;
+						MonsterEvent e0 = new MonsterEvent();
+						e0.Type = Tob.MonsterEventType.MonsterBack;
+						e0.Id = this.GetComponent<Monster>().ID.ToString();
+						e.M = e0;
+						NS.SendEvent (e);
+
 					}
 				}
 
@@ -150,6 +177,13 @@ public class AutoAttack : MonoBehaviour {
 						start_attack();
 						attackCounter = 0;
 						//animator.SetBool ("Waiting", false);
+						Tob.Event e = new Tob.Event ();
+						e.Topic = EventTopic.MonsterEvent;
+						MonsterEvent e1 = new MonsterEvent();
+						e1.Type = Tob.MonsterEventType.MonsterAttack;
+						e1.Id = this.GetComponent<Monster>().ID.ToString();
+						e.M = e1;
+						NS.SendEvent (e);
 					}
 				}
 				else {
@@ -167,6 +201,24 @@ public class AutoAttack : MonoBehaviour {
 							this.GetComponent<Monster> ().Z = this.transform.position.z;
 							gameObject.GetComponent<Monster>().InBattle = true;
 							gameObject.GetComponent<Monster>().InMovement = true;
+							Tob.Event e = new Tob.Event ();
+							e.Topic = EventTopic.MonsterEvent;
+							MonsterEvent e0 = new MonsterEvent();
+							MonsterMoveEvent e1 = new MonsterMoveEvent();
+							e0.Id = this.GetComponent<Monster>().ID.ToString();
+							Tob.Vector passpos = new Tob.Vector ();
+							Tob.Vector passpos1 = new Tob.Vector ();
+							passpos.X = targetPos.x;
+							passpos.Y = targetPos.y;
+							passpos.Z = targetPos.z;
+							passpos1.X = transform.position.x;
+							passpos1.Y = transform.position.y;
+							passpos1.Z = transform.position.z;
+							e1.Target = passpos;
+							e1.Position = passpos1;
+							e0.Move = e1;
+							e.M = e0;
+							NS.SendEvent (e);
 						}
 						if (hitted == true && rangeDistance < activeDistance) {
 							//Debug.Log("I am here");
@@ -179,6 +231,24 @@ public class AutoAttack : MonoBehaviour {
 							this.GetComponent<Monster> ().Z = this.transform.position.z;
 							gameObject.GetComponent<Monster>().InBattle = true;
 							gameObject.GetComponent<Monster>().InMovement = true;
+							Tob.Event e = new Tob.Event ();
+							e.Topic = EventTopic.MonsterEvent;
+							MonsterEvent e0 = new MonsterEvent();
+							MonsterMoveEvent e1 = new MonsterMoveEvent();
+							e0.Id = this.GetComponent<Monster>().ID.ToString();
+							Tob.Vector passpos = new Tob.Vector ();
+							Tob.Vector passpos1 = new Tob.Vector ();
+							passpos.X = targetPos.x;
+							passpos.Y = targetPos.y;
+							passpos.Z = targetPos.z;
+							passpos1.X = transform.position.x;
+							passpos1.Y = transform.position.y;
+							passpos1.Z = transform.position.z;
+							e1.Target = passpos;
+							e1.Position = passpos1;
+							e0.Move = e1;
+							e.M = e0;
+							NS.SendEvent (e);
 						}
 					}
 					if (animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack1")
@@ -193,6 +263,24 @@ public class AutoAttack : MonoBehaviour {
 						gameObject.GetComponent<Monster>().InBattle = true;
 						gameObject.GetComponent<Monster>().InMovement = true;
 						animator.SetBool ("PlayerOutofRange", true);
+						Tob.Event e = new Tob.Event ();
+						e.Topic = EventTopic.MonsterEvent;
+						MonsterEvent e0 = new MonsterEvent();
+						MonsterMoveEvent e1 = new MonsterMoveEvent();
+						e0.Id = this.GetComponent<Monster>().ID.ToString();
+						Tob.Vector passpos = new Tob.Vector ();
+						Tob.Vector passpos1 = new Tob.Vector ();
+						passpos.X = targetPos.x;
+						passpos.Y = targetPos.y;
+						passpos.Z = targetPos.z;
+						passpos1.X = transform.position.x;
+						passpos1.Y = transform.position.y;
+						passpos1.Z = transform.position.z;
+						e1.Target = passpos;
+						e1.Position = passpos1;
+						e0.Move = e1;
+						e.M = e0;
+						NS.SendEvent (e);
 					}
 				}
 			}
@@ -209,7 +297,7 @@ public class AutoAttack : MonoBehaviour {
 				manual_die();
 			}*/
 			else if (this.GetComponent<Monster> ().InMovement == false && this.GetComponent<Monster> ().InBattle == false) {
-				manual_patrol();
+				//manual_patrol();
 			}
 
 
@@ -230,11 +318,23 @@ public class AutoAttack : MonoBehaviour {
 	GameObject FindClosestPlayer(){
 		//Debug.Log ("Finding player");
 		GameObject[] players;
+		GameObject[] otherplayers;
 		players = GameObject.FindGameObjectsWithTag("Player");
+		otherplayers = GameObject.FindGameObjectsWithTag("OtherPlayer");
 		GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
 		foreach (GameObject target in players)
+		{
+			Vector3 diff = target.transform.position - position;
+			float curDistance = diff.sqrMagnitude;
+			if (curDistance < distance)
+			{
+				closest = target;
+				distance = curDistance;
+			}
+		}
+		foreach (GameObject target in otherplayers)
 		{
 			Vector3 diff = target.transform.position - position;
 			float curDistance = diff.sqrMagnitude;

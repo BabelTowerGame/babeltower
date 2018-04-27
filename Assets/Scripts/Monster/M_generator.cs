@@ -100,7 +100,6 @@ public class M_generator : MonoBehaviour {
 			M_generator.WeaponType.Pike, mobLocation4);
 		
 
-		NS.SendMessage("OnMonsterEvent",)
 		//random gen
 		for (int i = 0; i < 50; i++) {
 			regenCounter [i] = 60.0f;
@@ -113,13 +112,22 @@ public class M_generator : MonoBehaviour {
 			WeaponType wt = RdWeapon ();
 			Vector3 gencoord  = new Vector3(resultX,300,resultZ);
 			monsterList[i] = GenerateMonster(i, dt, ds, wt, gencoord);
-			MonsterEvent e = new MonsterSpawnEvent();
-			e.Spawn.Id = i.ToString();
-			e.Spawn.Position = gencoord;
-			e.Spawn.DemonSkin = ds;
-			e.Spawn.DemonType = dt;
-			e.Spawn.WeaponType = wt;
-			NS.SendMessage("OnMonsterEvent",e);
+			Tob.Event e = new Tob.Event ();
+			e.Topic = EventTopic.MonsterEvent;
+			MonsterEvent e0 = new MonsterEvent();
+			MonsterSpawnEvent e1 = new MonsterSpawnEvent();
+			e1.Id = i.ToString();
+			Tob.Vector passpos = new Tob.Vector ();
+			passpos.X = gencoord.x;
+			passpos.Y = gencoord.y;
+			passpos.Z = gencoord.z;
+			e1.Position = passpos;
+			e1.DemonSkin = (int)ds;
+			e1.DemonType = (int)dt;
+			e1.WeaponType = (int)wt;
+			e0.Spawn = e1;
+			e.M = e0;
+			NS.SendEvent(e);
 		}
 
 	}
@@ -142,14 +150,22 @@ public class M_generator : MonoBehaviour {
 					WeaponType wt = RdWeapon ();
 					Vector3 gencoord  = new Vector3(resultX,300,resultZ);
 					monsterList[i] = GenerateMonster(i, dt, ds, wt, gencoord);
-					MonsterEvent e = new MonsterSpawnEvent();
-					e.Spawn.Id = i.ToString();
-					e.Spawn.Position = gencoord;
-					e.Spawn.DemonSkin = ds;
-					e.Spawn.DemonType = dt;
-					e.Spawn.WeaponType = wt;
-					NS.SendMessage("OnMonsterEvent",e);
-					regenCounter [i] = 60.0f;
+					Tob.Event e = new Tob.Event ();
+					e.Topic = EventTopic.MonsterEvent;
+					MonsterEvent e0 = new MonsterEvent();
+					MonsterSpawnEvent e1 = new MonsterSpawnEvent();
+					e1.Id = i.ToString();
+					Tob.Vector passpos = new Tob.Vector ();
+					passpos.X = gencoord.x;
+					passpos.Y = gencoord.y;
+					passpos.Z = gencoord.z;
+					e1.Position = passpos;
+					e1.DemonSkin = (int)ds;
+					e1.DemonType = (int)dt;
+					e1.WeaponType = (int)wt;
+					e0.Spawn = e1;
+					e.M = e0;
+					NS.SendEvent(e);
 				}
 			}
 			
