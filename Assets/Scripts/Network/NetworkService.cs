@@ -110,9 +110,13 @@ public class NetworkService : MonoBehaviour {
     }
 
     private void OnPlayerEvent(PlayerEvent e) {
-
-        NetworkPlayerManager mgr = GameObject.FindGameObjectWithTag("NetworkPlayer")
-            .GetComponent<NetworkPlayerManager>();
+        NetworkPlayerManager mgr;
+        try {
+            mgr = GameObject.FindGameObjectWithTag("NetworkPlayer")
+                .GetComponent<NetworkPlayerManager>();
+        } catch (Exception ee) {
+            return;
+        }
 
         Debug.Log("[!!PlayerEvent!!] EventType:" + e.Type);
         switch (e.Type) {
