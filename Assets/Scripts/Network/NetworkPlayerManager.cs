@@ -13,6 +13,7 @@ public class NetworkPlayerManager : MonoBehaviour {
 
     public void Awake() {
         players = new Dictionary<string, GameObject>();
+        playerAppearence = new Dictionary<string, PlayerAppearance>();
     }
 
     //TODO: parse msg to player class
