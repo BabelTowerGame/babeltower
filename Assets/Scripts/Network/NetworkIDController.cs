@@ -85,6 +85,7 @@ public class NetworkIDController : MonoBehaviour {
 	    if (Time.time - lastClientSendTime < k_NetWorkTickRate) return;
 	    if (networkID.IsLocalPlayer) {
 	        SendTransform();
+            SendAnimation();
 
 	        lastClientSendTime = Time.time;
 	    }
@@ -235,7 +236,8 @@ public class NetworkIDController : MonoBehaviour {
             // turn off interpolation if we go out of the time window for a new packet
             fixedPosDiff = Vector3.zero;
 
-            var diff = targetPosition - transform.position;
+            var diff = targetPosition - transform.position + Physics.gravity;
+            
             charController.Move(diff);
         }
 
